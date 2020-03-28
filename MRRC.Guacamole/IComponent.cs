@@ -1,3 +1,5 @@
+using System;
+
 namespace MRRC.Guacamole
 {
     public interface IComponent
@@ -9,5 +11,7 @@ namespace MRRC.Guacamole
         /// <param name="y">The top offset</param>
         /// <param name="active">When true, this component is currently focused</param>
         void Render(int x, int y, bool active = true);
+
+        event EventHandler<char> KeyPressed;
     }
 }
