@@ -18,7 +18,8 @@ namespace MRRC.Guacamole
         /// <param name="y">Top offset</param>
         /// <param name="w">Width</param>
         /// <param name="h">Height</param>
-        public static void Outline(int x, int y, int w, int h)
+        /// <param name="title">Title to display at the top of the outline</param>
+        public static void Outline(int x, int y, int w, int h, string title = "")
         {
             Console.SetCursorPosition(x, y);
 
@@ -39,6 +40,12 @@ namespace MRRC.Guacamole
             Console.SetCursorPosition(x, y + h - 1);
             Console.WriteLine('╰' + widthLine + '╯');
             
+            // draw the title
+            Console.SetCursorPosition(x + 1, y);
+            Console.Write(" ");
+            Console.Write(title.Length > w - 4 ? title.Substring(0, w - 5) + "…" : title);
+            Console.Write(" ");
+
             // mov the cursor to x,y to make sure it doesn't scroll
             Console.SetCursorPosition(x, y);
             
