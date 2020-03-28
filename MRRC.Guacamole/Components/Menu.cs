@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Pastel;
 
 namespace MRRC.Guacamole.Components
 {
@@ -32,17 +33,24 @@ namespace MRRC.Guacamole.Components
             }
         }
 
+        private string Highlight(string item, int index)
+        {
+            var paddedItem = $" {item} ";
+            return index == _highlightIndex ? paddedItem.Pastel("#ffffff").PastelBg("#333333") : paddedItem;
+        }
+
         public override void Render(int x, int y, bool active = true)
         {
             Console.CursorVisible = false;
 
             DrawUtil.Outline(x, y, Width, Console.WindowHeight);
-            DrawUtil.Lines(x + 2, y, 
+            DrawUtil.Lines(x + 1, y, 
                 Items
                     .Select(item => item.ToString())
                     .Select(item => item.Length > Width - 4 ? 
                         item.Substring(0, Width - 5) + "…" : 
-                        item));
+                        item)
+                    .Select(Highlight));
             
             Console.CursorVisible = true;
         }
