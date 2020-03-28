@@ -1,11 +1,10 @@
 using System;
 using System.Linq;
 
-namespace MRRC.Guacamole.Component
+namespace MRRC.Guacamole.Components
 {
-    public class Menu<T> : IComponent
+    public class Menu<T> : Component
     {
-        public event EventHandler<ConsoleKeyInfo> KeyPressed;
         public event EventHandler<T> ItemEntered;
 
         private int _highlightIndex;
@@ -23,7 +22,7 @@ namespace MRRC.Guacamole.Component
             Width = width;
         }
 
-        public void Render(int x, int y, bool active = true)
+        public override void Render(int x, int y, bool active = true)
         {
             Console.CursorVisible = false;
 

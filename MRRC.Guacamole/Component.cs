@@ -2,7 +2,7 @@ using System;
 
 namespace MRRC.Guacamole
 {
-    public interface IComponent
+    public abstract class Component
     {
         /// <summary>
         /// Render this component to stdout
@@ -10,8 +10,8 @@ namespace MRRC.Guacamole
         /// <param name="x">The left offset</param>
         /// <param name="y">The top offset</param>
         /// <param name="active">When true, this component is currently focused</param>
-        void Render(int x, int y, bool active = true);
+        public abstract void Render(int x, int y, bool active = true);
 
-        event EventHandler<ConsoleKeyInfo> KeyPressed;
+        public event EventHandler<ConsoleKeyInfo> KeyPressed;
     }
 }

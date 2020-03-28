@@ -38,12 +38,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Component\Menu.cs" />
-        <Compile Include="Component\MenuManager.cs" />
-        <Compile Include="Component\Text.cs" />
+        <Compile Include="Components\Menu.cs" />
+        <Compile Include="Components\MenuManager.cs" />
+        <Compile Include="Components\Text.cs" />
         <Compile Include="DrawUtil.cs" />
         <Compile Include="Guac.cs" />
-        <Compile Include="IComponent.cs" />
+        <Compile Include="Component.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

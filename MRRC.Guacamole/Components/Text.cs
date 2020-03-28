@@ -1,11 +1,9 @@
 using System;
 
-namespace MRRC.Guacamole.Component
+namespace MRRC.Guacamole.Components
 {
-    public class Text : IComponent
+    public class Text : Component
     {
-        public event EventHandler<ConsoleKeyInfo> KeyPressed;
-        
         public string Contents { get; set; }
         
         public Text(string contents)
@@ -13,7 +11,7 @@ namespace MRRC.Guacamole.Component
             Contents = contents;
         }
 
-        public void Render(int x, int y, bool active = true)
+        public override void Render(int x, int y, bool active = true)
         {
             DrawUtil.Text(x, y, Contents);
         }
