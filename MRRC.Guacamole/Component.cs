@@ -13,5 +13,16 @@ namespace MRRC.Guacamole
         public abstract void Render(int x, int y, bool active = true);
 
         public event EventHandler<ConsoleKeyInfo> KeyPressed;
+        
+        /// <summary>
+        /// This event is invoked when the component requires a re-render. Any component that has children should bubble
+        /// this event upwards.
+        /// </summary>
+        public event EventHandler MustRender;
+
+        protected void TriggerRender()
+        {
+            MustRender?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

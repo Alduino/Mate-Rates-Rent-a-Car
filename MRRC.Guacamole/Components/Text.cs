@@ -4,8 +4,17 @@ namespace MRRC.Guacamole.Components
 {
     public class Text : Component
     {
-        public string Contents { get; set; }
-        
+        private string _contents;
+        public string Contents
+        {
+            get => _contents;
+            set
+            {
+                _contents = value;
+                TriggerRender();
+            }
+        }
+
         public Text(string contents)
         {
             Contents = contents;
