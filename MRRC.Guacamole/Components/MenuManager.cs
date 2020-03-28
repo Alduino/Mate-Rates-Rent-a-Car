@@ -47,7 +47,7 @@ namespace MRRC.Guacamole.Components
                 var width = item is Menu<Component> menu ? menu.Width :
                     i == menuItems.Count - 1 ? Console.WindowWidth - totalWidth + 16 : 16;
 
-                item.Render(x + offset, y, active && i == menuItems.Count - 1);
+                item.Render(x + offset, y, active);
                 offset += width;
             }
         }
