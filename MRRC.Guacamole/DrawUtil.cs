@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MRRC.Guacamole
 {
@@ -42,6 +44,37 @@ namespace MRRC.Guacamole
             
             // move to inside the box
             Console.SetCursorPosition(x + 1, y + 1);
+        }
+
+        /// <summary>
+        /// Draws text lines at the specified position. Don't include newlines in the strings.
+        /// </summary>
+        /// <remarks>
+        /// Normally you could just use <see cref="Console.WriteLine(string)"/>, however this will not work when
+        /// needing to reset to a different x position.
+        /// If you have just a string, instead of splitting it up into lines use <see cref="Text"/>.
+        /// </remarks>
+        /// <param name="x">Left offset</param>
+        /// <param name="y">Top offset</param>
+        /// <param name="lines">List of text lines</param>
+        public static void Lines(int x, int y, IEnumerable<string> lines)
+        {
+            var linesArr = lines.ToArray();
+
+            for (var i = 0; i < linesArr.Length; i++)
+            {
+                Console.SetCursorPosition(x, y + i);
+                Console.Write(linesArr[i]);
+            }
+        }
+
+        /// <summary>
+        /// Same as <see cref="Lines"/>, however this automatically splits the string into lines for you.
+        /// </summary>
+        public static void Text(int x, int y, string text)
+        {
+            var lines = text.Split('\n');
+            Lines(x, y, lines);
         }
     }
 }
