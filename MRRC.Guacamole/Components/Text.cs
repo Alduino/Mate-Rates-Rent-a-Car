@@ -20,7 +20,7 @@ namespace MRRC.Guacamole.Components
             Contents = contents;
         }
 
-        public override void Render(int x, int y, bool active = true)
+        protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             DrawUtil.Text(x, y, Contents);
         }

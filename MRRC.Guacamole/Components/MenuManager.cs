@@ -6,17 +6,17 @@ namespace MRRC.Guacamole.Components
 {
     public class MenuManager : Component
     {
-        public Menu<Component> RootMenu { get; }
+        public Menu RootMenu { get; }
 
-        public MenuManager(Menu<Component> rootMenu)
+        public MenuManager(Menu rootMenu)
         {
             RootMenu = rootMenu;
+            rootMenu.SetChildOf(this);
 
-            KeyPressed += RootMenu.HandleKeyPress;
             RootMenu.MustRender += TriggerRender;
         }
 
-        public override void Render(int x, int y, bool active = true)
+        protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             var menuItems = new List<Component>(new [] { RootMenu });
 
@@ -24,7 +24,7 @@ namespace MRRC.Guacamole.Components
             {
                 var currentItem = menuItems.Last();
 
-                if (currentItem is Menu<Component> menuItem)
+                if (currentItem is Menu menuItem)
                 {
                     var nextItem = menuItem.ActiveItem;
                     menuItems.Add(nextItem);
@@ -33,7 +33,7 @@ namespace MRRC.Guacamole.Components
             }
 
             // subtract one from menu width so that they overlap on the border line
-            var totalWidth = menuItems.Sum(v => v is Menu<Component> menu ? menu.Width - 1 : 16);
+            var totalWidth = menuItems.Sum(v => v is Menu menu ? menu.Width - 1 : 16);
             var scroll = Math.Min(0, Console.WindowWidth - totalWidth);
 
             var offset = scroll;
@@ -44,10 +44,10 @@ namespace MRRC.Guacamole.Components
                 // if the item is a menu item, use its width
                 // otherwise, if it is the last item, fill the available space
                 // otherwise default to a width of 16
-                var width = item is Menu<Component> menu ? menu.Width :
+                var width = item is Menu menu ? menu.Width :
                     i == menuItems.Count - 1 ? Console.WindowWidth - totalWidth + 16 : 16;
 
-                item.Render(x + offset, y, active);
+                item.Render(state, x + offset, y);
                 offset += width;
             }
         }

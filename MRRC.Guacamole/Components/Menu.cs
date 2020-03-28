@@ -4,10 +4,8 @@ using Pastel;
 
 namespace MRRC.Guacamole.Components
 {
-    public class Menu<T> : Component
+    public class Menu : Component
     {
-        public event EventHandler<T> ItemEntered;
-
         private int _highlightIndex;
 
         private int HighlightIndex
@@ -22,45 +20,34 @@ namespace MRRC.Guacamole.Components
         }
 
         public string Name { get; }
-        public T[] Items { get; }
+        public Component[] Items { get; }
         public int Width { get; }
 
-        public bool Open { get; private set; }
-
-        public T ActiveItem => Items[HighlightIndex];
+        public Component ActiveItem => Items[HighlightIndex];
         
-        public Menu(string name, T[] items, int width = 32)
+        public Menu(string name, Component[] items, int width = 32)
         {
             Name = name;
             Items = items;
             Width = width;
             
+            foreach (var component in Items)
+            {
+                component.SetChildOf(this);
+            }
+            
             KeyPressed += OnKeyPressed;
             HighlightIndex = 0;
         }
 
-        private void OnKeyPressed(object sender, ConsoleKeyInfo key)
+        private void OnKeyPressed(object sender, KeyPressEvent ev)
         {
-            if (Open)
+            var key = ev.Key;
+
+            if (ev.State.ActiveComponent == this)
             {
-                var requiresRerender = false;
-                switch (key.Key)
-                {
-                    case ConsoleKey.LeftArrow:
-                    case ConsoleKey.Escape:
-                        Open = false;
-                        requiresRerender = true;
-                        break;
-                    
-                    default:
-                        if (ActiveItem is Component component) component.HandleKeyPress(sender, key);
-                        break;
-                }
-                if (requiresRerender) TriggerRender();
-            }
-            else
-            {
-                var requiresRender = true;
+                // we can move up and down or enter into the current child
+                var shouldRender = true;
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
@@ -70,15 +57,19 @@ namespace MRRC.Guacamole.Components
                         HighlightIndex = (HighlightIndex + 1).Mod(Items.Length);
                         break;
                     case ConsoleKey.RightArrow:
-                    case ConsoleKey.Enter:
-                        Open = true;
+                        ev.State.ActiveComponent = ActiveItem;
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        ev.State.ActiveComponent = Parent;
                         break;
                     
                     default:
-                        requiresRender = false;
+                        shouldRender = false;
                         break;
                 }
-                if (requiresRender) TriggerRender();
+
+                ev.Cancel = true;
+                ev.Rerender = shouldRender;
             }
         }
 
@@ -98,7 +89,7 @@ namespace MRRC.Guacamole.Components
                 paddedItem.Pastel(noHighlightFg).PastelBg(noHighlightBg);
         }
 
-        public override void Render(int x, int y, bool active = true)
+        protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             Console.CursorVisible = false;
 
@@ -109,7 +100,7 @@ namespace MRRC.Guacamole.Components
                     .Select(item => item.Length > Width - 4 ? 
                         item.Substring(0, Width - 5) + "…" : 
                         item)
-                    .Select((v, i) => Highlight(v, i, active && !Open)));
+                    .Select((v, i) => Highlight(v, i, active)));
             
             Console.CursorVisible = true;
         }

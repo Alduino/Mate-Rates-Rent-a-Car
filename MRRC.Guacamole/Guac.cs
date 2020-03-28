@@ -1,21 +1,33 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MRRC.Guacamole
 {
     public class Guac
     {
         public Component Root { get; }
+        
+        public Component ActiveComponent { get; private set; }
+
+        public void Focus(Component component) => ActiveComponent = component;
+
+        private ApplicationState MakeApplicationState() => new ApplicationState
+        {
+            ActiveComponent = ActiveComponent
+        };
 
         private void Render()
         {
             // for now we need to re-render the whole screen, so we will clear it first to make sure nothing breaks
             Console.Clear();
-            Root.Render(0, 0);
+            Root.Render(MakeApplicationState(), 0, 0);
         }
         
         public Guac(Component root)
         {
             Root = root;
+            ActiveComponent = root;
 
             root.MustRender += delegate
             {
@@ -31,7 +43,16 @@ namespace MRRC.Guacamole
         public void HandleEventLoop()
         {
             var character = Console.ReadKey();
-            Root.HandleKeyPress(this, character);
+            var ev = new KeyPressEvent
+            {
+                Key = character,
+                State = MakeApplicationState()
+            };
+            
+            ActiveComponent.HandleKeyPress(this, ev);
+
+            if (ev.State.ActiveComponent != ActiveComponent) ActiveComponent = ev.State.ActiveComponent;
+            if (ev.Rerender) Render();
         }
     }
 }
