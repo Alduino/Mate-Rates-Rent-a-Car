@@ -70,10 +70,18 @@ namespace MRRC.Guacamole.Components
             }
         }
 
-        private string Highlight(string item, int index)
+        private string Highlight(string item, int index, bool active)
         {
+            var noHighlightFg = active ? "#f5f5ff" : "#aaaacc";
+            const string noHighlightBg = "#000000";
+
+            const string highlightFg = "#000000";
+            var highlightBg = active ? "#f5f5ff" : "#aaaacc";
+            
             var paddedItem = $" {item} ";
-            return index == _highlightIndex ? paddedItem.Pastel("#ffffff").PastelBg("#333333") : paddedItem;
+            return index == _highlightIndex ? 
+                paddedItem.Pastel(highlightFg).PastelBg(highlightBg) : 
+                paddedItem.Pastel(noHighlightFg).PastelBg(noHighlightBg);
         }
 
         public override void Render(int x, int y, bool active = true)
@@ -87,7 +95,7 @@ namespace MRRC.Guacamole.Components
                     .Select(item => item.Length > Width - 4 ? 
                         item.Substring(0, Width - 5) + "…" : 
                         item)
-                    .Select(Highlight));
+                    .Select((v, i) => Highlight(v, i, active && !Open)));
             
             Console.CursorVisible = true;
         }
