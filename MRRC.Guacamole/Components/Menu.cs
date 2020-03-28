@@ -14,6 +14,8 @@ namespace MRRC.Guacamole.Components
         public T[] Items { get; }
         public int Width { get; }
 
+        public bool Open { get; private set; }
+
         public T ActiveItem => Items[_highlightIndex];
         
         public Menu(string name, T[] items, int width = 32)
@@ -27,9 +29,44 @@ namespace MRRC.Guacamole.Components
 
         private void OnKeyPressed(object sender, ConsoleKeyInfo key)
         {
-            foreach (var item in Items)
+            if (Open)
             {
-                if (item is Component component) component.HandleKeyPress(sender, key);
+                var requiresRerender = false;
+                switch (key.Key)
+                {
+                    case ConsoleKey.LeftArrow:
+                    case ConsoleKey.Escape:
+                        Open = false;
+                        requiresRerender = true;
+                        break;
+                    
+                    default:
+                        if (ActiveItem is Component component) component.HandleKeyPress(sender, key);
+                        break;
+                }
+                if (requiresRerender) TriggerRender();
+            }
+            else
+            {
+                var requiresRender = true;
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        _highlightIndex = (_highlightIndex - 1).Mod(Items.Length);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        _highlightIndex = (_highlightIndex + 1).Mod(Items.Length);
+                        break;
+                    case ConsoleKey.RightArrow:
+                    case ConsoleKey.Enter:
+                        Open = true;
+                        break;
+                    
+                    default:
+                        requiresRender = false;
+                        break;
+                }
+                if (requiresRender) TriggerRender();
             }
         }
 
