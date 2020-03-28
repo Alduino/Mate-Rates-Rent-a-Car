@@ -20,6 +20,16 @@ namespace MRRC.Guacamole.Components
             Name = name;
             Items = items;
             Width = width;
+
+            KeyPressed += OnKeyPressed;
+        }
+
+        private void OnKeyPressed(object sender, ConsoleKeyInfo key)
+        {
+            foreach (var item in Items)
+            {
+                if (item is Component component) component.HandleKeyPress(sender, key);
+            }
         }
 
         public override void Render(int x, int y, bool active = true)

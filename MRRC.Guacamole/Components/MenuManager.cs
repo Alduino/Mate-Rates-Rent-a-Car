@@ -11,6 +11,8 @@ namespace MRRC.Guacamole.Components
         public MenuManager(Menu<Component> rootMenu)
         {
             RootMenu = rootMenu;
+
+            KeyPressed += RootMenu.HandleKeyPress;
         }
 
         public override void Render(int x, int y, bool active = true)

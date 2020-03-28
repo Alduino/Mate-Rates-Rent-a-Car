@@ -4,11 +4,6 @@ namespace MRRC.Guacamole
 {
     public abstract class Component
     {
-        protected Component()
-        {
-            KeyPressed += (_, key) => HandleKeyPress(key);
-        }
-        
         /// <summary>
         /// Render this component to stdout
         /// </summary>
@@ -31,11 +26,12 @@ namespace MRRC.Guacamole
         }
 
         /// <summary>
-        /// Handle a key press. Will trigger key press event and bubble to all components.
+        /// Handle a key press. Will trigger key press event and bubble to all components. Any component that has
+        /// children should bubble this event downwards to them.
         /// </summary>
-        public void HandleKeyPress(ConsoleKeyInfo keyInfo)
+        public void HandleKeyPress(object sender, ConsoleKeyInfo keyInfo)
         {
-            KeyPressed?.Invoke(this, keyInfo);
+            KeyPressed?.Invoke(sender, keyInfo);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace MRRC.Guacamole
         public void HandleEventLoop()
         {
             var character = Console.ReadKey();
-            Root.HandleKeyPress(character);
+            Root.HandleKeyPress(this, character);
         }
     }
 }
