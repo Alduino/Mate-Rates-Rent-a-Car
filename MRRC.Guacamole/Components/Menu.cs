@@ -9,22 +9,34 @@ namespace MRRC.Guacamole.Components
         public event EventHandler<T> ItemEntered;
 
         private int _highlightIndex;
-        
+
+        private int HighlightIndex
+        {
+            get => _highlightIndex;
+            set
+            {
+                if (ActiveItem is Component component) component.MustRender -= TriggerRender;
+                _highlightIndex = value;
+                if (ActiveItem is Component newComponent) newComponent.MustRender += TriggerRender;
+            }
+        }
+
         public string Name { get; }
         public T[] Items { get; }
         public int Width { get; }
 
         public bool Open { get; private set; }
 
-        public T ActiveItem => Items[_highlightIndex];
+        public T ActiveItem => Items[HighlightIndex];
         
         public Menu(string name, T[] items, int width = 32)
         {
             Name = name;
             Items = items;
             Width = width;
-
+            
             KeyPressed += OnKeyPressed;
+            HighlightIndex = 0;
         }
 
         private void OnKeyPressed(object sender, ConsoleKeyInfo key)
@@ -52,10 +64,10 @@ namespace MRRC.Guacamole.Components
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        _highlightIndex = (_highlightIndex - 1).Mod(Items.Length);
+                        HighlightIndex = (HighlightIndex - 1).Mod(Items.Length);
                         break;
                     case ConsoleKey.DownArrow:
-                        _highlightIndex = (_highlightIndex + 1).Mod(Items.Length);
+                        HighlightIndex = (HighlightIndex + 1).Mod(Items.Length);
                         break;
                     case ConsoleKey.RightArrow:
                     case ConsoleKey.Enter:
@@ -78,7 +90,7 @@ namespace MRRC.Guacamole.Components
             const string highlightFg = "#000000";
             var highlightBg = active ? "#f5f5ff" : "#aaaacc";
 
-            var current = index == _highlightIndex;
+            var current = index == HighlightIndex;
 
             var paddedItem = $"{(current ? '>' : ' ')}{item} ";
             return current ? 
