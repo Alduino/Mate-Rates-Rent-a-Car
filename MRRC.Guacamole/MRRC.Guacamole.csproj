@@ -49,6 +49,7 @@
         <Compile Include="DrawUtil.cs" />
         <Compile Include="Guac.cs" />
         <Compile Include="Component.cs" />
+        <Compile Include="Maths.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
