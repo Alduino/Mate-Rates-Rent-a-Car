@@ -37,6 +37,7 @@ namespace MRRC.Guacamole.Components
             }
             
             KeyPressed += OnKeyPressed;
+            Focused += (_, ev) => ev.Cancel = false;
             HighlightIndex = 0;
         }
 
