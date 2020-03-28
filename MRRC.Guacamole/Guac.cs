@@ -14,6 +14,13 @@ namespace MRRC.Guacamole
         public Guac(Component root)
         {
             Root = root;
+
+            root.MustRender += delegate
+            {
+                Render();
+            };
+
+            Render();
         }
 
         /// <summary>
