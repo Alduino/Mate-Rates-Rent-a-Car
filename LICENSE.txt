@@ -1,0 +1,2 @@
+Copyright 2020 (c) Zach Barham
+This work is for an assignment submitted to the Queensland University of Technology.

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MateRatesRentACar", "MateRatesRentACar\MateRatesRentACar.csproj", "{D1E7C33A-37FA-4DCC-9C78-96CA2A67C949}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatesRatesRentACar", "MatesRatesRentACar\MatesRatesRentACar.csproj", "{D1E7C33A-37FA-4DCC-9C78-96CA2A67C949}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Guacamole", "MRRC.Guacamole\MRRC.Guacamole.csproj", "{36E5D324-DC6C-4748-B6EE-CA8450857910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +14,9 @@ Global
 		{D1E7C33A-37FA-4DCC-9C78-96CA2A67C949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1E7C33A-37FA-4DCC-9C78-96CA2A67C949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1E7C33A-37FA-4DCC-9C78-96CA2A67C949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E5D324-DC6C-4748-B6EE-CA8450857910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E5D324-DC6C-4748-B6EE-CA8450857910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E5D324-DC6C-4748-B6EE-CA8450857910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E5D324-DC6C-4748-B6EE-CA8450857910}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
