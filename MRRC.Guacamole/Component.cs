@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace MRRC.Guacamole
 {
@@ -32,6 +33,16 @@ namespace MRRC.Guacamole
         }
         
         protected event EventHandler<KeyPressEvent> KeyPressed;
+
+        /// <summary>
+        /// Handle a key press. Will trigger key press event and bubble to all components. Any component that has
+        /// children should bubble this event downwards to them.
+        /// </summary>
+        public void HandleKeyPress(object sender, KeyPressEvent keyInfo)
+        {
+            KeyPressed?.Invoke(sender, keyInfo);
+            if (!keyInfo.Cancel) Parent?.HandleKeyPress(sender, keyInfo);
+        }
         
         /// <summary>
         /// This event is invoked when the component requires a re-render. Any component that has children should bubble
@@ -47,13 +58,27 @@ namespace MRRC.Guacamole
         }
 
         /// <summary>
-        /// Handle a key press. Will trigger key press event and bubble to all components. Any component that has
-        /// children should bubble this event downwards to them.
+        /// This event is triggered when the component is brought into focus.
         /// </summary>
-        public void HandleKeyPress(object sender, KeyPressEvent keyInfo)
+        /// <remarks>Cancelling this is enabled by default to prevent any situations where the user cannot exit some
+        /// focus state, so to enable it a handler must be set to allow the event.</remarks>
+        public event EventHandler<CancelEventArgs> Focused;
+
+        public bool HandleFocused(object sender)
         {
-            KeyPressed?.Invoke(sender, keyInfo);
-            if (!keyInfo.Cancel) Parent?.HandleKeyPress(sender, keyInfo);
+            var args = new CancelEventArgs(true);
+            Focused?.Invoke(sender, args);
+            return args.Cancel;
+        }
+
+        /// <summary>
+        /// This event is triggered when the component stops being focused
+        /// </summary>
+        public event EventHandler Blurred;
+
+        public void HandleBlurred(object sender)
+        {
+            Blurred?.Invoke(sender, EventArgs.Empty);
         }
     }
 }

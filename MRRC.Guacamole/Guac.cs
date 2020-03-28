@@ -51,7 +51,20 @@ namespace MRRC.Guacamole
             
             ActiveComponent.HandleKeyPress(this, ev);
 
-            if (ev.State.ActiveComponent != ActiveComponent) ActiveComponent = ev.State.ActiveComponent;
+            if (ev.State.ActiveComponent != ActiveComponent)
+            {
+                var oldComponent = ActiveComponent;
+                var newComponent = ev.State.ActiveComponent;
+
+                var cancelled = newComponent.HandleFocused(oldComponent);
+
+                if (!cancelled)
+                {
+                    oldComponent.HandleBlurred(newComponent);
+                    ActiveComponent = newComponent;
+                }
+            }
+            
             if (ev.Rerender) Render();
         }
     }
