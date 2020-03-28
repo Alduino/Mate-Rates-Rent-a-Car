@@ -6,6 +6,8 @@ namespace MRRC.Guacamole.Component
 {
     public class MenuManager : IComponent
     {
+        public event EventHandler<ConsoleKeyInfo> KeyPressed;
+        
         public Menu<IComponent> RootMenu { get; }
 
         public MenuManager(Menu<IComponent> rootMenu)
@@ -48,7 +50,5 @@ namespace MRRC.Guacamole.Component
                 offset += x;
             }
         }
-
-        public event EventHandler<char> KeyPressed;
     }
 }

@@ -5,7 +5,7 @@ namespace MRRC.Guacamole.Component
 {
     public class Menu<T> : IComponent
     {
-        public event EventHandler<char> KeyPressed;
+        public event EventHandler<ConsoleKeyInfo> KeyPressed;
         public event EventHandler<T> ItemEntered;
 
         private int _highlightIndex;

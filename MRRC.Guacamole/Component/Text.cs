@@ -4,7 +4,7 @@ namespace MRRC.Guacamole.Component
 {
     public class Text : IComponent
     {
-        public event EventHandler<char> KeyPressed;
+        public event EventHandler<ConsoleKeyInfo> KeyPressed;
         
         public string Contents { get; set; }
         

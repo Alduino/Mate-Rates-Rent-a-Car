@@ -12,6 +12,6 @@ namespace MRRC.Guacamole
         /// <param name="active">When true, this component is currently focused</param>
         void Render(int x, int y, bool active = true);
 
-        event EventHandler<char> KeyPressed;
+        event EventHandler<ConsoleKeyInfo> KeyPressed;
     }
 }
