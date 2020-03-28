@@ -20,7 +20,9 @@ namespace MRRC.Guacamole
         /// </summary>
         public event EventHandler MustRender;
 
-        protected void TriggerRender()
+        protected void TriggerRender() => TriggerRender(this, EventArgs.Empty);
+
+        protected void TriggerRender(object sender, EventArgs args)
         {
             MustRender?.Invoke(this, EventArgs.Empty);
         }

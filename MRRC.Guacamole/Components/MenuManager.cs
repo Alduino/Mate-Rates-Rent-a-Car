@@ -13,6 +13,7 @@ namespace MRRC.Guacamole.Components
             RootMenu = rootMenu;
 
             KeyPressed += RootMenu.HandleKeyPress;
+            RootMenu.MustRender += TriggerRender;
         }
 
         public override void Render(int x, int y, bool active = true)
