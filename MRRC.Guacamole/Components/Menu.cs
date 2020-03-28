@@ -77,9 +77,11 @@ namespace MRRC.Guacamole.Components
 
             const string highlightFg = "#000000";
             var highlightBg = active ? "#f5f5ff" : "#aaaacc";
-            
-            var paddedItem = $" {item} ";
-            return index == _highlightIndex ? 
+
+            var current = index == _highlightIndex;
+
+            var paddedItem = $"{(current ? '>' : ' ')}{item} ";
+            return current ? 
                 paddedItem.Pastel(highlightFg).PastelBg(highlightBg) : 
                 paddedItem.Pastel(noHighlightFg).PastelBg(noHighlightBg);
         }
