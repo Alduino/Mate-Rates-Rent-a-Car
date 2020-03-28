@@ -43,8 +43,8 @@ namespace MRRC.Guacamole.Components
         {
             Console.CursorVisible = false;
 
-            DrawUtil.Outline(x, y, Width, Console.WindowHeight);
-            DrawUtil.Lines(x + 1, y, 
+            DrawUtil.Outline(x, y, Width, Console.WindowHeight - 1);
+            DrawUtil.Lines(x + 1, y + 1, 
                 Items
                     .Select(item => item.ToString())
                     .Select(item => item.Length > Width - 4 ? 
