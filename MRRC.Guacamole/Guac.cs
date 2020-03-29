@@ -84,6 +84,7 @@ namespace MRRC.Guacamole
         {
             var dialogue = new Dialogue(title, contents, buttons);
             var oldActiveComponent = ActiveComponent;
+            oldActiveComponent.HandleBlurred(this);
             ActiveComponent = dialogue;
             _renderOverride = dialogue;
             Render();
