@@ -41,10 +41,13 @@ namespace MRRC.Guacamole
             Console.WriteLine('╰' + widthLine + '╯');
             
             // draw the title
-            Console.SetCursorPosition(x + 1, y);
-            Console.Write(" ");
-            Console.Write(title.Length > w - 4 ? title.Substring(0, w - 5) + "…" : title);
-            Console.Write(" ");
+            if (title.Length > 0)
+            {
+                Console.SetCursorPosition(x + 1, y);
+                Console.Write(" ");
+                Console.Write(title.Length > w - 4 ? title.Substring(0, w - 5) + "…" : title);
+                Console.Write(" ");
+            }
 
             // mov the cursor to x,y to make sure it doesn't scroll
             Console.SetCursorPosition(x, y);
