@@ -44,34 +44,32 @@ namespace MRRC.Guacamole.Components
         private void OnKeyPressed(object sender, KeyPressEvent ev)
         {
             var key = ev.Key;
-
-            if (ev.State.ActiveComponent == this)
+            if (ev.State.ActiveComponent != this) return;
+            
+            // we can move up and down or enter into the current child
+            var shouldRender = true;
+            switch (key.Key)
             {
-                // we can move up and down or enter into the current child
-                var shouldRender = true;
-                switch (key.Key)
-                {
-                    case ConsoleKey.UpArrow:
-                        HighlightIndex = (HighlightIndex - 1).Mod(Items.Length);
-                        break;
-                    case ConsoleKey.DownArrow:
-                        HighlightIndex = (HighlightIndex + 1).Mod(Items.Length);
-                        break;
-                    case ConsoleKey.RightArrow:
-                        ev.State.ActiveComponent = ActiveItem;
-                        break;
-                    case ConsoleKey.LeftArrow:
-                        ev.State.ActiveComponent = Parent;
-                        break;
+                case ConsoleKey.UpArrow:
+                    HighlightIndex = (HighlightIndex - 1).Mod(Items.Length);
+                    break;
+                case ConsoleKey.DownArrow:
+                    HighlightIndex = (HighlightIndex + 1).Mod(Items.Length);
+                    break;
+                case ConsoleKey.RightArrow:
+                    ev.State.ActiveComponent = ActiveItem;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    ev.State.ActiveComponent = Parent;
+                    break;
                     
-                    default:
-                        shouldRender = false;
-                        break;
-                }
-
-                ev.Cancel = true;
-                ev.Rerender = shouldRender;
+                default:
+                    shouldRender = false;
+                    break;
             }
+
+            ev.Cancel = true;
+            ev.Rerender = shouldRender;
         }
 
         private string Highlight(string item, int index, bool active)
