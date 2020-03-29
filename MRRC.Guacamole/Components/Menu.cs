@@ -94,7 +94,9 @@ namespace MRRC.Guacamole.Components
         {
             Console.CursorVisible = false;
 
+            if (!active) Console.ForegroundColor = ConsoleColor.Gray;
             DrawUtil.Outline(x, y, Width, Console.WindowHeight - 1, Name);
+
             DrawUtil.Lines(x + 1, y + 1, 
                 Items
                     .Select(item => item.ToString())
@@ -102,7 +104,7 @@ namespace MRRC.Guacamole.Components
                         item.Substring(0, Width - 5) + "…" : 
                         item)
                     .Select((v, i) => Highlight(v, i, active)));
-            
+
             Console.CursorVisible = true;
         }
 
