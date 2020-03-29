@@ -1,14 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using MRRC.Guacamole.Components;
 
 namespace MRRC.Guacamole
 {
     public class Guac
     {
+        private Component _renderOverride;
+        
         public Component Root { get; }
         
         public Component ActiveComponent { get; private set; }
+
+        public event EventHandler<ConsoleKeyInfo> KeyPressed;
 
         public void Focus(Component component) => ActiveComponent = component;
 
@@ -22,6 +26,7 @@ namespace MRRC.Guacamole
             // for now we need to re-render the whole screen, so we will clear it first to make sure nothing breaks
             Console.Clear();
             Root.Render(MakeApplicationState(), 0, 0);
+            _renderOverride?.Render(MakeApplicationState(), 0, 0);
         }
         
         public Guac(Component root)
@@ -50,6 +55,7 @@ namespace MRRC.Guacamole
             };
             
             ActiveComponent.HandleKeyPress(this, ev);
+            KeyPressed?.Invoke(this, character);
 
             if (ev.State.ActiveComponent != ActiveComponent)
             {
@@ -66,6 +72,28 @@ namespace MRRC.Guacamole
             }
             
             if (ev.Rerender) Render();
+        }
+
+        public Task<string> ShowDialogue(string title, string contents, string[] buttons)
+        {
+            var dialogue = new Dialogue(title, contents, buttons);
+            var oldActiveComponent = ActiveComponent;
+            ActiveComponent = dialogue;
+            _renderOverride = dialogue;
+            Render();
+            
+            var completionSource = new TaskCompletionSource<string>();
+
+            dialogue.ButtonPressed += (_, button) =>
+            {
+                _renderOverride = null;
+                ActiveComponent = oldActiveComponent;
+                Render();
+                
+                completionSource.TrySetResult(button);
+            };
+            
+            return completionSource.Task;
         }
     }
 }
