@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatesRatesRentACar", "Mates
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Guacamole", "MRRC.Guacamole\MRRC.Guacamole.csproj", "{025DD698-DE87-4FD0-B9CF-82E59E8FFED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatesRatesRentACar.Data", "MatesRatesRentACar.Data\MatesRatesRentACar.Data.csproj", "{A91DDD22-A1CA-4442-B62F-6D6392E4C605}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCCR.Data", "MCCR.Data\MCCR.Data.csproj", "{A91DDD22-A1CA-4442-B62F-6D6392E4C605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

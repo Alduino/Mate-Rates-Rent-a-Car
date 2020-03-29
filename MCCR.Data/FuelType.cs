@@ -1,4 +1,4 @@
-namespace MatesRatesRentACar.Data
+namespace MCCR.Data
 {
     public enum FuelType
     {

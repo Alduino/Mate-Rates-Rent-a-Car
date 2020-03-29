@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace MatesRatesRentACar.Data
+namespace MCCR.Data
 {
     public class Vehicle
     {
