@@ -12,7 +12,11 @@ namespace MRRC.Guacamole
         
         public Component ActiveComponent { get; private set; }
 
-        public event EventHandler<ConsoleKeyInfo> KeyPressed;
+        /// <summary>
+        /// Triggered when a key is pressed.
+        /// </summary>
+        /// <remarks>The <see cref="KeyPressEvent.Rerender"/> property does not do anything for this event</remarks>
+        public event EventHandler<KeyPressEvent> KeyPressed;
 
         public void Focus(Component component) => ActiveComponent = component;
 
@@ -54,8 +58,10 @@ namespace MRRC.Guacamole
                 State = MakeApplicationState()
             };
             
+            KeyPressed?.Invoke(this, ev);
+            if (ev.Cancel) return;
+
             ActiveComponent.HandleKeyPress(this, ev);
-            KeyPressed?.Invoke(this, character);
 
             if (ev.State.ActiveComponent != ActiveComponent)
             {
