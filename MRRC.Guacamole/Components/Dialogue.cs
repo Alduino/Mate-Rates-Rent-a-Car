@@ -76,5 +76,7 @@ namespace MRRC.Guacamole.Components
             DrawUtil.Text(left + 1, top + height - 2, string.Join(" ", 
                 Buttons.Select((text, i) => i == _highlightIndex ? text.Pastel("#45f98a") : text)));
         }
+
+        public override string ToString() => Title;
     }
 }
