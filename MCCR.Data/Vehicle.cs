@@ -9,18 +9,13 @@ namespace MCCR.Data
         public string Make { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
-        [Name("NumSeats")]
-        public int SeatCount { get; set; }
-        public TransmissionType Transmission { get; set; }
-        public FuelType Fuel { get; set; }
-        [Name("GPS")]
-        public bool HasGps { get; set; }
-        [Name("SunRoof")]
-        public bool HasSunRoof { get; set; }
-        public double DailyRate { get; set; }
-        public string Colour { get; set; }
-        
-        public Vehicle() {}
+        [Name("NumSeats")] public int SeatCount { get; set; } = 4;
+        public TransmissionType Transmission { get; set; } = TransmissionType.Manual;
+        public FuelType Fuel { get; set; } = FuelType.Petrol;
+        [Name("GPS")] public bool HasGps { get; set; } = false;
+        [Name("SunRoof")] public bool HasSunRoof { get; set; } = false;
+        public double DailyRate { get; set; } = 50;
+        public string Colour { get; set; } = "Black";
 
         public Vehicle(string rego, VehicleGrade grade, string make, string model, int year)
         {
