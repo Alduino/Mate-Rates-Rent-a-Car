@@ -53,6 +53,9 @@
         <Compile Include="Component.cs" />
         <Compile Include="KeyPressEvent.cs" />
         <Compile Include="Maths.cs" />
+        <Compile Include="MenuGeneration\IManager.cs" />
+        <Compile Include="MenuGeneration\MenuItemAttribute.cs" />
+        <Compile Include="MenuGeneration\MenuGenerator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
