@@ -31,13 +31,15 @@ namespace MRRC.Guacamole.Components
             if (e.Key.Key == ConsoleKey.Backspace && Value.Length > 0)
             {
                 Value = Value.Substring(0, Value.Length - 1);
-            }
-            else
-            {
-                Value += e.Key.KeyChar;
+                return;
             }
 
-            TriggerRender();
+            if (e.Key.KeyChar == 0)
+            {
+                return;
+            }
+            
+            Value += e.Key.KeyChar;
         }
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
