@@ -48,6 +48,7 @@
         <Compile Include="Components\Menu.cs" />
         <Compile Include="Components\MenuManager.cs" />
         <Compile Include="Components\Text.cs" />
+        <Compile Include="Components\TextBox.cs" />
         <Compile Include="DrawUtil.cs" />
         <Compile Include="Guac.cs" />
         <Compile Include="Component.cs" />
