@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -10,7 +11,7 @@ namespace MCCR.Data
     /// <summary>
     /// Stores information about the fleet of vehicles owned by MRRC, and what customers are renting them
     /// </summary>
-    public class Fleet
+    public class Fleet : IDisposable
     {
         /// <summary>
         /// Used for reading and writing rentals to/from the source CSV
@@ -165,6 +166,12 @@ namespace MCCR.Data
             var rentedBy = RentedBy(registration);
             _rentals.Remove(rentedBy);
             return rentedBy;
+        }
+
+        public void Dispose()
+        {
+            SaveRentals();
+            SaveVehicles();
         }
     }
 }
