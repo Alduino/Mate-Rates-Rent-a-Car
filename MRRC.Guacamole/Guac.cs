@@ -29,6 +29,7 @@ namespace MRRC.Guacamole
         {
             // for now we need to re-render the whole screen, so we will clear it first to make sure nothing breaks
             Console.Clear();
+            Console.ResetColor();
             Root.Render(MakeApplicationState(), 0, 0);
             _renderOverride?.Render(MakeApplicationState(), 0, 0);
         }
