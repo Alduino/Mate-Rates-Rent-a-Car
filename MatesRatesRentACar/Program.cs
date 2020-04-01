@@ -17,7 +17,7 @@ namespace MateRatesRentACar
             {
                 MenuGenerator.GenerateManager("Customers", customerManager).Menu
             });
-            
+
             var manager = new MenuManager(mainMenu);
 
             var guac = new Guac(manager);
@@ -38,13 +38,17 @@ namespace MateRatesRentACar
                 if (exitResult == "Ok") ProgramRunning = false;
             };
 
+            Console.CursorVisible = false;
+
             while (true)
             {
                 guac.HandleEventLoop();
 
                 if (!ProgramRunning) break;
             }
-            
+
+            Console.CursorVisible = true;
+
             // ReSharper disable once FunctionNeverReturns
         }
     }

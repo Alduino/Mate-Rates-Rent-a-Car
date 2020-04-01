@@ -90,8 +90,6 @@ namespace MRRC.Guacamole.Components
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
-            Console.CursorVisible = false;
-
             if (!active) Console.ForegroundColor = ConsoleColor.Gray;
             DrawUtil.Outline(x, y, Width, Console.WindowHeight - 1, Name);
 
@@ -102,8 +100,6 @@ namespace MRRC.Guacamole.Components
                         item.Substring(0, Width - 5) + "…" : 
                         item)
                     .Select((v, i) => Highlight(v, i, active)));
-
-            Console.CursorVisible = true;
         }
 
         public override string ToString()
