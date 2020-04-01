@@ -48,6 +48,7 @@ namespace MateRatesRentACar
             }
 
             Console.CursorVisible = true;
+            Console.Clear();
 
             // ReSharper disable once FunctionNeverReturns
         }
