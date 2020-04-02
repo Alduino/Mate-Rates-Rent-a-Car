@@ -27,7 +27,7 @@ namespace MRRC.Guacamole
             var widthSpace = ' '.Repeat(w - 2);
             
             // draw top line
-            Console.Write('╭' + widthLine + '╮');
+            Console.Write('┌' + widthLine + '┐');
 
             // edges
             for (var i = 0; i < h - 2; i++)
@@ -38,7 +38,7 @@ namespace MRRC.Guacamole
             
             // bottom line
             Console.SetCursorPosition(x, y + h - 1);
-            Console.WriteLine('╰' + widthLine + '╯');
+            Console.WriteLine('└' + widthLine + '┘');
             
             // draw the title
             if (title.Length > 0)
