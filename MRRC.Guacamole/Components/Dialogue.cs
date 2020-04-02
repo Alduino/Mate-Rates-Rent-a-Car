@@ -21,6 +21,8 @@ namespace MRRC.Guacamole.Components
             Contents = contents;
             Buttons = buttons;
 
+            Focused += (_, ev) => ev.Cancel = false;
+
             KeyPressed += (_, ev) =>
             {
                 ev.Rerender = true;
@@ -69,6 +71,7 @@ namespace MRRC.Guacamole.Components
             var left = (Console.WindowWidth - width) / 2;
             var top = (Console.WindowHeight - height) / 2;
 
+            Console.ResetColor();
             DrawUtil.Outline(left, top, width, height);
             DrawUtil.Text(left + 1, top + 1, Title);
             DrawUtil.Lines(left + 1, top + 2, contentsLines);
