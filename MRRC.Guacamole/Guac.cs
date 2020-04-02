@@ -39,6 +39,9 @@ namespace MRRC.Guacamole
             Root = root;
             ActiveComponent = root;
 
+            var focusEv = ActiveComponent.HandleFocused(this, MakeApplicationState());
+            if (focusEv.State.ActiveComponent != ActiveComponent) ActiveComponent = focusEv.State.ActiveComponent;
+
             root.MustRender += delegate
             {
                 Render();
@@ -69,9 +72,10 @@ namespace MRRC.Guacamole
                 var oldComponent = ActiveComponent;
                 var newComponent = ev.State.ActiveComponent;
 
-                var cancelled = newComponent.HandleFocused(oldComponent);
+                var focusEvent = newComponent.HandleFocused(oldComponent, MakeApplicationState());
+                if (focusEvent.Rerender) ev.Rerender = true;
 
-                if (!cancelled)
+                if (!focusEvent.Cancel)
                 {
                     oldComponent.HandleBlurred(newComponent);
                     ActiveComponent = newComponent;

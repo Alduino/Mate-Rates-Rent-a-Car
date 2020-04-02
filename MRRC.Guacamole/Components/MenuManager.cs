@@ -14,6 +14,14 @@ namespace MRRC.Guacamole.Components
             rootMenu.SetChildOf(this);
 
             RootMenu.MustRender += TriggerRender;
+
+            Focused += OnFocused;
+        }
+
+        private void OnFocused(object _, FocusEventArgs ev)
+        {
+            ev.State.ActiveComponent = RootMenu;
+            ev.Rerender = true;
         }
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)

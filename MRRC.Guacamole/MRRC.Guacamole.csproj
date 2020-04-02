@@ -50,6 +50,7 @@
         <Compile Include="Components\Text.cs" />
         <Compile Include="Components\TextBox.cs" />
         <Compile Include="DrawUtil.cs" />
+        <Compile Include="FocusEventArgs.cs" />
         <Compile Include="Guac.cs" />
         <Compile Include="Component.cs" />
         <Compile Include="KeyPressEvent.cs" />

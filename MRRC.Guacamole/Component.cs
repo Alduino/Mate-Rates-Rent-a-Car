@@ -62,13 +62,13 @@ namespace MRRC.Guacamole
         /// </summary>
         /// <remarks>Cancelling this is enabled by default to prevent any situations where the user cannot exit some
         /// focus state, so to enable it a handler must be set to allow the event.</remarks>
-        public event EventHandler<CancelEventArgs> Focused;
+        public event EventHandler<FocusEventArgs> Focused;
 
-        public bool HandleFocused(object sender)
+        public FocusEventArgs HandleFocused(object sender, ApplicationState state)
         {
-            var args = new CancelEventArgs(true);
+            var args = new FocusEventArgs(state);
             Focused?.Invoke(sender, args);
-            return args.Cancel;
+            return args;
         }
 
         /// <summary>
