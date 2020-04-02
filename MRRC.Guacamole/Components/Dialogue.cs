@@ -66,15 +66,14 @@ namespace MRRC.Guacamole.Components
             // when this is still 0 that means we didn't find any spaces to split the lines at
             if (lastLineEnd == 0) contentsLines.Add(Contents);
             
-            var height = 4 + contentsLines.Count;
+            var height = 3 + contentsLines.Count;
 
             var left = (Console.WindowWidth - width) / 2;
             var top = (Console.WindowHeight - height) / 2;
 
             Console.ResetColor();
-            DrawUtil.Outline(left, top, width, height);
-            DrawUtil.Text(left + 1, top + 1, Title);
-            DrawUtil.Lines(left + 1, top + 2, contentsLines);
+            DrawUtil.Outline(left, top, width, height, Title);
+            DrawUtil.Lines(left + 1, top + 1, contentsLines);
 
             DrawUtil.Text(left + 1, top + height - 2, string.Join(" ", 
                 Buttons.Select((text, i) => i == _highlightIndex ? text.Pastel("#45f98a") : text)));
