@@ -86,5 +86,15 @@ namespace MRRC.Guacamole
             var lines = text.Split('\n');
             Lines(x, y, lines);
         }
+
+        /// <summary>
+        /// Returns the width and height of the supplied text
+        /// </summary>
+        public static (int Width, int Height) MeasureText(string text)
+        {
+            var lines = text.Split('\n');
+            var maxWidth = lines.Max(line => line.Length);
+            return (maxWidth, lines.Length);
+        }
     }
 }
