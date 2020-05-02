@@ -21,7 +21,7 @@ namespace MRRC.Guacamole.Components.Forms
 
         public int Height => 3;
 
-        private Timer _blinkTimer = new Timer(300);
+        private readonly Timer _blinkTimer = new Timer(300);
         private bool _blinkOn;
 
         public TextBox(string label)
