@@ -52,7 +52,7 @@ namespace MRRC.Guacamole.Components.Forms
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
-            if (state.ActiveComponent != this) Console.ForegroundColor = ConsoleColor.Gray;
+            if (!active) Console.ForegroundColor = ConsoleColor.Gray;
             
             if (_active) Console.BackgroundColor = ConsoleColor.Gray;
             DrawUtil.Outline(x, y, Width, Height);
