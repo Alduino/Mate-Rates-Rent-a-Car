@@ -10,6 +10,9 @@ namespace MRRC.Guacamole.Components.Forms
         public string Text { get; }
         public TimeSpan ActiveTime { get; }
 
+        public int Width => DrawUtil.MeasureText(Text).Width + 2;
+        public int Height => DrawUtil.MeasureText(Text).Height + 2;
+
         public event EventHandler Activated;
         
         public Button(string text, TimeSpan activeTime)
@@ -51,9 +54,8 @@ namespace MRRC.Guacamole.Components.Forms
         {
             if (state.ActiveComponent != this) Console.ForegroundColor = ConsoleColor.Gray;
             
-            var (width, height) = DrawUtil.MeasureText(Text);
             if (_active) Console.BackgroundColor = ConsoleColor.Gray;
-            DrawUtil.Outline(x, y, width + 2, height + 2);
+            DrawUtil.Outline(x, y, Width, Height);
             DrawUtil.Text(x + 1, y + 1, Text);
             Console.ResetColor();
         }
