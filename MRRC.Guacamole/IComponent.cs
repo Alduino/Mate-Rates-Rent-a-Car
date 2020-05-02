@@ -13,5 +13,7 @@ namespace MRRC.Guacamole
         FocusEventArgs HandleFocused(object sender, ApplicationState state);
 
         void HandleBlurred(object sender);
+
+        bool IsActive(ApplicationState state);
     }
 }

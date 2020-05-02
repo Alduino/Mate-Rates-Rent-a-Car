@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace MRRC.Guacamole
 {
@@ -9,9 +11,13 @@ namespace MRRC.Guacamole
 
         public Component ParentComponent => Parent is Component cp ? cp : null;
 
-        private bool IsActive(ApplicationState state) => this == state.ActiveComponent || 
-                                                         (ParentComponent?.IsActive(state) ?? false);
+        public bool IsActive(ApplicationState state) => this == state.ActiveComponent || HasActiveChildren(state);
+
+        private bool HasActiveChildren(ApplicationState state) =>
+            Children.Any(child => child.IsActive(state));
         
+        protected virtual IEnumerable<IComponent> Children => Enumerable.Empty<Component>();
+
         /// <summary>
         /// Render this component to stdout
         /// </summary>
