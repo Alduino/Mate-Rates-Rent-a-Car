@@ -1,6 +1,6 @@
 namespace MRRC.Guacamole
 {
-    public struct ApplicationState
+    public class ApplicationState
     {
         public IComponent ActiveComponent;
     }
