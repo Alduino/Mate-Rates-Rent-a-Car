@@ -1,8 +1,12 @@
+using System;
+
 namespace MRRC.Guacamole
 {
     public interface IComponent
     {
         IComponent Parent { get; }
+        
+        event EventHandler MustRender;
 
         void Render(ApplicationState state, int x, int y);
 
