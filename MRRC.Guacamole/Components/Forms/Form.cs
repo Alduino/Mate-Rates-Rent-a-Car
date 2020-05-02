@@ -109,11 +109,10 @@ namespace MRRC.Guacamole.Components.Forms
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
-            var width = _items
-                .Select(v => v.Title.Length + v.Component.Width + 1)
-                .Append(_submit.Width)
-                .Max() + 2;
-            
+            var maxTextWidth = _items.Max(v => v.Title.Length);
+            var maxComponentWidth = _items.Max(v => v.Component.Width);
+
+            var width = Math.Max(maxTextWidth + maxComponentWidth, _submit.Width) + 3;
             var height = _items.Select(v => v.Component.Height).Append(_submit.Height).Sum() + 2;
 
             if (!active) Console.ForegroundColor = ConsoleColor.Gray;
@@ -122,10 +121,10 @@ namespace MRRC.Guacamole.Components.Forms
             var yOffset = 0;
             foreach (var item in _items)
             {
-                var (textWidth, textHeight) = DrawUtil.MeasureText(item.Title);
+                var (_, textHeight) = DrawUtil.MeasureText(item.Title);
                 
                 DrawUtil.Text(x + 1, y + yOffset + item.Component.Height / 2 + 1, $"{item.Title}:");
-                item.Component.Render(state, x + textWidth + 2, y + yOffset + 1);
+                item.Component.Render(state, x + maxTextWidth + 2, y + yOffset + 1);
 
                 yOffset += Math.Max(textHeight, item.Component.Height);
             }
