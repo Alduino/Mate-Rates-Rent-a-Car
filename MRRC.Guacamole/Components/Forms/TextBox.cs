@@ -64,6 +64,7 @@ namespace MRRC.Guacamole.Components.Forms
                     // Exit out of focus to the parent component
                     e.State.ActiveComponent = ParentComponent;
                     e.Rerender = true;
+                    e.Cancel = false;
                     return;
                 case ConsoleKey.Backspace:
                 {
