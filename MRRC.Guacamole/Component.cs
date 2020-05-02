@@ -86,7 +86,7 @@ namespace MRRC.Guacamole
 
         protected void TriggerRender(object sender, EventArgs args)
         {
-            MustRender?.Invoke(this, EventArgs.Empty);
+            MustRender?.Invoke(sender, EventArgs.Empty);
         }
 
         /// <summary>
