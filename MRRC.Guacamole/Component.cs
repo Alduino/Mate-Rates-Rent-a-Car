@@ -3,12 +3,14 @@ using System.ComponentModel;
 
 namespace MRRC.Guacamole
 {
-    public abstract class Component
+    public abstract class Component : IComponent
     {
-        public Component Parent { get; private set; }
+        public IComponent Parent { get; private set; }
+
+        public Component ParentComponent => Parent is Component cp ? cp : null;
 
         private bool IsActive(ApplicationState state) => this == state.ActiveComponent || 
-                                                         (Parent?.IsActive(state) ?? false);
+                                                         (ParentComponent?.IsActive(state) ?? false);
         
         /// <summary>
         /// Render this component to stdout
@@ -27,7 +29,7 @@ namespace MRRC.Guacamole
         /// <summary>
         /// Sets parent to be the parent of this component
         /// </summary>
-        public void SetChildOf(Component parent)
+        public void SetChildOf(IComponent parent)
         {
             Parent = parent;
         }
@@ -41,7 +43,7 @@ namespace MRRC.Guacamole
         public void HandleKeyPress(object sender, KeyPressEvent keyInfo)
         {
             KeyPressed?.Invoke(sender, keyInfo);
-            if (!keyInfo.Cancel) Parent?.HandleKeyPress(sender, keyInfo);
+            if (!keyInfo.Cancel) ParentComponent?.HandleKeyPress(sender, keyInfo);
         }
         
         /// <summary>

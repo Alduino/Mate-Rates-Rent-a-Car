@@ -60,7 +60,7 @@ namespace MRRC.Guacamole.Components
                     ev.State.ActiveComponent = ActiveItem;
                     break;
                 case ConsoleKey.LeftArrow:
-                    ev.State.ActiveComponent = Parent;
+                    ev.State.ActiveComponent = ParentComponent;
                     break;
                     
                 default:

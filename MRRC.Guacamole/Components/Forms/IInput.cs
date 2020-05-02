@@ -1,6 +1,6 @@
 namespace MRRC.Guacamole.Components.Forms
 {
-    public interface IInput<out T>
+    public interface IInput<out T> : IComponent
     {
         T Value { get; }
         
