@@ -122,7 +122,8 @@ namespace MRRC.Guacamole.Components.Forms
             foreach (var item in _items)
             {
                 var (_, textHeight) = DrawUtil.MeasureText(item.Title);
-                
+
+                if (active) Console.ResetColor();
                 DrawUtil.Text(x + 1, y + yOffset + item.Component.Height / 2 + 1, $"{item.Title}:");
                 item.Component.Render(state, x + maxTextWidth + 2, y + yOffset + 1);
 
