@@ -77,6 +77,10 @@ namespace MRRC.Guacamole.Components.Forms
                     if (Value.Length > Width - 4) e.Rerender = true;
                     return;
                 }
+                case ConsoleKey.Tab:
+                    // this should go to the parent so that it can handle tabbing through children
+                    e.Cancel = false;
+                    return;
             }
 
             if (e.Key.KeyChar == 0)
