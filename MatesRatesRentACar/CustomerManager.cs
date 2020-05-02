@@ -6,6 +6,9 @@ namespace MateRatesRentACar
     public class CustomerManager
     {
         [MenuItem]
-        public TextBox AddCustomer { get; } = new TextBox("Add Customer");
+        public Form AddCustomer { get; } = new Form("Add Customer", new []
+        {
+            new Form.Item("Name", new TextBox()), 
+        }, new Button("Submit"));
     }
 }
