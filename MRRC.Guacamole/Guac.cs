@@ -75,6 +75,12 @@ namespace MRRC.Guacamole
                 var focusEvent = newComponent.HandleFocused(oldComponent, MakeApplicationState());
                 if (focusEvent.Rerender) ev.Rerender = true;
 
+                // Changing the focus target is supported in compile-time, but is not implemented.
+                if (focusEvent.State.ActiveComponent != ActiveComponent)
+                {
+                    throw new NotImplementedException("Cannot set focus in Focused event");
+                }
+
                 if (!focusEvent.Cancel)
                 {
                     oldComponent.HandleBlurred(newComponent);
