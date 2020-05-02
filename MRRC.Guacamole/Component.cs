@@ -6,6 +6,22 @@ namespace MRRC.Guacamole
 {
     public abstract class Component : IComponent
     {
+        private readonly struct RenderState
+        {
+            public RenderState(int x, int y, ApplicationState appState)
+            {
+                X = x;
+                Y = y;
+                AppState = appState;
+            }
+
+            public int X { get; }
+            public int Y { get; }
+            public ApplicationState AppState { get; }
+        }
+
+        private RenderState _previousRenderState;
+            
         public IComponent Parent { get; private set; }
 
         public Component ParentComponent => Parent is Component cp ? cp : null;
@@ -25,8 +41,17 @@ namespace MRRC.Guacamole
         /// <param name="y">The top offset</param>
         public void Render(ApplicationState state, int x, int y)
         {
+            _previousRenderState = new RenderState(x, y, state);
             var active = IsActive(state);
             Draw(x, y, active, state);
+        }
+
+        /// <summary>
+        /// Renders the component with the same parameters as the last render
+        /// </summary>
+        public void RenderLikePrevious()
+        {
+            Render(_previousRenderState.AppState, _previousRenderState.X, _previousRenderState.Y);
         }
 
         protected abstract void Draw(int x, int y, bool active, ApplicationState state);
