@@ -44,6 +44,7 @@ namespace MRRC.Guacamole.Components.Forms
             switch (e.Key.Key)
             {
                 case ConsoleKey.Enter:
+                    e.Cancel = true;
                     if (_active) break;
                     Activate();
                     break;
