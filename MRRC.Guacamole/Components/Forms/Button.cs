@@ -48,6 +48,11 @@ namespace MRRC.Guacamole.Components.Forms
                     if (_active) break;
                     Activate();
                     break;
+                
+                default:
+                    // Take control while the button is pressed
+                    e.Cancel = _active;
+                    break;
             }
         }
 
