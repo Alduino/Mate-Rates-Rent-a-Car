@@ -10,7 +10,7 @@ namespace MRRC.Guacamole
         
         public Component Root { get; }
         
-        public Component ActiveComponent { get; private set; }
+        public IComponent ActiveComponent { get; private set; }
 
         /// <summary>
         /// Triggered when a key is pressed.
