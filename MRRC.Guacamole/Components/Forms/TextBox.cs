@@ -81,6 +81,11 @@ namespace MRRC.Guacamole.Components.Forms
                     // this should go to the parent so that it can handle tabbing through children
                     e.Cancel = false;
                     return;
+                case ConsoleKey.Delete:
+                    // this can move the cursor, so we need to trigger a render to move it back
+                    e.Rerender = true;
+                    e.Cancel = true;
+                    return;
             }
 
             if (e.Key.KeyChar == 0)
