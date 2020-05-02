@@ -44,6 +44,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ApplicationState.cs" />
+        <Compile Include="Components\Button.cs" />
         <Compile Include="Components\Dialogue.cs" />
         <Compile Include="Components\Menu.cs" />
         <Compile Include="Components\MenuManager.cs" />
