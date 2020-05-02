@@ -15,5 +15,7 @@ namespace MRRC.Guacamole
         void HandleBlurred(object sender);
 
         bool IsActive(ApplicationState state);
+
+        void RenderLikePrevious();
     }
 }
