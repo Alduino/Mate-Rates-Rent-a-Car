@@ -32,6 +32,9 @@ namespace MRRC.Guacamole
             Console.ResetColor();
             Root.Render(MakeApplicationState(), 0, 0);
             _renderOverride?.Render(MakeApplicationState(), 0, 0);
+            
+            // then render the active component again, to put the cursor in the correct place
+            ActiveComponent.RenderLikePrevious();
         }
         
         public Guac(Component root)
