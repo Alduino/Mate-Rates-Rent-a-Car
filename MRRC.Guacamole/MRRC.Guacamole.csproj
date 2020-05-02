@@ -44,12 +44,14 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="ApplicationState.cs" />
-        <Compile Include="Components\Button.cs" />
         <Compile Include="Components\Dialogue.cs" />
+        <Compile Include="Components\Forms\Button.cs" />
+        <Compile Include="Components\Forms\Form.cs" />
+        <Compile Include="Components\Forms\IInput.cs" />
+        <Compile Include="Components\Forms\TextBox.cs" />
         <Compile Include="Components\Menu.cs" />
         <Compile Include="Components\MenuManager.cs" />
         <Compile Include="Components\Text.cs" />
-        <Compile Include="Components\TextBox.cs" />
         <Compile Include="DrawUtil.cs" />
         <Compile Include="FocusEventArgs.cs" />
         <Compile Include="Guac.cs" />

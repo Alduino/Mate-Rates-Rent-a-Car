@@ -1,9 +1,9 @@
 using System;
 using System.Timers;
 
-namespace MRRC.Guacamole.Components
+namespace MRRC.Guacamole.Components.Forms
 {
-    public class TextBox : Component
+    public class TextBox : Component, IInput<string>
     {
         public string Label { get; }
         public string Value { get; private set; } = "";

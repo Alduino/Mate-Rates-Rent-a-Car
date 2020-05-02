@@ -1,4 +1,4 @@
-using MRRC.Guacamole.Components;
+using MRRC.Guacamole.Components.Forms;
 using MRRC.Guacamole.MenuGeneration;
 
 namespace MateRatesRentACar

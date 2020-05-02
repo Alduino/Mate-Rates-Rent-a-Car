@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace MRRC.Guacamole.Components
+namespace MRRC.Guacamole.Components.Forms
 {
     public class Button : Component
     {
