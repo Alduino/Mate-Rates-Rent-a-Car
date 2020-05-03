@@ -20,6 +20,7 @@ namespace MRRC.Guacamole.Components.Forms
         }
 
         public int Height => 3;
+        public bool ReadOnly { get; set; }
 
         private readonly Timer _blinkTimer = new Timer(300);
         private bool _blinkOn;
@@ -68,6 +69,8 @@ namespace MRRC.Guacamole.Components.Forms
                     return;
                 case ConsoleKey.Backspace:
                 {
+                    if (ReadOnly) return;
+                    
                     if (Value.Length <= 0) e.Rerender = true;
                     else
                     {
@@ -87,6 +90,12 @@ namespace MRRC.Guacamole.Components.Forms
                     e.Rerender = true;
                     e.Cancel = true;
                     return;
+            }
+
+            if (ReadOnly)
+            {
+                e.Rerender = true;
+                return;
             }
 
             if (e.Key.KeyChar == 0)
@@ -109,6 +118,7 @@ namespace MRRC.Guacamole.Components.Forms
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             if (!active) Console.ForegroundColor = ConsoleColor.Gray;
+            else if (ReadOnly) Console.ForegroundColor = ConsoleColor.DarkGray;
             
             DrawUtil.Outline(x, y, Width, 3, Label);
             Console.Write(Value.Substring(Math.Max(0, Value.Length - Width + 3)), Value.Length);
