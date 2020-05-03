@@ -38,6 +38,8 @@ namespace MCCR.Data
         /// </summary>
         public void LoadVehicles()
         {
+            if (!File.Exists(_source)) return;
+            
             using (var reader = new StreamReader(_source))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
