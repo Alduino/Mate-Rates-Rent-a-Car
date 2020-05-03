@@ -67,5 +67,10 @@ namespace MCCR.Data
             _customers.Remove(customer);
             return true;
         }
+
+        /// <summary>
+        /// Returns the next available ID
+        /// </summary>
+        public int NextId() => Customers.Max(c => c.Id) + 1;
     }
 }
