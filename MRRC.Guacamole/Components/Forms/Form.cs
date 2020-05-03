@@ -65,7 +65,7 @@ namespace MRRC.Guacamole.Components.Forms
             }
 
             public FormData Data { get; }
-            public string Result { get; set; }
+            public string Result { get; set; } = "";
         }
         
         private readonly string _title;
