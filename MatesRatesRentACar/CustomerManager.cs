@@ -24,7 +24,7 @@ namespace MateRatesRentACar
             new Form.Item("Title", new TextBox()),
             new Form.Item("Given Names", new TextBox()),
             new Form.Item("Surname", new TextBox()),
-            new Form.Item("Date of birth", new TextBox()),
+            new Form.Item("Date of birth", new TextBox { Placeholder = "dd/MM/yyyy"}),
             new Form.Item("Gender", new Select<Gender>())
         }, new Button("Submit"));
         
@@ -46,7 +46,7 @@ namespace MateRatesRentACar
                     new Form.Item("Title", new TextBox()),
                     new Form.Item("Given Names", new TextBox()),
                     new Form.Item("Surname", new TextBox()),
-                    new Form.Item("Date of birth", new TextBox()),
+                    new Form.Item("Date of birth", new TextBox { Placeholder = "dd/MM/yyyy"}),
                     new Form.Item("Gender", new Select<Gender>())
                 }, new Button("Submit"))
             }
@@ -68,7 +68,7 @@ namespace MateRatesRentACar
                     new Form.Item("ID", new TextBox { ReadOnly = true }),
                     new Form.Item("Given Names", new TextBox { ReadOnly = true }),
                     new Form.Item("Surname", new TextBox { ReadOnly = true }),
-                    new Form.Item("Date of birth", new TextBox { ReadOnly = true, Placeholder = "dd/MM/yyyy"}),
+                    new Form.Item("Date of birth", new TextBox { ReadOnly = true }),
                 }, new Button("Confirm"))
             }
         }, "select", "Delete Customer");
