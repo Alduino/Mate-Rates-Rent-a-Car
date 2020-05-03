@@ -75,18 +75,23 @@ namespace MRRC.Guacamole
                 var oldComponent = ActiveComponent;
                 var newComponent = ev.State.ActiveComponent;
 
-                var focusEvent = newComponent.HandleFocused(oldComponent, MakeApplicationState());
-                if (focusEvent.Rerender) ev.Rerender = true;
+                FocusEventArgs focusEvent = null;
 
-                // Changing the focus target is supported in compile-time, but is not implemented.
-                if (focusEvent.State.ActiveComponent != ActiveComponent)
+                while (focusEvent?.State.ActiveComponent != newComponent)
                 {
-                    throw new NotImplementedException("Cannot set focus in Focused event");
+                    focusEvent = newComponent.HandleFocused(oldComponent, new ApplicationState
+                    {
+                        ActiveComponent = newComponent
+                    });
+                    if (focusEvent.Rerender) ev.Rerender = true;
+
+                    oldComponent = newComponent;
+                    newComponent = focusEvent.State.ActiveComponent;
                 }
 
-                if (!focusEvent.Cancel)
+                if (focusEvent?.Cancel == false)
                 {
-                    oldComponent.HandleBlurred(newComponent);
+                    ActiveComponent.HandleBlurred(newComponent);
                     ActiveComponent = newComponent;
                 }
             }
