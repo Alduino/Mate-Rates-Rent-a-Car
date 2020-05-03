@@ -16,14 +16,5 @@ namespace MCCR.Data
         [Name("SunRoof")] public bool HasSunRoof { get; set; } = false;
         public double DailyRate { get; set; } = 50;
         public string Colour { get; set; } = "Black";
-
-        public Vehicle(string rego, VehicleGrade grade, string make, string model, int year)
-        {
-            Registration = rego;
-            Grade = grade;
-            Make = make;
-            Model = model;
-            Year = year;
-        }
     }
 }
