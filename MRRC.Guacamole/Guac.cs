@@ -18,7 +18,34 @@ namespace MRRC.Guacamole
         /// <remarks>The <see cref="KeyPressEvent.Rerender"/> property does not do anything for this event</remarks>
         public event EventHandler<KeyPressEvent> KeyPressed;
 
-        public void Focus(IComponent component) => ActiveComponent = component;
+        public bool Focus(IComponent component)
+        {
+            var oldComponent = ActiveComponent;
+            var newComponent = component;
+            var rerender = false;
+
+            FocusEventArgs focusEvent = null;
+
+            while (focusEvent?.State.ActiveComponent != newComponent)
+            {
+                focusEvent = newComponent.HandleFocused(oldComponent, new ApplicationState
+                {
+                    ActiveComponent = newComponent
+                });
+                if (focusEvent.Rerender) rerender = true;
+
+                oldComponent = newComponent;
+                newComponent = focusEvent.State.ActiveComponent;
+            }
+
+            if (focusEvent?.Cancel == false)
+            {
+                ActiveComponent.HandleBlurred(newComponent);
+                ActiveComponent = newComponent;
+            }
+
+            return rerender;
+        }
 
         private ApplicationState MakeApplicationState() => new ApplicationState
         {
@@ -52,9 +79,9 @@ namespace MRRC.Guacamole
 
             root.FocusRequested += (_, component) =>
             {
-                Focus(component);
+                if (Focus(component)) Render();
             };
-
+            
             Render();
         }
 
@@ -77,28 +104,7 @@ namespace MRRC.Guacamole
 
             if (ev.State.ActiveComponent != ActiveComponent)
             {
-                var oldComponent = ActiveComponent;
-                var newComponent = ev.State.ActiveComponent;
-
-                FocusEventArgs focusEvent = null;
-
-                while (focusEvent?.State.ActiveComponent != newComponent)
-                {
-                    focusEvent = newComponent.HandleFocused(oldComponent, new ApplicationState
-                    {
-                        ActiveComponent = newComponent
-                    });
-                    if (focusEvent.Rerender) ev.Rerender = true;
-
-                    oldComponent = newComponent;
-                    newComponent = focusEvent.State.ActiveComponent;
-                }
-
-                if (focusEvent?.Cancel == false)
-                {
-                    ActiveComponent.HandleBlurred(newComponent);
-                    ActiveComponent = newComponent;
-                }
+                ev.Rerender = Focus(ev.State.ActiveComponent) || ev.Rerender;
             }
             
             if (ev.Rerender) Render();
