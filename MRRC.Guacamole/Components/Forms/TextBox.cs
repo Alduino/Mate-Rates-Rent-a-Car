@@ -85,7 +85,8 @@ namespace MRRC.Guacamole.Components.Forms
                         Value = Value.Substring(0, Value.Length - 1);
                         DrawCursor();
                     }
-                    
+
+                    if (Placeholder.Length > 0 && Value.Length == 0) e.Rerender = true;
                     if (Value.Length > Width - 4) e.Rerender = true;
                     return;
                 }
@@ -112,6 +113,8 @@ namespace MRRC.Guacamole.Components.Forms
             }
 
             Value += e.Key.KeyChar;
+
+            if (Value.Length == 1) e.Rerender = true;
 
             if (MaxLength > 0 && Value.Length > MaxLength)
             {
