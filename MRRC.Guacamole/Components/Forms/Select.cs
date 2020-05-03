@@ -104,8 +104,7 @@ namespace MRRC.Guacamole.Components.Forms
 
         public Select<T> WithDefault(T value)
         {
-            Value = value;
-            
+            SetValue(value);
             return this;
         }
     }
