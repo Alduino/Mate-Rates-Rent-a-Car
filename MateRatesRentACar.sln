@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Guacamole", "MRRC.Guac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Data", "MRRC.Data\MRRC.Data.csproj", "{A91DDD22-A1CA-4442-B62F-6D6392E4C605}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Cursive", "MRRC.Cursive\MRRC.Cursive.csproj", "{F1DC15CA-E2C9-4F19-B887-F74165615466}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A91DDD22-A1CA-4442-B62F-6D6392E4C605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A91DDD22-A1CA-4442-B62F-6D6392E4C605}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A91DDD22-A1CA-4442-B62F-6D6392E4C605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
