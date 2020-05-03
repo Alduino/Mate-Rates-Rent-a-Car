@@ -18,7 +18,6 @@ namespace MRRC.Guacamole.Components
             foreach (var c in _components)
             {
                 c.Value.SetChildOf(this);
-                c.Value.MustRender += TriggerRender;
             }
 
             Focused += (sender, ev) =>
@@ -44,8 +43,12 @@ namespace MRRC.Guacamole.Components
             get => _activeComponent;
             set
             {
+                if (ActiveComponent != null) CurrentComponent.MustRender -= TriggerRender;
+                
                 _activeComponent = value;
                 Focus(CurrentComponent);
+                
+                CurrentComponent.MustRender += TriggerRender;
             }
         }
 
