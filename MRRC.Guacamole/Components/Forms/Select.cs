@@ -93,5 +93,11 @@ namespace MRRC.Guacamole.Components.Forms
 
         public int Width => _members.Append(SelectOne).Max(v => v.Length) + 4;
         public int Height => 3;
+        
+        public void SetValue(object val)
+        {
+            Value = val;
+            TriggerRender();
+        }
     }
 }

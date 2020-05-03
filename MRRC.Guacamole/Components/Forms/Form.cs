@@ -172,6 +172,12 @@ namespace MRRC.Guacamole.Components.Forms
             DrawUtil.Text(x + maxTextWidth + 2, yOffset + _submit.Height / 2 + 1, _result);
         }
 
+        public void Set(string title, object value)
+        {
+            var item = _items.FirstOrDefault(v => v.Title == title);
+            item.Component?.SetValue(value);
+        }
+
         public override string ToString() => _title;
     }
 }

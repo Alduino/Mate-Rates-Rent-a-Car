@@ -117,5 +117,11 @@ namespace MRRC.Guacamole.Components.Forms
         }
 
         public override string ToString() => Label;
+        
+        public void SetValue(object val)
+        {
+            Value = (string) val;
+            TriggerRender();
+        }
     }
 }

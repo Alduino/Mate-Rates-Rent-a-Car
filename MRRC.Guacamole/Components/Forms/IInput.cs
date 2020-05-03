@@ -6,5 +6,7 @@ namespace MRRC.Guacamole.Components.Forms
         
         int Width { get; }
         int Height { get; }
+
+        void SetValue(object val);
     }
 }
