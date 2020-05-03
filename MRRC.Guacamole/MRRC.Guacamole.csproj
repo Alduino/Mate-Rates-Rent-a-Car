@@ -48,6 +48,7 @@
         <Compile Include="Components\Forms\Button.cs" />
         <Compile Include="Components\Forms\Form.cs" />
         <Compile Include="Components\Forms\IInput.cs" />
+        <Compile Include="Components\Forms\Select.cs" />
         <Compile Include="Components\Forms\TextBox.cs" />
         <Compile Include="Components\Menu.cs" />
         <Compile Include="Components\MenuManager.cs" />
