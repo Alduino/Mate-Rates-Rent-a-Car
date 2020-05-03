@@ -18,10 +18,19 @@ namespace MRRC.Guacamole.Components
                 c.Value.SetChildOf(this);
             }
 
-            Focused += (_, ev) =>
+            Focused += (sender, ev) =>
             {
-                ActiveComponent = initial;
-                ev.State.ActiveComponent = CurrentComponent;
+                ev.Cancel = false;
+                
+                if (sender == CurrentComponent)
+                {
+                    ev.State.ActiveComponent = Parent;
+                }
+                else
+                {
+                    ActiveComponent = initial;
+                    ev.State.ActiveComponent = CurrentComponent;
+                }
             };
         }
 
