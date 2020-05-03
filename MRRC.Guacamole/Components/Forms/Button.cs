@@ -65,5 +65,7 @@ namespace MRRC.Guacamole.Components.Forms
             DrawUtil.Text(x + 1, y + 1, Text);
             Console.ResetColor();
         }
+
+        public override string ToString() => Text;
     }
 }
