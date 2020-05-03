@@ -30,6 +30,9 @@ namespace MRRC.Guacamole.Components.Forms
 
         private async void Activate()
         {
+            // Get out of this event so this can happen separately
+            await Task.Delay(1);
+            
             Activated?.Invoke(this, EventArgs.Empty);
             
             _active = true;
