@@ -69,7 +69,11 @@ namespace MRRC.Guacamole.Components.Forms
                     return;
                 case ConsoleKey.Backspace:
                 {
-                    if (ReadOnly) return;
+                    if (ReadOnly)
+                    {
+                        e.Rerender = true;
+                        return;
+                    }
                     
                     if (Value.Length <= 0) e.Rerender = true;
                     else
