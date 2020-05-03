@@ -235,7 +235,7 @@ namespace MateRatesRentACar
                 Id = _crm.NextId()
             };
 
-            if (!_crm.AddCustomer(customer)) e.Result = "Couldn't add customer";
+            e.Result = _crm.AddCustomer(customer) ? $"Added customer {customer.Id}" : "Couldn't add customer";
         }
     }
 }
