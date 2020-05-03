@@ -78,6 +78,8 @@ namespace MCCR.Data
         /// </summary>
         public void LoadVehicles()
         {
+            if (!File.Exists(_fleetDb)) return;
+            
             using (var reader = new StreamReader(_fleetDb))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -90,6 +92,8 @@ namespace MCCR.Data
         /// </summary>
         public void LoadRentals()
         {
+            if (!File.Exists(_rentalDb)) return;
+            
             using (var reader = new StreamReader(_rentalDb))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
