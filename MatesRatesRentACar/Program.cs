@@ -1,4 +1,5 @@
 ﻿using System;
+using MCCR.Data;
 using MRRC.Guacamole;
 using MRRC.Guacamole.Components;
 using MRRC.Guacamole.MenuGeneration;
@@ -11,7 +12,9 @@ namespace MateRatesRentACar
         
         public static void Main(string[] args)
         {
-            var customerManager = new CustomerManager();
+            var crm = new CustomerResourceManager("db/customers.csv");
+            
+            var customerManager = new CustomerManager(crm);
             
             var mainMenu = new Menu("Main Menu", new Component[]
             {
@@ -49,6 +52,8 @@ namespace MateRatesRentACar
 
             Console.CursorVisible = true;
             Console.Clear();
+            
+            crm.Save();
 
             // ReSharper disable once FunctionNeverReturns
         }
