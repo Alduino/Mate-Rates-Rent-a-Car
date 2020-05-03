@@ -19,14 +19,8 @@ namespace MCCR.Data
         private class Rental
         {
             [Name("CustomerID")]
-            public int CustomerId { get; }
-            public string Registration { get; }
-            
-            public Rental(string registration, int customerId)
-            {
-                Registration = registration;
-                CustomerId = customerId;
-            }
+            public int CustomerId { get; set; }
+            public string Registration { get; set; }
         }
         
         private List<Vehicle> _vehicles;
@@ -69,7 +63,11 @@ namespace MCCR.Data
             using (var writer = new StreamWriter(_rentalDb))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.WriteRecords(_rentals.Select(kvp => new Rental(kvp.Value, kvp.Key)));
+                csv.WriteRecords(_rentals.Select(kvp => new Rental
+                {
+                    Registration = kvp.Value, 
+                    CustomerId = kvp.Key
+                }));
             }
         }
 
