@@ -46,6 +46,7 @@
         <Compile Include="ApplicationState.cs" />
         <Compile Include="Components\Dialogue.cs" />
         <Compile Include="Components\Forms\Button.cs" />
+        <Compile Include="Components\Forms\Checkbox.cs" />
         <Compile Include="Components\Forms\Form.cs" />
         <Compile Include="Components\Forms\IInput.cs" />
         <Compile Include="Components\Forms\Select.cs" />
