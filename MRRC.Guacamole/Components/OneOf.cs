@@ -6,6 +6,7 @@ namespace MRRC.Guacamole.Components
     public class OneOf : Component
     {
         private readonly Dictionary<string, Component> _components;
+        private string _activeComponent;
 
         public OneOf(Dictionary<string, Component> components, string initial)
         {
@@ -36,8 +37,16 @@ namespace MRRC.Guacamole.Components
         }
 
         public Component CurrentComponent => _components[ActiveComponent];
-        
-        public string ActiveComponent { get; set; }
+
+        public string ActiveComponent
+        {
+            get => _activeComponent;
+            set
+            {
+                _activeComponent = value;
+                Focus(CurrentComponent);
+            }
+        }
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
