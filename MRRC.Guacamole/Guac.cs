@@ -18,7 +18,7 @@ namespace MRRC.Guacamole
         /// <remarks>The <see cref="KeyPressEvent.Rerender"/> property does not do anything for this event</remarks>
         public event EventHandler<KeyPressEvent> KeyPressed;
 
-        public void Focus(Component component) => ActiveComponent = component;
+        public void Focus(IComponent component) => ActiveComponent = component;
 
         private ApplicationState MakeApplicationState() => new ApplicationState
         {
@@ -48,6 +48,11 @@ namespace MRRC.Guacamole
             root.MustRender += delegate
             {
                 Render();
+            };
+
+            root.FocusRequested += (_, component) =>
+            {
+                Focus(component);
             };
 
             Render();

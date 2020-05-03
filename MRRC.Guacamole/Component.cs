@@ -112,5 +112,15 @@ namespace MRRC.Guacamole
         {
             Blurred?.Invoke(sender, EventArgs.Empty);
         }
+
+        internal event EventHandler<IComponent> FocusRequested;
+
+        protected void Focus(IComponent component) => Focus(this, component);
+
+        private void Focus(object sender, IComponent component)
+        {
+            FocusRequested?.Invoke(sender, component);
+            ParentComponent?.Focus(sender, component);
+        }
     }
 }
