@@ -18,7 +18,7 @@ namespace MCCR.Data
         {
             _source = source;
             
-            LoadVehicles();
+            Load();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MCCR.Data
         /// <summary>
         /// Overwrites the current list of customers with the ones saved in the source file
         /// </summary>
-        public void LoadVehicles()
+        public void Load()
         {
             if (!File.Exists(_source)) return;
             
