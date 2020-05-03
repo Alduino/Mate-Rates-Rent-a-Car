@@ -101,5 +101,12 @@ namespace MRRC.Guacamole.Components.Forms
             _selected = Array.FindIndex(_members, m => m == val.ToString());
             TriggerRender();
         }
+
+        public Select<T> WithDefault(T value)
+        {
+            Value = value;
+            
+            return this;
+        }
     }
 }
