@@ -37,5 +37,7 @@ namespace MRRC.Guacamole.Components
             var component = _components[ActiveComponent];
             component.Render(state, x, y);
         }
+
+        public override string ToString() => CurrentComponent.ToString();
     }
 }
