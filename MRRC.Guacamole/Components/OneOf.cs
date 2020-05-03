@@ -8,11 +8,12 @@ namespace MRRC.Guacamole.Components
         private readonly Dictionary<string, Component> _components;
         private string _activeComponent;
 
-        public OneOf(Dictionary<string, Component> components, string initial)
+        public OneOf(Dictionary<string, Component> components, string initial, string title)
         {
             _components = components;
 
             ActiveComponent = initial;
+            Title = title;
 
             foreach (var c in _components)
             {
@@ -48,6 +49,8 @@ namespace MRRC.Guacamole.Components
             }
         }
 
+        public string Title { get; }
+
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             if (!_components.ContainsKey(ActiveComponent)) 
@@ -62,6 +65,6 @@ namespace MRRC.Guacamole.Components
             return (T) _components[key];
         }
 
-        public override string ToString() => CurrentComponent.ToString();
+        public override string ToString() => Title;
     }
 }
