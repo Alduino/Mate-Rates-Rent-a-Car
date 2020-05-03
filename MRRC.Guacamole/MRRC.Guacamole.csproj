@@ -52,6 +52,7 @@
         <Compile Include="Components\Forms\TextBox.cs" />
         <Compile Include="Components\Menu.cs" />
         <Compile Include="Components\MenuManager.cs" />
+        <Compile Include="Components\OneOf.cs" />
         <Compile Include="Components\Text.cs" />
         <Compile Include="DrawUtil.cs" />
         <Compile Include="FocusEventArgs.cs" />
