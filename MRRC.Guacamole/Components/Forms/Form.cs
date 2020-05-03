@@ -152,7 +152,7 @@ namespace MRRC.Guacamole.Components.Forms
             var width = Math.Max(maxTextWidth + maxComponentWidth, _submit.Width) + 3;
             var height = _items.Select(v => v.Component.Height).Append(_submit.Height).Sum() + 2;
 
-            if (!active) Console.ForegroundColor = ConsoleColor.Gray;
+            if (!active) Console.ForegroundColor = ConsoleColor.DarkGray;
             DrawUtil.Outline(x, y, width, height, _title);
 
             var yOffset = 0;
