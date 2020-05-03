@@ -43,7 +43,16 @@ namespace MRRC.Guacamole.Components.Forms
                 }
                 
                 var el = _items.First(v => v.Title == title);
-                result = (T) el.Component.Value;
+                var res = el.Component.Value;
+
+                if (res == null)
+                {
+                    result = default;
+                    return false;
+                }
+
+                result = (T) res;
+                
                 return true;
             }
         }
