@@ -57,6 +57,7 @@ namespace MRRC.Guacamole.Components.Forms
                     _selected = Mod(_selected - 1, _members.Length);
                     e.Rerender = true;
                     break;
+                case ConsoleKey.Tab:
                 case ConsoleKey.DownArrow:
                     if (!_open) break;
                     _selected = Mod(_selected + 1, _members.Length);

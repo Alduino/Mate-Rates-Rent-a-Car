@@ -53,12 +53,15 @@ namespace MRRC.Guacamole.Components
                 case ConsoleKey.UpArrow:
                     HighlightIndex = (HighlightIndex - 1).Mod(Items.Length);
                     break;
+                case ConsoleKey.Tab:
                 case ConsoleKey.DownArrow:
                     HighlightIndex = (HighlightIndex + 1).Mod(Items.Length);
                     break;
+                case ConsoleKey.Enter:
                 case ConsoleKey.RightArrow:
                     ev.State.ActiveComponent = ActiveItem;
                     break;
+                case ConsoleKey.Backspace:
                 case ConsoleKey.LeftArrow:
                     ev.State.ActiveComponent = ParentComponent;
                     break;
