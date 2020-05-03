@@ -97,6 +97,7 @@ namespace MRRC.Guacamole.Components.Forms
         public void SetValue(object val)
         {
             Value = val;
+            _selected = Array.FindIndex(_members, m => m == val.ToString());
             TriggerRender();
         }
     }
