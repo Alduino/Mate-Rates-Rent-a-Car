@@ -24,7 +24,7 @@ namespace MateRatesRentACar
             new Form.Item("Title", new TextBox()),
             new Form.Item("Given Names", new TextBox()),
             new Form.Item("Surname", new TextBox()),
-            new Form.Item("DOB (dd/mm/yyyy)", new TextBox()),
+            new Form.Item("Date of birth", new TextBox()),
             new Form.Item("Gender", new Select<Gender>())
         }, new Button("Submit"));
         
@@ -46,7 +46,7 @@ namespace MateRatesRentACar
                     new Form.Item("Title", new TextBox()),
                     new Form.Item("Given Names", new TextBox()),
                     new Form.Item("Surname", new TextBox()),
-                    new Form.Item("DOB (dd/mm/yyyy)", new TextBox()),
+                    new Form.Item("Date of birth", new TextBox()),
                     new Form.Item("Gender", new Select<Gender>())
                 }, new Button("Submit"))
             }
@@ -68,7 +68,7 @@ namespace MateRatesRentACar
                     new Form.Item("ID", new TextBox { ReadOnly = true }),
                     new Form.Item("Given Names", new TextBox { ReadOnly = true }),
                     new Form.Item("Surname", new TextBox { ReadOnly = true }),
-                    new Form.Item("Date of birth", new TextBox { ReadOnly = true }),
+                    new Form.Item("Date of birth", new TextBox { ReadOnly = true, Placeholder = "dd/MM/yyyy"}),
                 }, new Button("Confirm"))
             }
         }, "select", "Delete Customer");
@@ -143,7 +143,7 @@ namespace MateRatesRentACar
                 return;
             }
 
-            if (!e.Data.TryGet("DOB (dd/mm/yyyy)", out string dobStr) || !DobRegex.IsMatch(dobStr))
+            if (!e.Data.TryGet("Date of birth", out string dobStr) || !DobRegex.IsMatch(dobStr))
             {
                 e.Result = "Invalid date of birth";
                 return;
@@ -187,7 +187,7 @@ namespace MateRatesRentACar
             modifyForm.Set("Title", customer.Title);
             modifyForm.Set("Given Names", customer.GivenNames);
             modifyForm.Set("Surname", customer.Surname);
-            modifyForm.Set("DOB (dd/mm/yyyy)", customer.BirthDate.ToString("dd/MM/yyyy"));
+            modifyForm.Set("Date of birth", customer.BirthDate.ToString("dd/MM/yyyy"));
             modifyForm.Set("Gender", customer.Gender);
 
             ModifyCustomer.ActiveComponent = "modify";
@@ -213,7 +213,7 @@ namespace MateRatesRentACar
                 return;
             }
 
-            if (!e.Data.TryGet("DOB (dd/mm/yyyy)", out string dobStr) || !DobRegex.IsMatch(dobStr))
+            if (!e.Data.TryGet("Date of birth", out string dobStr) || !DobRegex.IsMatch(dobStr))
             {
                 e.Result = "Invalid date of birth";
                 return;

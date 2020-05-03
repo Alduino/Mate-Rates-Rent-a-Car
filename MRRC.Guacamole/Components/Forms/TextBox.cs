@@ -21,6 +21,8 @@ namespace MRRC.Guacamole.Components.Forms
 
         public int Height => 3;
         public bool ReadOnly { get; set; }
+        
+        public string Placeholder { get; set; }
 
         private readonly Timer _blinkTimer = new Timer(300);
         private bool _blinkOn;
@@ -125,7 +127,17 @@ namespace MRRC.Guacamole.Components.Forms
             else if (ReadOnly) Console.ForegroundColor = ConsoleColor.Gray;
             
             DrawUtil.Outline(x, y, Width, 3, Label);
-            Console.Write(Value.Substring(Math.Max(0, Value.Length - Width + 3)), Value.Length);
+
+            if (Value.Length == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(Placeholder);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write(Value.Substring(Math.Max(0, Value.Length - Width + 3)), Value.Length);
+            }
 
             if (state.ActiveComponent == this) DrawCursor();
         }
