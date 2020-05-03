@@ -16,6 +16,7 @@ namespace MRRC.Guacamole.Components
             foreach (var c in _components)
             {
                 c.Value.SetChildOf(this);
+                c.Value.MustRender += TriggerRender;
             }
 
             Focused += (sender, ev) =>
