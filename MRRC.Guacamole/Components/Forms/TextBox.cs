@@ -45,7 +45,7 @@ namespace MRRC.Guacamole.Components.Forms
         private void DrawCursor()
         {
             var (cursorLeft, cursorTop) = (Console.CursorLeft, Console.CursorTop);
-            Console.Write(_blinkOn ? '_' : ' ');
+            Console.Write(_blinkOn && !ReadOnly ? '_' : ' ');
             // clear old line for backspace
             if (Value.Length < Width - 3) Console.Write(' ');
             Console.SetCursorPosition(cursorLeft, cursorTop);
