@@ -90,6 +90,10 @@ namespace MateRatesRentACar
             {
                 e.Result = "Could not delete";
             }
+            else
+            {
+                e.Result = "Deleted customer";
+            }
         }
 
         private void DeleteCustomerOnSearch(object sender, Form.SubmittedEventArgs e)
