@@ -33,14 +33,26 @@ namespace MRRC.Guacamole.Components.Forms
                 return (T) el.Component.Value;
             }
         }
+
+        public class SubmittedEventArgs : EventArgs
+        {
+            public SubmittedEventArgs(FormData data)
+            {
+                Data = data;
+            }
+
+            public FormData Data { get; }
+            public string Result { get; set; }
+        }
         
         private readonly string _title;
         private readonly Item[] _items;
         private readonly Button _submit;
 
         private int _tabIndex;
+        private string _result = "";
 
-        public event EventHandler<FormData> Submitted;
+        public event EventHandler<SubmittedEventArgs> Submitted;
 
         protected override IEnumerable<IComponent> Children => 
             _items
@@ -65,7 +77,9 @@ namespace MRRC.Guacamole.Components.Forms
 
             _submit.Activated += (sender, _) =>
             {
-                Submitted?.Invoke(sender, new FormData(_items));
+                var ev = new SubmittedEventArgs(new FormData(_items));
+                Submitted?.Invoke(sender, ev);
+                _result = ev.Result;
             };
             
             KeyPressed += OnKeyPressed;
@@ -131,6 +145,8 @@ namespace MRRC.Guacamole.Components.Forms
             }
             
             _submit.Render(state, x + 1, yOffset + 1);
+            
+            DrawUtil.Text(x + maxTextWidth + 2, yOffset + _submit.Height / 2 + 1, _result);
         }
 
         public override string ToString() => _title;
