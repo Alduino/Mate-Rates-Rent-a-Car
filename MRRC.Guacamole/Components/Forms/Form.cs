@@ -32,6 +32,20 @@ namespace MRRC.Guacamole.Components.Forms
                 var el = _items.First(v => v.Title == title);
                 return (T) el.Component.Value;
             }
+
+            public bool TryGet<T>(string title, out T result)
+            {
+                var has = _items.Any(v => v.Title == title);
+                if (!has)
+                {
+                    result = default;
+                    return false;
+                }
+                
+                var el = _items.First(v => v.Title == title);
+                result = (T) el.Component.Value;
+                return true;
+            }
         }
 
         public class SubmittedEventArgs : EventArgs
