@@ -21,8 +21,8 @@ namespace MRRC.Guacamole.Components.Forms
 
         public int Height => 3;
         public bool ReadOnly { get; set; }
-        
-        public string Placeholder { get; set; }
+
+        public string Placeholder { get; set; } = "";
         
         public int MaxLength { get; set; }
 
