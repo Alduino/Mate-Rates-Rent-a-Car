@@ -29,6 +29,7 @@ namespace MCCR.Data
             using (var writer = new StreamWriter(_source))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
+                csv.Configuration.CultureInfo = CultureInfo.CurrentCulture;
                 csv.WriteRecords(Customers);
             }
         }
@@ -43,6 +44,7 @@ namespace MCCR.Data
             using (var reader = new StreamReader(_source))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                csv.Configuration.CultureInfo = CultureInfo.CurrentCulture;
                 _customers = csv.GetRecords<Customer>().ToList();
             }
         }
