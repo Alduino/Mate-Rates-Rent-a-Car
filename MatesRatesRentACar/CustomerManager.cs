@@ -56,7 +56,7 @@ namespace MateRatesRentACar
         {
             {
                 "select",
-                new Form("Select Customer", new []
+                new Form("Find Customer", new []
                 {
                     new Form.Item("Customer ID", new TextBox())
                 }, new Button("Search"))
