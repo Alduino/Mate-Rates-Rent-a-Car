@@ -13,13 +13,15 @@ namespace MateRatesRentACar
         public static void Main(string[] args)
         {
             var crm = new CustomerResourceManager("db/customers.csv");
-            var fleet = new Fleet("db/fleet.csv", "db/rental.csv");
+            var fleet = new Fleet("db/fleet.csv", "db/rentals.csv");
             
             var customerManager = new CustomerManager(crm, fleet);
+            var fleetManager = new FleetManager(fleet);
             
             var mainMenu = new Menu("Main Menu", new Component[]
             {
-                MenuGenerator.GenerateManager("Customers", customerManager).Menu
+                MenuGenerator.GenerateManager("Customers", customerManager).Menu,
+                MenuGenerator.GenerateManager("Fleet", fleetManager).Menu
             });
 
             var manager = new MenuManager(mainMenu);
@@ -55,6 +57,8 @@ namespace MateRatesRentACar
             Console.Clear();
             
             crm.Save();
+            fleet.SaveRentals();
+            fleet.SaveVehicles();
 
             // ReSharper disable once FunctionNeverReturns
         }
