@@ -23,6 +23,8 @@ namespace MRRC.Guacamole.Components.Forms
         public bool ReadOnly { get; set; }
         
         public string Placeholder { get; set; }
+        
+        public int MaxLength { get; set; }
 
         private readonly Timer _blinkTimer = new Timer(300);
         private bool _blinkOn;
@@ -110,6 +112,12 @@ namespace MRRC.Guacamole.Components.Forms
             }
 
             Value += e.Key.KeyChar;
+
+            if (MaxLength > 0 && Value.Length > MaxLength)
+            {
+                Value = Value.Substring(0, MaxLength);
+                e.Rerender = true;
+            }
 
             if (Value.Length > Width - 3)
             {
