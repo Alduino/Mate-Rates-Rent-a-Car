@@ -48,6 +48,11 @@ namespace MRRC.Guacamole.Components
             component.Render(state, x, y);
         }
 
+        public T GetComponent<T>(string key) where T : Component
+        {
+            return (T) _components[key];
+        }
+
         public override string ToString() => CurrentComponent.ToString();
     }
 }
