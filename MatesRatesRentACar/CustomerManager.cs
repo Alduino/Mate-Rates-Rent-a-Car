@@ -16,6 +16,7 @@ namespace MateRatesRentACar
         private static readonly Regex DobRegex = new Regex("^[0-3]\\d/[0-1]\\d/\\d{4}$");
 
         private readonly CustomerResourceManager _crm;
+        private readonly Fleet _fleet;
 
         [MenuItem]
         public Form AddCustomer { get; } = new Form("Add Customer", new []
@@ -51,12 +52,75 @@ namespace MateRatesRentACar
             }
         }, "search", "Modify Customer");
 
-        public CustomerManager(CustomerResourceManager crm)
+        [MenuItem] public OneOf DeleteCustomer { get; } = new OneOf(new Dictionary<string, Component>
+        {
+            {
+                "select",
+                new Form("Select Customer", new []
+                {
+                    new Form.Item("Customer ID", new TextBox())
+                }, new Button("Search"))
+            },
+            {
+                "confirm",
+                new Form("Confirm Deletion", new []
+                {
+                    new Form.Item("ID", new TextBox { ReadOnly = true }),
+                    new Form.Item("Given Names", new TextBox { ReadOnly = true }),
+                    new Form.Item("Surname", new TextBox { ReadOnly = true }),
+                    new Form.Item("Date of birth", new TextBox { ReadOnly = true }),
+                }, new Button("Confirm"))
+            }
+        }, "select", "Delete Customer");
+
+        public CustomerManager(CustomerResourceManager crm, Fleet fleet)
         {
             _crm = crm;
+            _fleet = fleet;
             AddCustomer.Submitted += AddCustomerOnSubmitted;
             ModifyCustomer.GetComponent<Form>("search").Submitted += ModifyCustomerOnSearch;
             ModifyCustomer.GetComponent<Form>("modify").Submitted += ModifyCustomerOnSubmitted;
+            DeleteCustomer.GetComponent<Form>("select").Submitted += DeleteCustomerOnSearch;
+            DeleteCustomer.GetComponent<Form>("confirm").Submitted += DeleteCustomerOnSubmitted;
+        }
+
+        private void DeleteCustomerOnSubmitted(object sender, Form.SubmittedEventArgs e)
+        {
+            if (!_crm.RemoveCustomer(int.Parse(e.Data.Get<string>("ID"))))
+            {
+                e.Result = "Could not delete";
+            }
+        }
+
+        private void DeleteCustomerOnSearch(object sender, Form.SubmittedEventArgs e)
+        {
+            if (!int.TryParse(e.Data.Get<string>("Customer ID"), out var customerId))
+            {
+                e.Result = "Invalid ID";
+                return;
+            }
+
+            if (_crm.Customers.All(c => c.Id != customerId))
+            {
+                e.Result = "No customer with that ID";
+                return;
+            }
+
+            if (_fleet.IsRenting(customerId))
+            {
+                e.Result = "Customer still renting";
+                return;
+            }
+
+            var customer = _crm.Customers.First(c => c.Id == customerId);
+
+            var confirmForm = DeleteCustomer.GetComponent<Form>("confirm");
+            confirmForm.Set("ID", customerId.ToString());
+            confirmForm.Set("Given Names", customer.GivenNames);
+            confirmForm.Set("Surname", customer.Surname);
+            confirmForm.Set("Date of birth", customer.BirthDate.ToString("dd/MM/yyyy"));
+
+            DeleteCustomer.ActiveComponent = "confirm";
         }
 
         private void ModifyCustomerOnSubmitted(object sender, Form.SubmittedEventArgs e)
