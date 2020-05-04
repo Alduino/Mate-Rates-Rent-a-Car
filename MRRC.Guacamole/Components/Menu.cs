@@ -1,6 +1,4 @@
 using System;
-using System.Linq;
-using Pastel;
 
 namespace MRRC.Guacamole.Components
 {
@@ -75,34 +73,44 @@ namespace MRRC.Guacamole.Components
             ev.Rerender = shouldRender;
         }
 
-        private string Highlight(string item, int index, bool active)
-        {
-            var noHighlightFg = active ? "#f5f5ff" : "#aaaacc";
-            const string noHighlightBg = "#000000";
-
-            const string highlightFg = "#000000";
-            var highlightBg = active ? "#f5f5ff" : "#aaaacc";
-
-            var current = index == HighlightIndex;
-
-            var paddedItem = $"{(current ? '>' : ' ')}{item} ";
-            return current ? 
-                paddedItem.Pastel(highlightFg).PastelBg(highlightBg) : 
-                paddedItem.Pastel(noHighlightFg).PastelBg(noHighlightBg);
-        }
-
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             if (state.ActiveComponent != this) Console.ForegroundColor = ConsoleColor.DarkGray;
             DrawUtil.Outline(x, y, Width, Console.WindowHeight - 1, Name);
 
-            DrawUtil.Lines(x + 1, y + 1, 
-                Items
-                    .Select(item => item.ToString())
-                    .Select(item => item.Length > Width - 4 ? 
-                        item.Substring(0, Width - 5) + "…" : 
-                        item)
-                    .Select((v, i) => Highlight(v, i, active)));
+            for (var i = 0; i < Items.Length; i++)
+            {
+                var current = i == HighlightIndex;
+                var item = Items[i];
+                var str = item.ToString();
+                if (str.Length > Width - 4) str = str.Substring(0, Width - 5) + '…';
+                
+                Console.SetCursorPosition(x + 1, y + i + 1);
+
+                if (state.ActiveComponent == this)
+                {
+                    if (current)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Gray;
+                    }
+                }
+                else
+                {
+                    if (current)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    }
+                }
+
+                Console.Write((current ? '>' : ' ') + str);
+                Console.ResetColor();
+            }
         }
 
         public override string ToString()

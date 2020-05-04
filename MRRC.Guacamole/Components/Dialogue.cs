@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Pastel;
 
 namespace MRRC.Guacamole.Components
 {
@@ -75,8 +73,15 @@ namespace MRRC.Guacamole.Components
             DrawUtil.Outline(left, top, width, height, Title);
             DrawUtil.Lines(left + 1, top + 1, contentsLines);
 
-            DrawUtil.Text(left + 1, top + height - 2, string.Join(" ", 
-                Buttons.Select((text, i) => i == _highlightIndex ? text.Pastel("#45f98a") : text)));
+            Console.SetCursorPosition(left + 1, top + height - 2);
+            for (var i = 0; i < Buttons.Length; i++)
+            {
+                var button = Buttons[i];
+
+                if (i == _highlightIndex) Console.BackgroundColor = ConsoleColor.DarkGray;
+                Console.Write(button);
+                if (i != Buttons.Length - 1) Console.Write(" ");
+            }
         }
 
         public override string ToString() => Title;

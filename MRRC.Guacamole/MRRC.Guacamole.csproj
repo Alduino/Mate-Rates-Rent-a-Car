@@ -32,10 +32,6 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="Pastel, Version=1.3.1.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\packages\Pastel.1.3.1\lib\netstandard2.0\Pastel.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
@@ -66,9 +62,6 @@
         <Compile Include="MenuGeneration\MenuItemAttribute.cs" />
         <Compile Include="MenuGeneration\MenuGenerator.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
