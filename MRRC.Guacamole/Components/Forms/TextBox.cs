@@ -91,6 +91,12 @@ namespace MRRC.Guacamole.Components.Forms
             
             switch (e.Key.Key)
             {
+                case ConsoleKey.UpArrow:
+                case ConsoleKey.DownArrow:
+                case ConsoleKey.LeftArrow:
+                case ConsoleKey.RightArrow:
+                    e.Cancel = false;
+                    return;
                 case ConsoleKey.Enter:
                     // Exit out of focus to the parent component
                     e.State.ActiveComponent = ParentComponent;
