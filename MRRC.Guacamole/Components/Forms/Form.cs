@@ -160,6 +160,13 @@ namespace MRRC.Guacamole.Components.Forms
                     _tabIndex = _items.Length;
                     SetFocus(e.State);
                     break;
+                case ConsoleKey.UpArrow:
+                    _tabIndex = (_tabIndex - 1).Mod(_items.Length + 1);
+                    SetFocus(e.State);
+                    e.Rerender = true;
+                    e.Cancel = true;
+                    break;
+                case ConsoleKey.DownArrow:
                 case ConsoleKey.Tab:
                     _tabIndex = (_tabIndex + 1) % (_items.Length + 1);
                     SetFocus(e.State);
