@@ -38,6 +38,8 @@ The program is based around menus and forms, with menus being what you use to fi
 
 When a component is active, it will be drawn in a brighter colour than the rest of the app.
 
+Note: Sometimes forms don't automatically focus the first input (shown by the input being a brighter colour than the other inputs) - in this case, pressing tab should focus it.
+
 ### Main Menu
 
 This menu lets you choose between the groups of functions the program supports. You can select one of these by pressing tab or vertical arrow keys to cycle through, then enter or the right arrow key to enter into the menu (this is true for all menus). To go up a level in the menus, you can press backspace or the left arrow key.
