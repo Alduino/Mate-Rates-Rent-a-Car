@@ -12,8 +12,8 @@ namespace MateRatesRentACar
         
         public static void Main(string[] args)
         {
-            var crm = new CustomerResourceManager("db/customers.csv");
-            var fleet = new Fleet("db/fleet.csv", "db/rentals.csv");
+            var crm = new CustomerResourceManager("../../../Data/customers.csv");
+            var fleet = new Fleet("../../../Data/fleet.csv", "../../../Data/rentals.csv");
             
             var customerManager = new CustomerManager(crm, fleet);
             var fleetManager = new FleetManager(fleet);
