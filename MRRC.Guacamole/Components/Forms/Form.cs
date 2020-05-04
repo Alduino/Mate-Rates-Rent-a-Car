@@ -90,7 +90,6 @@ namespace MRRC.Guacamole.Components.Forms
 
             foreach (var item in _items)
             {
-                Console.WriteLine(item);
                 item.Component.SetChildOf(this);
                 item.Component.MustRender += TriggerRender;
             }
