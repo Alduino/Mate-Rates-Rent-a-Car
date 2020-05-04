@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 
 namespace MRRC.Guacamole.Components.Forms
 {
+    /// <summary>
+    /// Input that can be toggled on or off
+    /// </summary>
     public class Checkbox : Component, IInput<object>
     {
         public Checkbox(bool def, TimeSpan activeTime)
@@ -35,6 +38,9 @@ namespace MRRC.Guacamole.Components.Forms
         }
 
         public object Value { get; private set; }
+        /// <summary>
+        /// Deprecated
+        /// </summary>
         public TimeSpan ActiveTime { get; }
         public int Width => 5;
         public int Height => 3;

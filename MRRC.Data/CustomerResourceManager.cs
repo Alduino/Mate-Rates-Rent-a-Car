@@ -6,12 +6,18 @@ using MRRC.Cursive;
 
 namespace MCCR.Data
 {
+    /// <summary>
+    /// Manages customers
+    /// </summary>
     public class CustomerResourceManager
     {
         private List<Customer> _customers;
         
         private readonly string _source;
 
+        /// <summary>
+        /// List of customers
+        /// </summary>
         public IEnumerable<Customer> Customers => _customers;
         
         public CustomerResourceManager(string source)

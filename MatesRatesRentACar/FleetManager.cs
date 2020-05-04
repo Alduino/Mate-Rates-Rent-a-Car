@@ -10,6 +10,9 @@ using MRRC.Guacamole.MenuGeneration;
 
 namespace MateRatesRentACar
 {
+    /// <summary>
+    /// Fleet management menu
+    /// </summary>
     public class FleetManager
     {
         private static readonly Regex RegoRegex = new Regex("^\\d{3}[A-Za-z]{3}");

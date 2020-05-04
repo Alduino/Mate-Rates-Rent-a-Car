@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MRRC.Guacamole.Components
 {
+    /// <summary>
+    /// Displays a dialogue in the centre of the window
+    /// </summary>
     public class Dialogue : Component
     {
         private int _highlightIndex;
@@ -11,6 +14,9 @@ namespace MRRC.Guacamole.Components
         public string Contents { get; }
         public string[] Buttons { get; }
 
+        /// <summary>
+        /// Triggered when one of the buttons is pressed
+        /// </summary>
         public event EventHandler<string> ButtonPressed;
         
         public Dialogue(string title, string contents, string[] buttons)

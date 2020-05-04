@@ -3,10 +3,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace MRRC.Cursive
 {
+    /// <summary>
+    /// Writes data to a CSV file
+    /// </summary>
     public class CsvWriter
     {
         private readonly struct Header
@@ -30,6 +32,9 @@ namespace MRRC.Cursive
             _culture = culture;
         }
 
+        /// <summary>
+        /// Writes the specified records (including headers) to the CSV file
+        /// </summary>
         public void WriteRecords<T>(IEnumerable<T> records)
         {
             var headers = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance)

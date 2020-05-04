@@ -2,6 +2,9 @@ using System;
 
 namespace MRRC.Guacamole.Components
 {
+    /// <summary>
+    /// Vertical list to select one of the specified items
+    /// </summary>
     public class Menu : Component
     {
         private int _highlightIndex;
@@ -21,6 +24,9 @@ namespace MRRC.Guacamole.Components
         public Component[] Items { get; }
         public int Width { get; }
 
+        /// <summary>
+        /// The currently active component
+        /// </summary>
         public Component ActiveItem => Items[HighlightIndex];
         
         public Menu(string name, Component[] items, int width = 32)

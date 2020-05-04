@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace MRRC.Guacamole.Components.Forms
 {
+    /// <summary>
+    /// Selection input of items in an enumeration
+    /// </summary>
     public class Select<T> : Component, IInput<object> where T : Enum
     {
         private const string SelectOne = "Select one";
@@ -102,6 +105,9 @@ namespace MRRC.Guacamole.Components.Forms
             TriggerRender();
         }
 
+        /// <summary>
+        /// Returns this instance with the value set
+        /// </summary>
         public Select<T> WithDefault(T value)
         {
             SetValue(value);

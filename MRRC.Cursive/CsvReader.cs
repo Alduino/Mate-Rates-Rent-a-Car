@@ -8,6 +8,9 @@ using System.Text.RegularExpressions;
 
 namespace MRRC.Cursive
 {
+    /// <summary>
+    /// Reads a CSV file
+    /// </summary>
     public class CsvReader
     {
         // From https://stackabuse.com/regex-splitting-by-character-unless-in-quotes/
@@ -52,6 +55,10 @@ namespace MRRC.Cursive
             throw new Exception($"Unknown type {type}");
         }
 
+        /// <summary>
+        /// Returns a lazy list of each row in the CSV
+        /// </summary>
+        /// <exception cref="IndexOutOfRangeException">A row has the wrong amount of values</exception>
         public IEnumerable<T> GetRecords<T>()
         {
             var line = _reader.ReadLine();

@@ -3,10 +3,16 @@ using System.Linq;
 
 namespace MRRC.Guacamole
 {
+    /// <summary>
+    /// Utilities for Linq
+    /// </summary>
     public static class LinqUtil
     {
         // Originally the program was made in .Net 4.8, but as the QUT VMs only support 4.6.2 we need to add some
         // methods back in
+        /// <summary>
+        /// Appends an item to the end of the enumerator
+        /// </summary>
         public static IEnumerable<T> Append<T>(this IEnumerable<T> source, T next) => source.Concat(new[] {next});
     }
 }

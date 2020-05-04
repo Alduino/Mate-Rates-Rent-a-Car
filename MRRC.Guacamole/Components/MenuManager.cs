@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace MRRC.Guacamole.Components
 {
+    /// <summary>
+    /// Manages menu instances
+    /// </summary>
     public class MenuManager : Component
     {
         public Menu RootMenu { get; }

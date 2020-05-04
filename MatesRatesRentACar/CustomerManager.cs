@@ -11,6 +11,9 @@ using MRRC.Guacamole.MenuGeneration;
 
 namespace MateRatesRentACar
 {
+    /// <summary>
+    /// Customer management menu
+    /// </summary>
     public class CustomerManager
     {
         private static readonly Regex DobRegex = new Regex("^[0-3]\\d/[0-1]\\d/\\d{4}$");

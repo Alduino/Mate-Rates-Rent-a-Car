@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace MRRC.Guacamole
 {
+    /// <summary>
+    /// Base class for any component
+    /// </summary>
     public abstract class Component : IComponent
     {
         private readonly struct RenderState
@@ -22,15 +25,28 @@ namespace MRRC.Guacamole
 
         private RenderState _previousRenderState;
             
+        /// <summary>
+        /// The component that owns this one
+        /// </summary>
         public IComponent Parent { get; private set; }
 
+        /// <summary>
+        /// The parent component, but as a <see cref="Component"/> (or null if it is not one)
+        /// </summary>
         public Component ParentComponent => Parent is Component cp ? cp : null;
 
+        /// <summary>
+        /// Returns true when this component or its children are active
+        /// </summary>
+        /// <param name="state">The current application state</param>
         public bool IsActive(ApplicationState state) => this == state.ActiveComponent || HasActiveChildren(state);
 
         private bool HasActiveChildren(ApplicationState state) =>
             Children.Any(child => child.IsActive(state));
         
+        /// <summary>
+        /// Should enumerate to every child of this component
+        /// </summary>
         protected virtual IEnumerable<IComponent> Children => Enumerable.Empty<Component>();
 
         /// <summary>
@@ -64,6 +80,11 @@ namespace MRRC.Guacamole
             Parent = parent;
         }
         
+        /// <summary>
+        /// Triggered when a key is pressed
+        /// </summary>
+        /// <remarks>If the <see cref="KeyPressEvent.Cancel"/> property is false (the default), this event will
+        /// propagate up through the parent components.</remarks>
         protected event EventHandler<KeyPressEvent> KeyPressed;
 
         /// <summary>
@@ -82,8 +103,14 @@ namespace MRRC.Guacamole
         /// </summary>
         public event EventHandler MustRender;
 
+        /// <summary>
+        /// Trigger a render of the entire component tree
+        /// </summary>
         protected void TriggerRender() => TriggerRender(this, EventArgs.Empty);
 
+        /// <summary>
+        /// Trigger a render of the entire component tree, with the event args specified
+        /// </summary>
         protected void TriggerRender(object sender, EventArgs args)
         {
             MustRender?.Invoke(sender, EventArgs.Empty);
@@ -96,6 +123,9 @@ namespace MRRC.Guacamole
         /// focus state, so to enable it a handler must be set to allow the event.</remarks>
         public event EventHandler<FocusEventArgs> Focused;
 
+        /// <summary>
+        /// Triggers the <see cref="Focused"/> event and returns the event args used.
+        /// </summary>
         public FocusEventArgs HandleFocused(object sender, ApplicationState state)
         {
             var args = new FocusEventArgs(state);
@@ -108,6 +138,9 @@ namespace MRRC.Guacamole
         /// </summary>
         public event EventHandler Blurred;
 
+        /// <summary>
+        /// Triggers the internal blur event
+        /// </summary>
         public void HandleBlurred(object sender)
         {
             Blurred?.Invoke(sender, EventArgs.Empty);
@@ -115,6 +148,9 @@ namespace MRRC.Guacamole
 
         internal event EventHandler<IComponent> FocusRequested;
 
+        /// <summary>
+        /// Attempts to focus the specified component. No blur event will be triggered on this component.
+        /// </summary>
         protected void Focus(IComponent component) => Focus(this, component);
 
         private void Focus(object sender, IComponent component)

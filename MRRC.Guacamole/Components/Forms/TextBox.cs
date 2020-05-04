@@ -3,12 +3,26 @@ using System.Timers;
 
 namespace MRRC.Guacamole.Components.Forms
 {
+    /// <summary>
+    /// A box that allows user input
+    /// </summary>
     public class TextBox : Component, IInput<string>
     {
+        /// <summary>
+        /// Text that is displayed above the input, or empty to not display it
+        /// </summary>
         public string Label { get; }
+        
+        /// <summary>
+        /// The current value of the input
+        /// </summary>
         public string Value { get; private set; } = "";
 
         private int _width = 30;
+        
+        /// <summary>
+        /// The width of the input
+        /// </summary>
         public int Width
         {
             get => _width;
@@ -20,10 +34,20 @@ namespace MRRC.Guacamole.Components.Forms
         }
 
         public int Height => 3;
+        
+        /// <summary>
+        /// When true, the input value cannot be modified
+        /// </summary>
         public bool ReadOnly { get; set; }
 
+        /// <summary>
+        /// Some value to display while the input is empty
+        /// </summary>
         public string Placeholder { get; set; } = "";
         
+        /// <summary>
+        /// The maximum amount of characters allowed
+        /// </summary>
         public int MaxLength { get; set; }
 
         private readonly Timer _blinkTimer = new Timer(300);

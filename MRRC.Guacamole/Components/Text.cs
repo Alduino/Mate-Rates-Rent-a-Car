@@ -2,6 +2,9 @@ using System;
 
 namespace MRRC.Guacamole.Components
 {
+    /// <summary>
+    /// Prints plain text
+    /// </summary>
     public class Text : Component
     {
         private string _contents;

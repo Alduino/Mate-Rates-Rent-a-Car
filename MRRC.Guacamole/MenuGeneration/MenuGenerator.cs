@@ -4,8 +4,14 @@ using MRRC.Guacamole.Components;
 
 namespace MRRC.Guacamole.MenuGeneration
 {
+    /// <summary>
+    /// Generates a menu from a class with <see cref="MenuItemAttribute"/>s
+    /// </summary>
     public class MenuGenerator
     {
+        /// <summary>
+        /// Contains a menu that has been generated
+        /// </summary>
         public class Manager : IManager
         {
             public Menu Menu { get; }
@@ -16,6 +22,11 @@ namespace MRRC.Guacamole.MenuGeneration
             }
         }
         
+        /// <summary>
+        /// Generates a <see cref="Manager"/> instance from a class instance
+        /// </summary>
+        /// <param name="name">Display name of the menu</param>
+        /// <param name="source">Instance of the menu class</param>
         public static IManager GenerateManager(string name, object source) => new MenuGenerator(name, source).Generate();
 
         private readonly string _name;
@@ -36,6 +47,7 @@ namespace MRRC.Guacamole.MenuGeneration
             _width = width;
         }
 
+        /// <inheritdoc cref="GenerateManager"/>
         public IManager Generate()
         {
             var type = _manager.GetType();

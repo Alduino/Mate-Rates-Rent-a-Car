@@ -4,8 +4,14 @@ using System.Linq;
 
 namespace MRRC.Guacamole.Components.Forms
 {
+    /// <summary>
+    /// Form that holds any amount of inputs and a submit button
+    /// </summary>
     public class Form : Component
     {
+        /// <summary>
+        /// Represents one of the input fields
+        /// </summary>
         public readonly struct Item
         {
             public Item(string title, IInput<object> component)
@@ -18,6 +24,9 @@ namespace MRRC.Guacamole.Components.Forms
             public IInput<object> Component { get; }
         }
 
+        /// <summary>
+        /// Allows access of data in the form
+        /// </summary>
         public class FormData
         {
             private readonly Item[] _items;
@@ -27,12 +36,19 @@ namespace MRRC.Guacamole.Components.Forms
                 _items = items;
             }
 
+            /// <summary>
+            /// Returns the value of the field with the specified title
+            /// </summary>
             public T Get<T>(string title)
             {
                 var el = _items.First(v => v.Title == title);
                 return (T) el.Component.Value;
             }
 
+            /// <summary>
+            /// Attempts to output the value of the field with the specified title to <see cref="result"/> 
+            /// </summary>
+            /// <returns>True when successful, false if the field doesn't exist or the value is null</returns>
             public bool TryGet<T>(string title, out T result)
             {
                 var has = _items.Any(v => v.Title == title);
@@ -57,6 +73,9 @@ namespace MRRC.Guacamole.Components.Forms
             }
         }
 
+        /// <summary>
+        /// Event args for when the form is submitted
+        /// </summary>
         public class SubmittedEventArgs : EventArgs
         {
             public SubmittedEventArgs(FormData data)
@@ -65,6 +84,10 @@ namespace MRRC.Guacamole.Components.Forms
             }
 
             public FormData Data { get; }
+            
+            /// <summary>
+            /// Message displayed beside the submit button
+            /// </summary>
             public string Result { get; set; } = "";
         }
         
@@ -75,6 +98,9 @@ namespace MRRC.Guacamole.Components.Forms
         private int _tabIndex;
         private string _result = "";
 
+        /// <summary>
+        /// Triggered when the form is submitted
+        /// </summary>
         public event EventHandler<SubmittedEventArgs> Submitted;
 
         protected override IEnumerable<IComponent> Children => 
@@ -172,6 +198,9 @@ namespace MRRC.Guacamole.Components.Forms
             DrawUtil.Text(x + maxTextWidth + 2, yOffset + _submit.Height / 2 + 1, _result);
         }
 
+        /// <summary>
+        /// Sets the value of the specified field
+        /// </summary>
         public void Set(string title, object value)
         {
             var item = _items.FirstOrDefault(v => v.Title == title);

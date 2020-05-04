@@ -4,12 +4,21 @@ using MRRC.Guacamole.Components;
 
 namespace MRRC.Guacamole
 {
+    /// <summary>
+    /// Guacamole main class, controls all the components
+    /// </summary>
     public class Guac
     {
         private Component _renderOverride;
         
+        /// <summary>
+        /// The root component
+        /// </summary>
         public Component Root { get; }
         
+        /// <summary>
+        /// The component that is currently focused
+        /// </summary>
         public IComponent ActiveComponent { get; private set; }
 
         /// <summary>
@@ -18,6 +27,10 @@ namespace MRRC.Guacamole
         /// <remarks>The <see cref="KeyPressEvent.Rerender"/> property does not do anything for this event</remarks>
         public event EventHandler<KeyPressEvent> KeyPressed;
 
+        /// <summary>
+        /// Focus the specified component
+        /// </summary>
+        /// <remarks>This assumes the component is in the component tree</remarks>
         public bool Focus(IComponent component)
         {
             var oldComponent = ActiveComponent;
@@ -110,6 +123,13 @@ namespace MRRC.Guacamole
             if (ev.Rerender) Render();
         }
 
+        /// <summary>
+        /// Shows a dialogue window in the centre of the screen
+        /// </summary>
+        /// <param name="title">The title of the dialogue</param>
+        /// <param name="contents">The main text in the dialogue</param>
+        /// <param name="buttons">A list of options that can be selected</param>
+        /// <returns>Task that completes when a button is pressed, containing the text of that button</returns>
         public Task<string> ShowDialogue(string title, string contents, string[] buttons)
         {
             var dialogue = new Dialogue(title, contents, buttons);

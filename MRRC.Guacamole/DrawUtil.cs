@@ -4,8 +4,14 @@ using System.Linq;
 
 namespace MRRC.Guacamole
 {
+    /// <summary>
+    /// Utilities for drawing to the console
+    /// </summary>
     public static class DrawUtil
     {
+        /// <summary>
+        /// Stores a size by width and height
+        /// </summary>
         public readonly struct Size
         {
             public Size(int width, int height)
@@ -18,6 +24,11 @@ namespace MRRC.Guacamole
             public int Height { get; }
         }
     
+        /// <summary>
+        /// Repeats a character the specified amount of times
+        /// </summary>
+        /// <param name="character">A single character that will be repeated</param>
+        /// <param name="count">The amount of times to repeat the character</param>
         public static string Repeat(this char character, int count)
         {
             return new string(character, count);

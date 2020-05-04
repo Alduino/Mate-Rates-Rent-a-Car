@@ -3,6 +3,9 @@ using System.ComponentModel;
 
 namespace MRRC.Guacamole
 {
+    /// <summary>
+    /// Event args for key presses
+    /// </summary>
     public class KeyPressEvent : CancelEventArgs
     {
         /// <summary>

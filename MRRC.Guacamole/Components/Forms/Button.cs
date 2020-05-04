@@ -3,16 +3,29 @@ using System.Threading.Tasks;
 
 namespace MRRC.Guacamole.Components.Forms
 {
+    /// <summary>
+    /// Allows triggering some action on press
+    /// </summary>
     public class Button : Component
     {
         private bool _active;
         
+        /// <summary>
+        /// The text to be displayed on the button
+        /// </summary>
         public string Text { get; }
+        
+        /// <summary>
+        /// How long the button will be held down for
+        /// </summary>
         public TimeSpan ActiveTime { get; }
 
         public int Width => DrawUtil.MeasureText(Text).Width + 2;
         public int Height => DrawUtil.MeasureText(Text).Height + 2;
 
+        /// <summary>
+        /// Triggered when the button is activated
+        /// </summary>
         public event EventHandler Activated;
         
         public Button(string text, TimeSpan activeTime)
