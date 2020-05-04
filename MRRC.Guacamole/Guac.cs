@@ -145,6 +145,7 @@ namespace MRRC.Guacamole
             {
                 _renderOverride = null;
                 ActiveComponent = oldActiveComponent;
+                ActiveComponent.HandleFocused(this, MakeApplicationState());
                 Render();
                 
                 completionSource.TrySetResult(button);
