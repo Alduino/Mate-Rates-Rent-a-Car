@@ -83,6 +83,6 @@ namespace MCCR.Data
         /// <summary>
         /// Returns the next available ID
         /// </summary>
-        public int NextId() => Customers.Max(c => c.Id) + 1;
+        public int NextId() => Customers.Select(c => c.Id).DefaultIfEmpty(0).Max() + 1;
     }
 }
