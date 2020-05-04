@@ -78,7 +78,7 @@ namespace MRRC.Guacamole.Components.Forms
             
             Console.SetCursorPosition(x + Width - 2, y + 1);
             if (_open) Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.Write('↓');
+            Console.Write('*');
             
             Console.ResetColor();
 
