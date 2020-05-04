@@ -207,7 +207,7 @@ namespace MateRatesRentACar
 
         private void ModifyVehicleOnSearch(object sender, Form.SubmittedEventArgs e)
         {
-            var rego = e.Data.Get<string>("Registration");
+            var rego = e.Data.Get<string>("Registration").ToUpper();
             if (!RegoRegex.IsMatch(rego))
             {
                 e.Result = "Invalid rego";
