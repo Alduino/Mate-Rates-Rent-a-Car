@@ -86,6 +86,7 @@ namespace MRRC.Guacamole.Components
 
                 if (i == _highlightIndex) Console.BackgroundColor = ConsoleColor.DarkGray;
                 Console.Write(button);
+                Console.ResetColor();
                 if (i != Buttons.Length - 1) Console.Write(" ");
             }
         }
