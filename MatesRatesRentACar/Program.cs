@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using MCCR.Data;
 using MRRC.Guacamole;
 using MRRC.Guacamole.Components;
@@ -12,6 +13,8 @@ namespace MateRatesRentACar
         
         public static void Main(string[] args)
         {
+            if (!Directory.Exists("../../../Data")) Directory.CreateDirectory("../../../Data");
+            
             var crm = new CustomerResourceManager("../../../Data/customers.csv");
             var fleet = new Fleet("../../../Data/fleet.csv", "../../../Data/rentals.csv");
             
