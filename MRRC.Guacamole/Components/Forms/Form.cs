@@ -142,9 +142,11 @@ namespace MRRC.Guacamole.Components.Forms
 
         private void OnFocused(object sender, FocusEventArgs e)
         {
-            _tabIndex = -1;
+            _tabIndex = 0;
             e.Cancel = false;
             e.Rerender = true;
+
+            SetFocus(e.State);
         }
 
         private void OnKeyPressed(object sender, KeyPressEvent e)
