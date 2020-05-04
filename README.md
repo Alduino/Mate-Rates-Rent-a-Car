@@ -8,6 +8,8 @@ Zach Barham (n10482661) -- 4th May 2020
 
 This project is set up so it can be built in Visual Studio or any other IDEs that support Visual Studio solution files. To build in VS, open the solution (`MateRatesRentACar.sln`), right click the `MatesRatesRentACar` project in the Solution Explorer panel and select Build (the required files will be put in the `MatesRatesRentACar/bin/Debug`directory).
 
+Note: You may have to build multiple times so that the dependant projects get included.
+
 ## Running
 
 You may want to resize the console window that is opened by running the application, otherwise some menus may flow off the edge, and in rare cases the program could throw an exception.
