@@ -161,6 +161,7 @@ namespace MRRC.Guacamole.Components.Forms
                 var (_, textHeight) = DrawUtil.MeasureText(item.Title);
 
                 if (active) Console.ResetColor();
+                else Console.ForegroundColor = ConsoleColor.DarkGray;
                 DrawUtil.Text(x + 1, y + yOffset + item.Component.Height / 2 + 1, $"{item.Title}:");
                 item.Component.Render(state, x + maxTextWidth + 2, y + yOffset + 1);
 
