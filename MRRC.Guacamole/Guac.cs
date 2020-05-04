@@ -143,12 +143,18 @@ namespace MRRC.Guacamole
 
             dialogue.ButtonPressed += (_, button) =>
             {
-                _renderOverride = null;
-                ActiveComponent = oldActiveComponent;
-                ActiveComponent.HandleFocused(this, MakeApplicationState());
-                Render();
-                
-                completionSource.TrySetResult(button);
+                Task.Run(async () =>
+                {
+                    await Task.Delay(100);
+                    
+                    _renderOverride = null;
+                    ActiveComponent = oldActiveComponent;
+                    ActiveComponent.HandleFocused(this, MakeApplicationState());
+
+                    Render();
+
+                    completionSource.TrySetResult(button);
+                });
             };
             
             return completionSource.Task;

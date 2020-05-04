@@ -44,7 +44,12 @@ namespace MateRatesRentACar
                         "Cancel"
                     });
 
-                if (exitResult == "Ok") ProgramRunning = false;
+                if (exitResult == "Ok")
+                {
+                    ProgramRunning = false;
+                    CleanUp(crm, fleet);
+                    Environment.Exit(0);
+                }
             };
 
             Console.CursorVisible = false;
@@ -56,14 +61,19 @@ namespace MateRatesRentACar
                 if (!ProgramRunning) break;
             }
 
+            CleanUp(crm, fleet);
+
+            // ReSharper disable once FunctionNeverReturns
+        }
+
+        private static void CleanUp(CustomerResourceManager crm, Fleet fleet)
+        {
             Console.CursorVisible = true;
             Console.Clear();
             
             crm.Save();
             fleet.SaveRentals();
             fleet.SaveVehicles();
-
-            // ReSharper disable once FunctionNeverReturns
         }
     }
 }
