@@ -72,12 +72,32 @@ namespace MRRC.Guacamole.Components.Forms
 
         private void DrawCursor()
         {
+            if (ReadOnly) return;
+            
             var cursorLeft = Console.CursorLeft;
             var cursorTop = Console.CursorTop;
+
+            var displayPlaceholder = Placeholder?.Length > 0 && Value.Length == 0;
             
-            Console.Write(_blinkOn && !ReadOnly ? '_' : ' ');
+            if (displayPlaceholder)
+            {
+                Console.SetCursorPosition(Console.CursorLeft - Math.Min(Width - 2, Placeholder.Length), 
+                    Console.CursorTop);
+
+                if (!_blinkOn) Console.ForegroundColor = ConsoleColor.Gray;
+                else Console.ResetColor();
+            }
+            
+            Console.Write(_blinkOn && !ReadOnly ? '_' : displayPlaceholder ? Placeholder[0] : ' ');
             // clear old line for backspace
-            if (Value.Length < Width - 3) Console.Write(' ');
+            if (Value.Length < Width - 3)
+            {
+                if (displayPlaceholder) Console.ForegroundColor = ConsoleColor.Gray;
+                else Console.ResetColor();
+                
+                Console.Write(displayPlaceholder && Placeholder?.Length > 1 ? Placeholder[1] : ' ');
+            }
+            
             Console.SetCursorPosition(cursorLeft, cursorTop);
         }
         
