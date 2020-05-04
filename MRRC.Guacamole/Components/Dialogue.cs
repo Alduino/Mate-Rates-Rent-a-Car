@@ -36,6 +36,7 @@ namespace MRRC.Guacamole.Components
                     case ConsoleKey.LeftArrow:
                         _highlightIndex = (_highlightIndex - 1).Mod(Buttons.Length);
                         break;
+                    case ConsoleKey.Tab:
                     case ConsoleKey.RightArrow:
                         _highlightIndex = (_highlightIndex + 1).Mod(Buttons.Length);
                         break;
