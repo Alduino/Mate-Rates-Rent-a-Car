@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using CsvHelper;
-using CsvHelper.Configuration.Attributes;
+using MRRC.Cursive;
 
 namespace MCCR.Data
 {
@@ -49,8 +48,8 @@ namespace MCCR.Data
         public void SaveVehicles()
         {
             using (var writer = new StreamWriter(_fleetDb))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
+                var csv = new CsvWriter(writer, CultureInfo.CurrentCulture);
                 csv.WriteRecords(Vehicles);
             }
         }
@@ -61,8 +60,8 @@ namespace MCCR.Data
         public void SaveRentals()
         {
             using (var writer = new StreamWriter(_rentalDb))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
+                var csv = new CsvWriter(writer, CultureInfo.CurrentCulture);
                 csv.WriteRecords(_rentals.Select(kvp => new Rental
                 {
                     Registration = kvp.Value, 
@@ -79,8 +78,8 @@ namespace MCCR.Data
             if (!File.Exists(_fleetDb)) return;
             
             using (var reader = new StreamReader(_fleetDb))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
                 _vehicles = csv.GetRecords<Vehicle>().ToList();
             }
         }
@@ -93,8 +92,8 @@ namespace MCCR.Data
             if (!File.Exists(_rentalDb)) return;
             
             using (var reader = new StreamReader(_rentalDb))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
                 var rentals = csv.GetRecords<Rental>();
 
                 _rentals.Clear();

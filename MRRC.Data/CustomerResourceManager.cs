@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using CsvHelper;
+using MRRC.Cursive;
 
 namespace MCCR.Data
 {
@@ -27,9 +27,8 @@ namespace MCCR.Data
         public void Save()
         {
             using (var writer = new StreamWriter(_source))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.CultureInfo = CultureInfo.CurrentCulture;
+                var csv = new CsvWriter(writer, CultureInfo.CurrentCulture);
                 csv.WriteRecords(Customers);
             }
         }
@@ -42,9 +41,8 @@ namespace MCCR.Data
             if (!File.Exists(_source)) return;
             
             using (var reader = new StreamReader(_source))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                csv.Configuration.CultureInfo = CultureInfo.CurrentCulture;
+                var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
                 _customers = csv.GetRecords<Customer>().ToList();
             }
         }

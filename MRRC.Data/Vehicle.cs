@@ -1,4 +1,4 @@
-﻿using CsvHelper.Configuration.Attributes;
+﻿using MRRC.Cursive;
 
 namespace MCCR.Data
 {
