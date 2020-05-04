@@ -6,7 +6,7 @@ Zach Barham (n10482661) -- 4th May 2020
 
 ## Building
 
-This project is set up so it can be built in Visual Studio or any other IDEs that support Visual Studio solution files. To build in VS, open the solution (`MateRatesRentACar.sln`), right click the `MatesRatesRentACar` project in the Solution Explorer panel and select Build (the required files will be put in the `bin/Debug`directory).
+This project is set up so it can be built in Visual Studio or any other IDEs that support Visual Studio solution files. To build in VS, open the solution (`MateRatesRentACar.sln`), right click the `MatesRatesRentACar` project in the Solution Explorer panel and select Build (the required files will be put in the `MatesRatesRentACar/bin/Debug`directory).
 
 ## Running
 
@@ -81,3 +81,11 @@ Note that you can press Control+C to kill the application on most terminals, how
 ## VCS
 
 During creating this application, Git was used to keep track of anything, and to provide a (private) backup on Github. You may open the directory in a Git viewer, or contact me (n10482661@qut.edu.au) to request access to the Github repo. Note: my username is Alduino (sometimes with an underscore at the end).
+
+
+
+## Planned to be implemented for Part B:
+
+- Ability to list customers and vehicles
+- Search for customer by other attributes to find the ID
+- Use multiple classes for vehicle types and have updating default values depending on the type
