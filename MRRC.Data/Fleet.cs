@@ -75,7 +75,11 @@ namespace MCCR.Data
         /// </summary>
         public void LoadVehicles()
         {
-            if (!File.Exists(_fleetDb)) return;
+            if (!File.Exists(_fleetDb))
+            {
+                _vehicles = new List<Vehicle>();
+                return;
+            }
             
             using (var reader = new StreamReader(_fleetDb))
             {

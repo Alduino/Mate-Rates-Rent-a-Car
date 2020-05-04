@@ -44,7 +44,11 @@ namespace MCCR.Data
         /// </summary>
         public void Load()
         {
-            if (!File.Exists(_source)) return;
+            if (!File.Exists(_source))
+            {
+                _customers = new List<Customer>();
+                return;
+            }
             
             using (var reader = new StreamReader(_source))
             {
