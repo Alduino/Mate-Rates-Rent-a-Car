@@ -10,10 +10,8 @@ namespace MRRC.Cursive
 {
     public class CsvReader
     {
-        // From https://stackoverflow.com/a/57121244
-        private static readonly Regex CsvLineRegex =
-            new Regex(
-                "(?<=\")[^\"]+?(?=\"(?:s*?,|s*?$))|(?<=(?:^|,)s*?)(?:[^,\"s][^,\"]*[^,\"s])|(?:[^,\"s])(?![^\"]*?\"(?:s*?,|s*?$))(?=s*?(?:,|$))");
+        // From https://stackabuse.com/regex-splitting-by-character-unless-in-quotes/
+        private static readonly Regex CsvLineRegex = new Regex(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
         
         private static IEnumerable<PropertyInfo> GetProperties<T>(IReadOnlyList<string> headers)
         {
@@ -65,17 +63,17 @@ namespace MRRC.Cursive
             var lineNum = 0;
             while ((line = _reader.ReadLine()) != null)
             {
-                var parts = CsvLineRegex.Matches(line);
+                var parts = CsvLineRegex.Split(line);
                 
-                if (parts.Count != headers.Length) 
-                    throw new IndexOutOfRangeException($"Expecting {headers.Length} columns, got {parts.Count} (l{lineNum})");
+                if (parts.Length != headers.Length) 
+                    throw new IndexOutOfRangeException($"Expecting {headers.Length} columns, got {parts.Length} (l{lineNum})");
 
                 var obj = Activator.CreateInstance<T>();
 
                 for (var i = 0; i < headers.Length; i++)
                 {
                     var prop = properties[i];
-                    var part = parts[i].Value;
+                    var part = parts[i];
 
                     var value = GetValue(prop.PropertyType, part);
                     prop.SetValue(obj, value);
