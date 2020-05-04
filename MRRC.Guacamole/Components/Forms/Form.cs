@@ -157,14 +157,14 @@ namespace MRRC.Guacamole.Components.Forms
             var yOffset = 0;
             foreach (var item in _items)
             {
-                var (_, textHeight) = DrawUtil.MeasureText(item.Title);
+                var textSize = DrawUtil.MeasureText(item.Title);
 
                 if (active) Console.ResetColor();
                 else Console.ForegroundColor = ConsoleColor.DarkGray;
                 DrawUtil.Text(x + 1, y + yOffset + item.Component.Height / 2 + 1, $"{item.Title}:");
                 item.Component.Render(state, x + maxTextWidth + 2, y + yOffset + 1);
 
-                yOffset += Math.Max(textHeight, item.Component.Height);
+                yOffset += Math.Max(textSize.Height, item.Component.Height);
             }
             
             _submit.Render(state, x + 1, yOffset + 1);

@@ -6,6 +6,18 @@ namespace MRRC.Guacamole
 {
     public static class DrawUtil
     {
+        public readonly struct Size
+        {
+            public Size(int width, int height)
+            {
+                Width = width;
+                Height = height;
+            }
+
+            public int Width { get; }
+            public int Height { get; }
+        }
+    
         public static string Repeat(this char character, int count)
         {
             return new string(character, count);
@@ -90,11 +102,11 @@ namespace MRRC.Guacamole
         /// <summary>
         /// Returns the width and height of the supplied text
         /// </summary>
-        public static (int Width, int Height) MeasureText(string text)
+        public static Size MeasureText(string text)
         {
             var lines = text.Split('\n');
             var maxWidth = lines.Max(line => line.Length);
-            return (maxWidth, lines.Length);
+            return new Size(maxWidth, lines.Length);
         }
     }
 }
