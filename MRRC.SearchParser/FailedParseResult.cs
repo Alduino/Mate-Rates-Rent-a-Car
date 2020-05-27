@@ -12,6 +12,9 @@ namespace MRRC.SearchParser
             Result = default;
         }
 
+        public FailedParseResult(Token.Type expected, Token.Match found, string help) :
+            this(new[] {expected}, found, help) {}
+
         public bool Successful => false;
         public object Result { get; }
         public string Message => $"Expected {string.Join(", ", ExpectedTokens)}, found {FoundToken.Type}. {Help}";
