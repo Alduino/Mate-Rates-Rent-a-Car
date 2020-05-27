@@ -38,6 +38,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="FailedParseResult.cs" />
         <Compile Include="IMatcher.cs" />
         <Compile Include="Matcher\LiteralMatcher.cs" />
         <Compile Include="Matcher\RegexMatcher.cs" />
