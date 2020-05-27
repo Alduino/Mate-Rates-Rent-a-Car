@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Data", "MRRC.Data\MRRC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.Cursive", "MRRC.Cursive\MRRC.Cursive.csproj", "{F1DC15CA-E2C9-4F19-B887-F74165615466}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRRC.SearchParser", "MRRC.SearchParser\MRRC.SearchParser.csproj", "{ED4F9423-F221-4C7C-BE4F-E0BBDC1D3A98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1DC15CA-E2C9-4F19-B887-F74165615466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED4F9423-F221-4C7C-BE4F-E0BBDC1D3A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED4F9423-F221-4C7C-BE4F-E0BBDC1D3A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED4F9423-F221-4C7C-BE4F-E0BBDC1D3A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED4F9423-F221-4C7C-BE4F-E0BBDC1D3A98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
