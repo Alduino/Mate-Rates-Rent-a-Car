@@ -1,12 +1,71 @@
+using System;
 using System.Collections.Generic;
 
 namespace MRRC.SearchParser.Parts
 {
-    public readonly struct Expression
+    public class Expression
     {
-        public static IParseResult<Expression> Parse(IEnumerator<Token.Match> tokens)
+        private static IParseResult<Expression> ParseValue(LLEnumerator<Token.Match> tokens)
         {
+            var a = Value.Parse(tokens);
+            if (a is FailedParseResult<Value> aFailure) return aFailure.Cast<Expression>();
+
+            if (tokens.LookAhead().Type != Token.Type.And && tokens.LookAhead().Type != Token.Type.Or)
+                return a.Then(v => new Expression(v));
             
+            var conjunction = Conjunction.Parse(tokens);
+            var b = Value.Parse(tokens);
+
+            return a.AndThen(conjunction, b, (aR, cR, bR) => new Expression(aR, cR, bR));
+
         }
+
+        /// <summary>
+        /// Parses an expression, which can be a value or two expressions separated by an AND or OR.
+        /// May also start with an open bracket, which will just parse the expression inside.
+        /// </summary>
+        /// <param name="tokens">List of tokens from tokeniser</param>
+        /// <returns>Expression result</returns>
+        public static IParseResult<Expression> Parse(LLEnumerator<Token.Match> tokens)
+        {
+            switch (tokens.LookAhead().Type)
+            {
+                case Token.Type.Not:
+                case Token.Type.Value:
+                    return ParseValue(tokens);
+                case Token.Type.OpenBracket:
+                    tokens.Next();
+                    var res = Parse(tokens);
+                    var next = tokens.Next();
+                    if (next.Type != Token.Type.CloseBracket)
+                        return new FailedParseResult<Expression>(Token.Type.CloseBracket, next,
+                            "A closing bracket should be used after an expression that started with " +
+                            "an opening bracket.");
+                    return res;
+                default:
+                    return new FailedParseResult<Expression>(
+                        new [] {Token.Type.Not, Token.Type.Value, Token.Type.OpenBracket},
+                        tokens.LookAhead(), "An expression should start with NOT, (, or a value.");
+            }
+        }
+
+        private Expression(Value val)
+        {
+            A = val;
+            HasConjunction = false;
+        }
+
+        private Expression(Value a, Conjunction conjunction, Value b)
+        {
+            A = a;
+            Conjunction = conjunction;
+            B = b;
+            HasConjunction = true;
+        }
+
+        public Value A { get; }
+        public Conjunction Conjunction { get; }
+        public Value B { get; }
+        public bool HasConjunction { get; }
     }
 }
