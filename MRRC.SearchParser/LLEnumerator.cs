@@ -63,12 +63,16 @@ namespace MRRC.SearchParser
 
             if (count <= _lookedAt.Length) return _lookedAt[count - 1];
             
+            var tempItems = new RollingEnumerator<T>();
+            
             for (var i = 0; i < count; i++)
             {
                 var canLookAhead = MoveNext();
                 if (!canLookAhead) throw new IndexOutOfRangeException("Reached end of enumerator");
-                _lookedAt.Push(Current);
+                tempItems.Push(Current);
             }
+
+            tempItems.PrependInto(_lookedAt);
             
             return Current;
         }
