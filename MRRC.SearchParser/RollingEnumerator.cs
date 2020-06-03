@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace MRRC.SearchParser
@@ -9,7 +11,7 @@ namespace MRRC.SearchParser
     /// <remarks>
     /// Provides O(1) pushing and shifting, and O(n) indexing.
     /// </remarks>
-    public class RollingEnumerator<T>
+    public class RollingEnumerator<T> : IEnumerable<T>
     {
         private class Item
         {
@@ -111,5 +113,17 @@ namespace MRRC.SearchParser
             get => Get(index);
             set => Set(index, value);
         }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            var next = _first;
+            while (next != null)
+            {
+                yield return next.Value;
+                next = next.Next;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
