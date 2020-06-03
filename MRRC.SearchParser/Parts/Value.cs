@@ -19,7 +19,9 @@ namespace MRRC.SearchParser.Parts
             }
             
             if (token.Type != Token.Type.Value) 
-                return new FailedParseResult<Value>(Token.Type.Value, token, "");
+                return new FailedParseResult<Value>(Token.Type.Value, token, 
+                    "Expecting a value type here - can be any text that isn't a keyword, or text surrounded by" +
+                    "double quotes.");
             
             return new SuccessfulParseResult<Value>(new Value(inverted, token.Content));
         }
