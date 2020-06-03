@@ -121,6 +121,7 @@ namespace MRRC.SearchParser
         /// </summary>
         public void PrependInto(RollingEnumerator<T> other)
         {
+            if (other == this) throw new ArgumentException("Cannot prepend a list into itself", nameof(other));
             _last.Next = other._first;
             _last = other._last;
             other._first = _first;
