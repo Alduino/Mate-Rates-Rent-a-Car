@@ -17,6 +17,8 @@ namespace MRRC.SearchParser
         private Item _first;
         private Item _last;
 
+        public int Length { get; private set; }
+
         public bool Shift(out T result)
         {
             if (_first == null)
@@ -24,7 +26,9 @@ namespace MRRC.SearchParser
                 result = default;
                 return false;
             }
-            
+
+            Length--;
+
             var value = _first.Value;
             _first = _first.Next;
             result = value;
@@ -36,6 +40,8 @@ namespace MRRC.SearchParser
             var item = new Item(value, null);
             _last.Next = item;
             _last = item;
+            if (_first == null) _first = item;
+            Length++;
         }
 
         public bool HasItems() => _first != null;
