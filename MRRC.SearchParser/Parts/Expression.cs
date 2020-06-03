@@ -1,20 +1,17 @@
-using System;
-using System.Collections.Generic;
-
 namespace MRRC.SearchParser.Parts
 {
-    public class Expression
+    public class Expression : IMatchable
     {
         private static IParseResult<Expression> ParseValue(LLEnumerator<Token.Match> tokens)
         {
-            var a = Value.Parse(tokens);
+            var a = Parts.Value.Parse(tokens);
             if (a is FailedParseResult<Value> aFailure) return aFailure.Cast<Expression>();
 
             if (tokens.LookAhead().Type != Token.Type.And && tokens.LookAhead().Type != Token.Type.Or)
                 return a.Then(v => new Expression(v));
             
             var conjunction = Conjunction.Parse(tokens);
-            var b = Value.Parse(tokens);
+            var b = Parts.Value.Parse(tokens);
 
             return a.AndThen(conjunction, b, (aR, cR, bR) => new Expression(aR, cR, bR));
 
@@ -51,21 +48,20 @@ namespace MRRC.SearchParser.Parts
 
         private Expression(Value val)
         {
-            A = val;
-            HasConjunction = false;
+            Value = new SingleMatchable(val);
         }
 
         private Expression(Value a, Conjunction conjunction, Value b)
         {
-            A = a;
-            Conjunction = conjunction;
-            B = b;
-            HasConjunction = true;
+            Value = new ConjunctionMatchable(
+                new SingleMatchable(a),
+                conjunction,
+                new SingleMatchable(b)
+            );
         }
+        
+        public IMatchable Value { get; }
 
-        public Value A { get; }
-        public Conjunction Conjunction { get; }
-        public Value B { get; }
-        public bool HasConjunction { get; }
+        public string[] Matches(string[] options) => Value.Matches(options);
     }
 }
