@@ -29,6 +29,18 @@ namespace MRRC.SearchParser
             Current = _base.Current;
             return res;
         }
+
+        private bool MoveNext(out bool fromCache)
+        {
+            if (_lookedAt.HasItems())
+            {
+                fromCache = true;
+                return MoveLookAhead();
+            }
+
+            fromCache = false;
+            return MoveBase();
+        }
         
         public LLEnumerator(IEnumerator<T> @base)
         {
