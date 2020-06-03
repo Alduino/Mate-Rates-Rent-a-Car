@@ -45,6 +45,7 @@
         <Compile Include="Matcher\RegexMatcher.cs" />
         <Compile Include="MrrcParser.cs" />
         <Compile Include="IParseResult.cs" />
+        <Compile Include="Parts\Conjunction.cs" />
         <Compile Include="Parts\Expression.cs" />
         <Compile Include="Parts\Value.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
