@@ -10,7 +10,8 @@ namespace MRRC.SearchParser
         /// </summary>
         public enum Type
         {
-            AddSub,
+            And,
+            Or,
             Not,
             Value,
             OpenBracket,
@@ -18,7 +19,8 @@ namespace MRRC.SearchParser
         }
 
         public static IMatcher[] TokenTypes { get; } = {
-            new RegexMatcher(Type.AddSub, "^\\+|-"),
+            new RegexMatcher(Type.And, "^AND"),
+            new RegexMatcher(Type.Or, "^OR"),
             new LiteralMatcher(Type.Not, "NOT"),
             // following regex from https://stackoverflow.com/a/30737232
             new RegexMatcher(Type.Value, "^\"(?:[^\"\\\\]*(?:\\\\.)?)*\""),
