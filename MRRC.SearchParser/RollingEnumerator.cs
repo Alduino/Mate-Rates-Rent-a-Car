@@ -62,9 +62,17 @@ namespace MRRC.SearchParser
         }
 
         /// <summary>
+        /// Inserts a new item at the start of the list
+        /// </summary>
+        public void Unshift(T value)
+        {
+            _first = new Item(value, _first);
+            Length++;
+        }
+
+        /// <summary>
         /// Appends an item to the end of the list
         /// </summary>
-        /// <param name="value"></param>
         public void Push(T value)
         {
             var item = new Item(value, null);
