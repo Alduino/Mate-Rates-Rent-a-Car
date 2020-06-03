@@ -19,8 +19,8 @@ namespace MRRC.SearchParser
         }
 
         public static IMatcher[] TokenTypes { get; } = {
-            new RegexMatcher(Type.And, "^AND"),
-            new RegexMatcher(Type.Or, "^OR"),
+            new LiteralMatcher(Type.And, "AND"),
+            new LiteralMatcher(Type.Or, "OR"),
             new LiteralMatcher(Type.Not, "NOT"),
             // following regex from https://stackoverflow.com/a/30737232
             new RegexMatcher(Type.Value, "^\"(?:[^\"\\\\]*(?:\\\\.)?)*\""),
