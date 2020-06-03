@@ -48,6 +48,8 @@ namespace MRRC.SearchParser
         public T LookAhead(int count = 1)
         {
             if (count < 1) throw new ArgumentOutOfRangeException(nameof(count), "Count must be at least 1");
+
+            if (count <= _lookedAt.Length) return _lookedAt[count - 1];
             
             for (var i = 0; i < count; i++)
             {
