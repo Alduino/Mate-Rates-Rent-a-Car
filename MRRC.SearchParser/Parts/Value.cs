@@ -4,6 +4,9 @@ namespace MRRC.SearchParser.Parts
 {
     public class Value
     {
+        /// <summary>
+        /// Parses a value or an inverted value
+        /// </summary>
         public static IParseResult<Value> Parse(IEnumerator<Token.Match> tokens)
         {
             var token = tokens.Next();
