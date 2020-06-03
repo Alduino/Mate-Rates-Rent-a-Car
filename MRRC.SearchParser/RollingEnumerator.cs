@@ -114,6 +114,20 @@ namespace MRRC.SearchParser
             set => Set(index, value);
         }
 
+        /// <summary>
+        /// Inserts this list into the start of the other list. Note that this modifies both lists, which will become
+        /// equal after this operation. Do not use both instances after this if you need to access lengths, as they will
+        /// become out of sync with the data.
+        /// </summary>
+        public void Prepend(RollingEnumerator<T> other)
+        {
+            _last.Next = other._first;
+            _last = other._last;
+            other._first = _first;
+            Length += other.Length;
+            other.Length = Length;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             var next = _first;
