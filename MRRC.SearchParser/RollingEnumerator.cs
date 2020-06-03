@@ -119,7 +119,7 @@ namespace MRRC.SearchParser
         /// equal after this operation. Do not use both instances after this if you need to access lengths, as they will
         /// become out of sync with the data.
         /// </summary>
-        public void Prepend(RollingEnumerator<T> other)
+        public void PrependInto(RollingEnumerator<T> other)
         {
             _last.Next = other._first;
             _last = other._last;
