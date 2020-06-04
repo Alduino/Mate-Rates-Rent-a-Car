@@ -11,10 +11,10 @@ namespace MRRC.SearchParser.Parts
                 return a.Then(v => new Expression(v));
             
             var conjunction = Conjunction.Parse(tokens);
-            var b = Parts.Value.Parse(tokens);
+
+            var b = Parse(tokens);
 
             return a.AndThen(conjunction, b, (aR, cR, bR) => new Expression(aR, cR, bR));
-
         }
 
         /// <summary>
@@ -57,6 +57,15 @@ namespace MRRC.SearchParser.Parts
                 new SingleMatchable(a),
                 conjunction,
                 new SingleMatchable(b)
+            );
+        }
+
+        private Expression(Value a, Conjunction conjunction, IMatchable b)
+        {
+            Value = new ConjunctionMatchable(
+                new SingleMatchable(a),
+                conjunction,
+                b
             );
         }
         
