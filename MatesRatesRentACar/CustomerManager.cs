@@ -22,6 +22,18 @@ namespace MateRatesRentACar
         private readonly Fleet _fleet;
 
         [MenuItem]
+        public OneOf CustomerSearch { get; } = new OneOf(new Dictionary<string, Component>
+        {
+            {
+                "search",
+                new Form("Find Customer", new []
+                {
+                    new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())), 
+                }, new Button("Submit"))
+            }
+        }, "search", "Find Customer");
+
+        [MenuItem]
         public Form AddCustomer { get; } = new Form("Add Customer", new []
         {
             new Form.Item("Title", new TextBox()),
