@@ -15,7 +15,7 @@ namespace MateRatesRentACar
         {
             {Token.Type.And, ConsoleColor.Green},
             {Token.Type.Or, ConsoleColor.Green},
-            {Token.Type.Not, ConsoleColor.DarkGreen},
+            {Token.Type.Not, ConsoleColor.Cyan},
             {Token.Type.Value, ConsoleColor.Gray},
             {Token.Type.OpenBracket, ConsoleColor.Blue},
             {Token.Type.CloseBracket, ConsoleColor.Blue},
