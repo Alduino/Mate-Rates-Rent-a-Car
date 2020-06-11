@@ -13,7 +13,7 @@ namespace MRRC.SearchParser
 
         private IMatcher[] Matchers { get; }
 
-        public IEnumerable<Token.Match> Tokenise(string source)
+        public IEnumerable<Token.Match> Tokenise(string source, bool neverFail = false)
         {
             var sourceLeft = source;
 
@@ -24,7 +24,15 @@ namespace MRRC.SearchParser
                     .FirstOrDefault(v => v.Item2 > 0);
 
                 var index = source.Length - sourceLeft.Length;
-                if (match == null) throw new TokenException($"Invalid token at {index}", index);
+                if (match == null)
+                {
+                    if (!neverFail) throw new TokenException($"Invalid token at {index}", index);
+                    
+                    yield return new Token.Match(Token.Type.Invalid, 
+                        sourceLeft.Substring(0, 1), source, index);
+                    sourceLeft = sourceLeft.Substring(1);
+                    continue;
+                }
 
                 var matchText = sourceLeft.Substring(0, match.Item2);
                 sourceLeft = sourceLeft.Substring(match.Item2);
