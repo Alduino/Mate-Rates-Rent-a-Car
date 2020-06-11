@@ -24,7 +24,7 @@ namespace MRRC.SearchParser
             new LiteralMatcher(Type.Or, "OR"),
             new LiteralMatcher(Type.Not, "NOT"),
             // following regex from https://stackoverflow.com/a/30737232
-            new RegexMatcher(Type.Value, "^\"(?:[^\"\\\\]*(?:\\\\.)?)*\""),
+            new RegexMatcher(Type.Value, "^(?:\"(?:[^\"\\\\]*(?:\\\\.)?)*\")|^\\w+"),
             new LiteralMatcher(Type.OpenBracket, "("),
             new LiteralMatcher(Type.CloseBracket, ")")
         };
