@@ -85,6 +85,13 @@ namespace MRRC.SearchParser
             return Current;
         }
 
+        public bool ReachedEnd()
+        {
+            var canLookAhead = MoveNext();
+            if (canLookAhead) _lookedAt.Unshift(Current);
+            return !canLookAhead;
+        }
+
         public T Current { get; private set; }
 
         object IEnumerator.Current => Current;
