@@ -13,7 +13,7 @@ namespace MRRC.SearchParser
 
         private IMatcher[] Matchers { get; }
 
-        public IEnumerable<Token.Match> Tokenise(string source, bool neverFail = false)
+        public IEnumerable<Token.Match> Tokenise(string source, bool neverFail = false, bool skipWhitespace = true)
         {
             var sourceLeft = source;
 
@@ -36,7 +36,8 @@ namespace MRRC.SearchParser
 
                 var matchText = sourceLeft.Substring(0, match.Item2);
                 sourceLeft = sourceLeft.Substring(match.Item2);
-                
+
+                if (skipWhitespace && match.Item1 == Token.Type.Whitespace) continue;
                 yield return new Token.Match(match.Item1, matchText, source, index);
             }
         }
