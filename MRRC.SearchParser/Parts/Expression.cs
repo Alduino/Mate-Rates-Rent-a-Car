@@ -7,7 +7,7 @@ namespace MRRC.SearchParser.Parts
             var a = Parts.Value.Parse(tokens);
             if (a is FailedParseResult<Value> aFailure) return aFailure.Cast<Expression>();
 
-            if (tokens.LookAhead().Type != Token.Type.And && tokens.LookAhead().Type != Token.Type.Or)
+            if (tokens.ReachedEnd() || tokens.LookAhead().Type != Token.Type.And && tokens.LookAhead().Type != Token.Type.Or)
                 return a.Then(v => new Expression(v));
             
             var conjunction = Conjunction.Parse(tokens);
