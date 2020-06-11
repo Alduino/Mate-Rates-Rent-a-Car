@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MRRC.SearchParser.Parts;
 
 namespace MRRC.SearchParser
 {
@@ -14,5 +15,8 @@ namespace MRRC.SearchParser
         private string Source { get; }
 
         public IEnumerable<Token.Match> Tokenise() => Tokeniser.Tokenise(Source);
+
+        public IParseResult<Expression> Parse(IEnumerable<Token.Match> tokens) =>
+            Expression.Parse(tokens.GetLLEnumerator());
     }
 }
