@@ -51,7 +51,7 @@ namespace MateRatesRentACar
         /// <inheritdoc cref="TextBox{TRenderHookState}.IContentsRenderer.Render"/>
         public void Render(bool active, TextBox<State> textBox, State state, int startOffset)
         {
-            var text = textBox.Value.Substring(startOffset).ToUpperInvariant();
+            var text = textBox.Value.ToUpperInvariant();
             var parser = new MrrcParser(text);
 
             var tokens = parser.Tokenise(true, false);
@@ -59,11 +59,15 @@ namespace MateRatesRentACar
             var lastIndex = 0;
             foreach (var token in tokens)
             {
+                var startedBefore = lastIndex <= startOffset;
+                
                 var source = text.Substring(lastIndex, token.Content.Length);
                 lastIndex += token.Content.Length;
 
+                if (lastIndex <= startOffset) continue;
+
                 Console.ForegroundColor = TokenColours[token.Type];
-                Console.Write(source);
+                Console.Write(startedBefore ? source.Substring(startOffset - lastIndex + source.Length) : source);
             }
         }
     }
