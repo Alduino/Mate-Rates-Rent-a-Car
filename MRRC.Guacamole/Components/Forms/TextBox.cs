@@ -32,17 +32,18 @@ namespace MRRC.Guacamole.Components.Forms
             /// <param name="active">When this is true, the text box is highlighted</param>
             /// <param name="textBox">The text box that this is connected to</param>
             /// <param name="state">State returned from <see cref="RequiresRender"/></param>
-            void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state);
+            /// <param name="startOffset">The offset that the text rendering should start at to fit the input</param>
+            void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state, int startOffset);
         }
 
         private class DefaultContentsRenderer : IContentsRenderer
         {
             public bool RequiresRender(string newText, ref TRenderHookState state) => false;
 
-            public void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state)
+            public void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state, int startOffset)
             {
                 Console.Write(
-                    textBox.Value.Substring(Math.Max(0, textBox.Value.Length - textBox.Width + 3)), 
+                    textBox.Value.Substring(startOffset), 
                     textBox.Value.Length);
             }
         }
@@ -252,8 +253,9 @@ namespace MRRC.Guacamole.Components.Forms
             }
             else 
             {
+                var startOffset = Math.Max(0, Value.Length - Width + 3);
                 Console.ResetColor();
-                _contentsRenderer.Render(active, this, _renderHookState);
+                _contentsRenderer.Render(active, this, _renderHookState, startOffset);
                 Console.ResetColor();
             }
 
