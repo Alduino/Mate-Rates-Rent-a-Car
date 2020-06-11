@@ -8,6 +8,8 @@ using MRRC.Guacamole;
 using MRRC.Guacamole.Components;
 using MRRC.Guacamole.Components.Forms;
 using MRRC.Guacamole.MenuGeneration;
+using MRRC.SearchParser;
+using MRRC.SearchParser.Parts;
 
 namespace MateRatesRentACar
 {
@@ -25,13 +27,21 @@ namespace MateRatesRentACar
         public OneOf CustomerSearch { get; } = new OneOf(new Dictionary<string, Component>
         {
             {
-                "search",
+                "initial search",
                 new Form("Find Customer", new []
                 {
                     new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())), 
                 }, new Button("Submit"))
+            },
+            {
+                "customer list",
+                new Form("Find Customer", new []
+                {
+                    new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())),
+                    new Form.Item("Results", new Select(new [] { "Select one" }).WithDefault("Select one"))
+                }, new Button("Select"))
             }
-        }, "search", "Find Customer");
+        }, "initial search", "Find Customer");
 
         [MenuItem]
         public Form AddCustomer { get; } = new Form("Add Customer", new []
@@ -93,10 +103,48 @@ namespace MateRatesRentACar
             _crm = crm;
             _fleet = fleet;
             AddCustomer.Submitted += AddCustomerOnSubmitted;
+            CustomerSearch.GetComponent<Form>("initial search").Submitted += CustomerSearchOnSearch;
+            CustomerSearch.GetComponent<Form>("customer list").Submitted += CustomerListOnSearch;
             ModifyCustomer.GetComponent<Form>("search").Submitted += ModifyCustomerOnSearch;
             ModifyCustomer.GetComponent<Form>("modify").Submitted += ModifyCustomerOnSubmitted;
             DeleteCustomer.GetComponent<Form>("select").Submitted += DeleteCustomerOnSearch;
             DeleteCustomer.GetComponent<Form>("confirm").Submitted += DeleteCustomerOnSubmitted;
+        }
+
+        private void CustomerListOnSearch(object sender, Form.SubmittedEventArgs e)
+        {
+            if (e.Data.Get<string>("Results") == "Select one")
+            {
+                CustomerSearchOnSearch(sender, e);
+                return;
+            }
+            
+            
+        }
+
+        private void CustomerSearchOnSearch(object sender, Form.SubmittedEventArgs e)
+        {
+            var options = _crm.Customers.Select(c => new[]
+            {
+                c.Id.ToString(),
+                c.Title.ToString(),
+                c.GivenNames,
+                c.Surname,
+                c.Gender.ToString()
+            }).SelectMany(it => it).ToArray();
+            
+            var parser = new MrrcParser(e.Data.Get<string>("Search"));
+            var result = parser.Parse(parser.Tokenise());
+
+            if (result is FailedParseResult<Expression> failure)
+            {
+                e.Result = failure.Message;
+                return;
+            }
+
+            var success = (SuccessfulParseResult<Expression>) result;
+
+            success.Result.Matches(options);
         }
 
         private void DeleteCustomerOnSubmitted(object sender, Form.SubmittedEventArgs e)
