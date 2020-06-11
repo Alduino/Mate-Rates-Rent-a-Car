@@ -78,7 +78,7 @@ namespace MRRC.SearchParser
         public void Push(T value)
         {
             var item = new Item(value, null);
-            _last.Next = item;
+            if (_last != null) _last.Next = item;
             _last = item;
             if (_first == null) _first = item;
             Length++;
