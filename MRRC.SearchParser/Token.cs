@@ -16,6 +16,7 @@ namespace MRRC.SearchParser
             Value,
             OpenBracket,
             CloseBracket,
+            Invalid
         }
 
         public static IMatcher[] TokenTypes { get; } = {
