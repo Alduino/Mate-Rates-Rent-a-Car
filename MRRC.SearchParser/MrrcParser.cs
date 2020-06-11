@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace MRRC.SearchParser
 {
-    public class Parser
+    public class MrrcParser
     {
         private static readonly Tokeniser Tokeniser = new Tokeniser(Token.TokenTypes);
 
-        public Parser(string source)
+        public MrrcParser(string source)
         {
             Source = source;
         }
