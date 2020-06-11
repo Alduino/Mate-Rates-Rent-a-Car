@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 namespace MRRC.SearchParser
 {
+    public static class LLUtils
+    {
+        public static LLEnumerator<T> GetLLEnumerator<T>(this IEnumerable<T> enumerable)
+        {
+            return new LLEnumerator<T>(enumerable.GetEnumerator());
+        }
+    }
+    
     /// <summary>
     /// Infinite and lazy look-ahead enumerator
     /// </summary>
