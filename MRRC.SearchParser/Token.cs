@@ -17,7 +17,8 @@ namespace MRRC.SearchParser
             OpenBracket,
             CloseBracket,
             Whitespace,
-            Invalid
+            Invalid,
+            NonTerminatedString
         }
 
         public static IMatcher[] TokenTypes { get; } = {
@@ -25,6 +26,7 @@ namespace MRRC.SearchParser
             new LiteralMatcher(Type.Or, "OR"),
             new LiteralMatcher(Type.Not, "NOT"),
             new RegexMatcher(Type.Value, "^\"(?:[^\"]|\"\")*\"|^\\w+"),
+            new RegexMatcher(Type.NonTerminatedString, "^\"(?:[^\"]|\"\")*"),
             new RegexMatcher(Type.Whitespace, "^\\s+"),
             new LiteralMatcher(Type.OpenBracket, "("),
             new LiteralMatcher(Type.CloseBracket, ")")
