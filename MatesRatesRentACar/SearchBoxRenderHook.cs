@@ -19,6 +19,7 @@ namespace MateRatesRentACar
             {Token.Type.Value, ConsoleColor.Gray},
             {Token.Type.OpenBracket, ConsoleColor.Blue},
             {Token.Type.CloseBracket, ConsoleColor.Blue},
+            {Token.Type.Whitespace, ConsoleColor.Black},
             {Token.Type.Invalid, ConsoleColor.DarkRed}
         };
         
@@ -52,7 +53,7 @@ namespace MateRatesRentACar
             var text = textBox.Value.Substring(startOffset).ToUpperInvariant();
             var parser = new MrrcParser(text);
 
-            var tokens = parser.Tokenise(true);
+            var tokens = parser.Tokenise(true, false);
 
             var lastIndex = 0;
             foreach (var token in tokens)
