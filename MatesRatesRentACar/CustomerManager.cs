@@ -149,14 +149,8 @@ namespace MateRatesRentACar
 
         private void DeleteCustomerOnSubmitted(object sender, Form.SubmittedEventArgs e)
         {
-            if (!_crm.RemoveCustomer(int.Parse(e.Data.Get<string>("ID"))))
-            {
-                e.Result = "Could not delete";
-            }
-            else
-            {
-                e.Result = "Deleted customer";
-            }
+            e.Result = _crm.RemoveCustomer(int.Parse(e.Data.Get<string>("ID")))
+                ? "Deleted customer" : "Could not delete";
         }
 
         private void DeleteCustomerOnSearch(object sender, Form.SubmittedEventArgs e)
