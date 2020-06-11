@@ -20,7 +20,8 @@ namespace MateRatesRentACar
             {Token.Type.OpenBracket, ConsoleColor.Blue},
             {Token.Type.CloseBracket, ConsoleColor.Blue},
             {Token.Type.Whitespace, ConsoleColor.Black},
-            {Token.Type.Invalid, ConsoleColor.DarkRed}
+            {Token.Type.Invalid, ConsoleColor.DarkRed},
+            {Token.Type.NonTerminatedString, ConsoleColor.DarkRed}
         };
         
         /// <summary>
