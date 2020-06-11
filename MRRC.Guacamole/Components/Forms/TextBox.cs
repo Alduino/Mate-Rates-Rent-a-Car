@@ -6,8 +6,47 @@ namespace MRRC.Guacamole.Components.Forms
     /// <summary>
     /// A box that allows user input
     /// </summary>
-    public class TextBox : Component, IInput<string>
+    public class TextBox<TRenderHookState> : Component, IInput<string>
     {
+        /// <summary>
+        /// Hooks can be used on text boxes to do custom rendering
+        /// </summary>
+        public interface IContentsRenderer
+        {
+            /// <summary>
+            /// Called whenever a key is pressed in the text box
+            /// </summary>
+            /// <param name="newText">The new text in the text box</param>
+            /// <param name="state">Some state to pass to Render. Initialised as default</param>
+            /// <returns>True to trigger the <see cref="Render"/> function</returns>
+            bool RequiresRender(string newText, ref TRenderHookState state);
+            
+            /// <summary>
+            /// Called to render new text. Should render text with the same length, and shouldn't move the cursor.
+            /// </summary>
+            /// <remarks>
+            /// This method will be called on every render, even if it was not triggered by
+            /// <see cref="RequiresRender"/>. You may wish to set a property on <see cref="TRenderHookState"/> if you only want
+            /// to run this when RequiresRender has been called.
+            /// </remarks>
+            /// <param name="active">When this is true, the text box is highlighted</param>
+            /// <param name="textBox">The text box that this is connected to</param>
+            /// <param name="state">State returned from <see cref="RequiresRender"/></param>
+            void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state);
+        }
+
+        private class DefaultContentsRenderer : IContentsRenderer
+        {
+            public bool RequiresRender(string newText, ref TRenderHookState state) => false;
+
+            public void Render(bool active, TextBox<TRenderHookState> textBox, TRenderHookState state)
+            {
+                Console.Write(
+                    textBox.Value.Substring(Math.Max(0, textBox.Value.Length - textBox.Width + 3)), 
+                    textBox.Value.Length);
+            }
+        }
+        
         /// <summary>
         /// Text that is displayed above the input, or empty to not display it
         /// </summary>
@@ -53,9 +92,14 @@ namespace MRRC.Guacamole.Components.Forms
         private readonly Timer _blinkTimer = new Timer(300);
         private bool _blinkOn;
 
-        public TextBox(string label = "")
+        private IContentsRenderer _contentsRenderer;
+        private TRenderHookState _renderHookState;
+
+        public TextBox(string label = "", IContentsRenderer contentsRenderer = null)
         {
             Label = label;
+
+            _contentsRenderer = contentsRenderer ?? new DefaultContentsRenderer();
 
             Focused += (_, ev) => ev.Cancel = false;
             KeyPressed += UpdateValue;
@@ -100,6 +144,11 @@ namespace MRRC.Guacamole.Components.Forms
             
             Console.SetCursorPosition(cursorLeft, cursorTop);
         }
+
+        private void TriggerRenderHook(KeyPressEvent e)
+        {
+            if (_contentsRenderer.RequiresRender(Value, ref _renderHookState)) e.Rerender = true;
+        }
         
         private void UpdateValue(object sender, KeyPressEvent e)
         {
@@ -108,7 +157,7 @@ namespace MRRC.Guacamole.Components.Forms
             
             // keep the cursor visible while typing
             _blinkOn = true;
-            
+
             switch (e.Key.Key)
             {
                 case ConsoleKey.UpArrow:
@@ -140,6 +189,8 @@ namespace MRRC.Guacamole.Components.Forms
 
                     if (Placeholder.Length > 0 && Value.Length == 0) e.Rerender = true;
                     if (Value.Length > Width - 4) e.Rerender = true;
+
+                    TriggerRenderHook(e);
                     return;
                 }
                 case ConsoleKey.Tab:
@@ -182,6 +233,8 @@ namespace MRRC.Guacamole.Components.Forms
             {
                 DrawCursor();
             }
+
+            TriggerRenderHook(e);
         }
 
         protected override void Draw(int x, int y, bool active, ApplicationState state)
@@ -197,9 +250,11 @@ namespace MRRC.Guacamole.Components.Forms
                 Console.Write(Placeholder);
                 Console.ResetColor();
             }
-            else
+            else 
             {
-                Console.Write(Value.Substring(Math.Max(0, Value.Length - Width + 3)), Value.Length);
+                Console.ResetColor();
+                _contentsRenderer.Render(active, this, _renderHookState);
+                Console.ResetColor();
             }
 
             if (state.ActiveComponent == this) DrawCursor();
@@ -211,6 +266,16 @@ namespace MRRC.Guacamole.Components.Forms
         {
             Value = (string) val;
             TriggerRender();
+        }
+    }
+
+    /// <summary>
+    /// Non-generic version of <see cref="TextBox{TRenderHookState}"/>, doesn't allow a render hook to be passed
+    /// </summary>
+    public class TextBox : TextBox<object>
+    {
+        public TextBox(string label = "") : base(label)
+        {
         }
     }
 }
