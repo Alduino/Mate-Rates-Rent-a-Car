@@ -155,16 +155,21 @@ namespace MateRatesRentACar
 
             var matches = success.Result.Matches(options);
 
-            if (matches.Length == 0)
+            var individualMatches = matches.Item1.GroupBy(v => v.Item2)
+                .SelectMany(v => v)
+                .Select(v => v.Item2).ToArray();
+
+            if (individualMatches.Length == 0)
             {
                 e.Result = "No results where found";
                 return;
             }
 
-            var customerList = FleetSearch.GetComponent<Form>("customer list");
+            var fleetList = FleetSearch.GetComponent<Form>("customer list");
             
-            customerList.Set("Search", e.Data.Get<string>("Search"));
-            customerList.GetComponent<Select>("Results").SetNewMembers(matches.Select(m => m.Item2.ToString()).ToArray());
+            fleetList.Set("Search", e.Data.Get<string>("Search"));
+            fleetList.GetComponent<Select>("Results")
+                .SetNewMembers(individualMatches.Select(m => m.ToString()).ToArray());
             
             FleetSearch.ActiveComponent = "customer list";
         }
