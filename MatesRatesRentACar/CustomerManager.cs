@@ -39,7 +39,7 @@ namespace MateRatesRentACar
                 {
                     new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())),
                     new Form.Item("Results", new Select(new [] { "Select one" }).WithDefault("Select one"))
-                }, new Button("Select"))
+                }, new Button("Search again"))
             }
         }, "initial search", "Find Customer");
 
@@ -104,22 +104,11 @@ namespace MateRatesRentACar
             _fleet = fleet;
             AddCustomer.Submitted += AddCustomerOnSubmitted;
             CustomerSearch.GetComponent<Form>("initial search").Submitted += CustomerSearchOnSearch;
-            CustomerSearch.GetComponent<Form>("customer list").Submitted += CustomerListOnSearch;
+            CustomerSearch.GetComponent<Form>("customer list").Submitted += CustomerSearchOnSearch;
             ModifyCustomer.GetComponent<Form>("search").Submitted += ModifyCustomerOnSearch;
             ModifyCustomer.GetComponent<Form>("modify").Submitted += ModifyCustomerOnSubmitted;
             DeleteCustomer.GetComponent<Form>("select").Submitted += DeleteCustomerOnSearch;
             DeleteCustomer.GetComponent<Form>("confirm").Submitted += DeleteCustomerOnSubmitted;
-        }
-
-        private void CustomerListOnSearch(object sender, Form.SubmittedEventArgs e)
-        {
-            if (e.Data.Get<string>("Results") == "Select one")
-            {
-                CustomerSearchOnSearch(sender, e);
-                return;
-            }
-            
-            
         }
 
         private void CustomerSearchOnSearch(object sender, Form.SubmittedEventArgs e)
@@ -132,6 +121,12 @@ namespace MateRatesRentACar
                 new Tuple<string, Customer>(c.Surname, c),
                 new Tuple<string, Customer>(c.Gender.ToString(), c)
             }).SelectMany(it => it).ToArray();
+
+            if (e.Data.Get<string>("Search").IsEmpty())
+            {
+                e.Result = "  Enter a search term";
+                return;
+            }
             
             var parser = new MrrcParser(e.Data.Get<string>("Search").ToUpperInvariant());
             var result = parser.Parse(parser.Tokenise());
