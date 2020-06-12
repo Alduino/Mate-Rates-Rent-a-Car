@@ -25,7 +25,7 @@ namespace MRRC.SearchParser.Parts
             
             return new SuccessfulParseResult<Value>(
                 new Value(inverted, token.Content.StartsWith("\"") ? 
-                    token.Source.Substring(1, token.Source.Length - 2) : token.Source));
+                    token.Source.Substring(1, token.Content.Length - 2) : token.Content));
         }
         
         private Value(bool inverted, string source)
