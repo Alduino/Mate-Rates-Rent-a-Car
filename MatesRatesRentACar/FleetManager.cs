@@ -221,7 +221,7 @@ namespace MateRatesRentACar
                 return;
             }
 
-            e.Result = "Success";
+            e.Result = $"Success ({_fleet.Vehicles.First(it => it.Registration == vehicleRegistration)}/d)";
         }
 
         private void FleetSearchOnSearch(object sender, Form.SubmittedEventArgs e)
