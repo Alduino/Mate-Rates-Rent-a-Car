@@ -39,13 +39,13 @@ namespace MRRC.Guacamole.Components
             var maxWidths = _keys.Select(key => 
                 Items.Select(it => key.GetValue(it)?.ToString().Length ?? 4)
                     .Append(key.Name.Length)
-                    .Max());
+                    .Max()).ToArray();
 
             var separatorBar = string.Join(" ", maxWidths.Select(w => '─'.Repeat(w + 2)));
             
             DrawUtil.Text(x, y, $"┌{separatorBar.Replace(' ', '┬')}┐");
             DrawUtil.Text(x, y + 1, 
-                $"│{string.Join("│", _keys.Select(k => $" {k.Name} "))}│");
+                $"│{string.Join("│", _keys.Zip(maxWidths, (k, w) => $" {k.Name.PadRight(w)} "))}│");
             DrawUtil.Text(x, y + 2, $"├{separatorBar.Replace(' ', '┼')}┤");
 
             DrawUtil.Lines(
@@ -53,7 +53,9 @@ namespace MRRC.Guacamole.Components
                 Items.Select(item => 
                     "│" +
                     string.Join("│",
-                    _keys.Select(key => " " + (key.GetValue(item)?.ToString() ?? "null") + " ")
+                    _keys.Zip(maxWidths, (key, width) => 
+                        (" " + (key.GetValue(item)?.ToString() ?? "null") + " ").PadRight(width + 2)
+                        )
                     ) +
                     "│"
                 )
