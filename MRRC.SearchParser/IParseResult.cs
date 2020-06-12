@@ -23,8 +23,8 @@ namespace MRRC.SearchParser
             IParseResult<TC> c, Func<TA, TB, TC, TV> map)
         {
             if (a is FailedParseResult<TA> fA) return fA.Cast<TV>();
-            if (b is FailedParseResult<TA> fB) return fB.Cast<TV>();
-            if (c is FailedParseResult<TA> fC) return fC.Cast<TV>();
+            if (b is FailedParseResult<TB> fB) return fB.Cast<TV>();
+            if (c is FailedParseResult<TC> fC) return fC.Cast<TV>();
 
             var rA = (SuccessfulParseResult<TA>) a;
             var rB = (SuccessfulParseResult<TB>) b;
