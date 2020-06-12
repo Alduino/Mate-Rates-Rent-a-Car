@@ -141,7 +141,13 @@ namespace MateRatesRentACar
 
             var matches = success.Result.Matches(options);
 
-            if (matches.Length == 0)
+            var individualMatches = matches.Item1
+                .Select(it => it.Item2)
+                .Distinct()
+                .Where(it => !matches.Item2.Contains(it))
+                .ToArray();
+
+            if (individualMatches.Length == 0)
             {
                 e.Result = "No results where found";
                 return;
@@ -150,7 +156,8 @@ namespace MateRatesRentACar
             var customerList = CustomerSearch.GetComponent<Form>("customer list");
             
             customerList.Set("Search", e.Data.Get<string>("Search"));
-            customerList.GetComponent<Select>("Results").SetNewMembers(matches.Select(m => m.Item2.ToString()).ToArray());
+            customerList.GetComponent<Select>("Results")
+                .SetNewMembers(individualMatches.Select(m => m.ToString()).ToArray());
             
             CustomerSearch.ActiveComponent = "customer list";
         }

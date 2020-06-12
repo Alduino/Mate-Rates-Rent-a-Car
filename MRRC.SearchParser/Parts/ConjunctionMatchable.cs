@@ -24,13 +24,22 @@ namespace MRRC.SearchParser.Parts
             return Conjunction.Type == Conjunction.CType.Or ? Right.Matches(options) : new string[0];
         }
 
-        public Tuple<string, T>[] Matches<T>(Tuple<string, T>[] options)
+        public Tuple<Tuple<string, T>[], T[]> Matches<T>(Tuple<string, T>[] options)
         {
             // exactly the same as string[] Matches but with a different data type
             var leftMatches = Left.Matches(options);
-            if (leftMatches.Length > 0 && Conjunction.Type == Conjunction.CType.And) 
-                return leftMatches.Concat(Right.Matches(options)).ToArray();
-            return Conjunction.Type == Conjunction.CType.Or ? Right.Matches(options) : new Tuple<string, T>[0];
+            if (leftMatches.Item1.Length > 0 && Conjunction.Type == Conjunction.CType.And)
+            {
+                var rightMatches = Right.Matches(options);
+                
+                return new Tuple<Tuple<string, T>[], T[]>(
+                    leftMatches.Item1.Concat(rightMatches.Item1).ToArray(),
+                    leftMatches.Item2.Concat(rightMatches.Item2).ToArray()
+                );
+            }
+
+            return Conjunction.Type == Conjunction.CType.Or ?
+                Right.Matches(options) : new Tuple<Tuple<string, T>[], T[]>(new Tuple<string, T>[0], new T[0]);
         }
     }
 }

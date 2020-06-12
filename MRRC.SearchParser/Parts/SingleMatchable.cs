@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MRRC.SearchParser.Parts
@@ -21,7 +22,21 @@ namespace MRRC.SearchParser.Parts
             };
         }
 
-        public Tuple<string, T>[] Matches<T>(Tuple<string, T>[] options) =>
-            options.Where(o => string.Equals(o.Item1, Value.Source, StringComparison.CurrentCultureIgnoreCase)).ToArray();
+        public Tuple<Tuple<string, T>[], T[]> Matches<T>(Tuple<string, T>[] options)
+        {
+            var skipped = new List<T>();
+            
+            var data = options.Where(o =>
+            {
+                var result = string.Equals(o.Item1, Value.Source, StringComparison.CurrentCultureIgnoreCase);
+                if (!Value.Inverted) return result;
+                
+                result = !result;
+                if (!result) skipped.Add(o.Item2);
+                return result;
+            }).ToArray();
+            
+            return new Tuple<Tuple<string, T>[], T[]>(data, skipped.ToArray());
+        }
     }
 }
