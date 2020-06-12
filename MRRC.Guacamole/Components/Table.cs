@@ -59,7 +59,7 @@ namespace MRRC.Guacamole.Components
                 )
             );
             
-            DrawUtil.Text(x, y + _keys.Length + 3, $"└{separatorBar.Replace(' ', '┴')}┘");
+            DrawUtil.Text(x, y + Items.Count + 3, $"└{separatorBar.Replace(' ', '┴')}┘");
         }
 
         public override string ToString() => Title;
