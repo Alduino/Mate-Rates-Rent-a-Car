@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,6 +8,8 @@ using MRRC.Guacamole;
 using MRRC.Guacamole.Components;
 using MRRC.Guacamole.Components.Forms;
 using MRRC.Guacamole.MenuGeneration;
+using MRRC.SearchParser;
+using MRRC.SearchParser.Parts;
 
 namespace MateRatesRentACar
 {
@@ -18,6 +21,25 @@ namespace MateRatesRentACar
         private static readonly Regex RegoRegex = new Regex("^\\d{3}[A-Za-z]{3}");
         
         private readonly Fleet _fleet;
+
+        [MenuItem] public OneOf FleetSearch { get; } = new OneOf(new Dictionary<string, Component>
+        {
+            {
+                "initial search",
+                new Form("Find Vehicle", new []
+                {
+                    new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())), 
+                }, new Button("Submit"))
+            },
+            {
+                "customer list",
+                new Form("Find Vehicle", new []
+                {
+                    new Form.Item("Search", new TextBox<SearchBoxRenderer.State>(contentsRenderer: new SearchBoxRenderer())),
+                    new Form.Item("Results", new Select(new [] { "Select one" }).WithDefault("Select one"))
+                }, new Button("Search again"))
+            }
+        }, "initial search", "Find Vehicle");
 
         [MenuItem] public Form AddVehicle { get; } = new Form("Add Vehicle", new []
         {
@@ -89,10 +111,62 @@ namespace MateRatesRentACar
         {
             _fleet = fleet;
             AddVehicle.Submitted += AddVehicleOnSubmitted;
+            FleetSearch.GetComponent<Form>("initial search").Submitted += FleetSearchOnSearch;
+            FleetSearch.GetComponent<Form>("customer list").Submitted += FleetSearchOnSearch;
             ModifyVehicle.GetComponent<Form>("search").Submitted += ModifyVehicleOnSearch;
             ModifyVehicle.GetComponent<Form>("modify").Submitted += ModifyVehicleOnSubmit;
             DeleteVehicle.GetComponent<Form>("select").Submitted += DeleteVehicleOnSearch;
             DeleteVehicle.GetComponent<Form>("confirm").Submitted += DeleteVehicleOnSubmitted;
+        }
+
+        private void FleetSearchOnSearch(object sender, Form.SubmittedEventArgs e)
+        {
+            var options = _fleet.Vehicles.Select(v => new[]
+            {
+                new Tuple<string, Vehicle>(v.Registration.ToString(), v),
+                new Tuple<string, Vehicle>(v.Grade.ToString(), v),
+                new Tuple<string, Vehicle>(v.Make, v),
+                new Tuple<string, Vehicle>(v.Model, v),
+                new Tuple<string, Vehicle>(v.Year.ToString(), v),
+                new Tuple<string, Vehicle>(v.SeatCount.ToString(), v),
+                new Tuple<string, Vehicle>(v.Transmission.ToString(), v),
+                new Tuple<string, Vehicle>(v.Fuel.ToString(), v),
+                new Tuple<string, Vehicle>(v.HasGps ? "GPS" : "No GPS", v),
+                new Tuple<string, Vehicle>(v.HasSunRoof ? "Sun roof" : "No sun roof", v),
+                new Tuple<string, Vehicle>(v.Colour, v)
+            }).SelectMany(it => it).ToArray();
+
+            if (e.Data.Get<string>("Search").IsEmpty())
+            {
+                e.Result = "  Enter a search term";
+                return;
+            }
+            
+            var parser = new MrrcParser(e.Data.Get<string>("Search").ToUpperInvariant());
+            var result = parser.Parse(parser.Tokenise());
+
+            if (result is FailedParseResult<Expression> failure)
+            {
+                e.Result = failure.Message;
+                return;
+            }
+
+            var success = (SuccessfulParseResult<Expression>) result;
+
+            var matches = success.Result.Matches(options);
+
+            if (matches.Length == 0)
+            {
+                e.Result = "  No results where found";
+                return;
+            }
+
+            var customerList = FleetSearch.GetComponent<Form>("customer list");
+            
+            customerList.Set("Search", e.Data.Get<string>("Search"));
+            customerList.GetComponent<Select>("Results").SetNewMembers(matches.Select(m => m.Item2.ToString()).ToArray());
+            
+            FleetSearch.ActiveComponent = "customer list";
         }
 
         private void DeleteVehicleOnSubmitted(object sender, Form.SubmittedEventArgs e)
