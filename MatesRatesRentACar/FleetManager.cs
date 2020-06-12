@@ -28,6 +28,7 @@ namespace MateRatesRentACar
             public string Make => _vehicle.Make;
             public string Model => _vehicle.Model;
             public string Colour => _vehicle.Colour;
+            public string DailyCost => $"${_vehicle.DailyRate:.2}";
 
             public string RentedBy => _rentedBy == -1 ? "N/A" : _rentedBy.ToString();
 
