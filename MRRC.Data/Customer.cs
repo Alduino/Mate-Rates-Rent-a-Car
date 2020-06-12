@@ -11,5 +11,7 @@ namespace MCCR.Data
         [Name("LastName")] public string Surname { get; set; }
         public Gender Gender { get; set; }
         [Name("DOB")] public DateTime BirthDate { get; set; }
+
+        public override string ToString() => $"{Id}: {GivenNames} {Surname}";
     }
 }
