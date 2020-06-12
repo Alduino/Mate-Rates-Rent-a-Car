@@ -18,6 +18,26 @@ namespace MateRatesRentACar
     /// </summary>
     public class FleetManager
     {
+        public readonly struct VehicleDisplayInfo
+        {
+            private readonly Vehicle _vehicle;
+            private readonly int _rentedBy;
+
+            public string Registration => _vehicle.Registration;
+            public int Year => _vehicle.Year;
+            public string Make => _vehicle.Make;
+            public string Model => _vehicle.Model;
+            public string Colour => _vehicle.Colour;
+
+            public string RentedBy => _rentedBy == -1 ? "N/A" : _rentedBy.ToString();
+
+            public VehicleDisplayInfo(Vehicle vehicle, int rentedBy)
+            {
+                _vehicle = vehicle;
+                _rentedBy = rentedBy;
+            }
+        }
+        
         private static readonly Regex RegoRegex = new Regex("^\\d{3}[A-Za-z]{3}");
         
         private readonly Fleet _fleet;
@@ -119,6 +139,9 @@ namespace MateRatesRentACar
             new Form.Item("Registration", new TextBox { MaxLength = 6, Placeholder = "123ABC" }), 
         }, new Button("Submit"));
 
+        [MenuItem] public Table<VehicleDisplayInfo> VehicleReport { get; } =
+            new Table<VehicleDisplayInfo>("Vehicle Report");
+
         public FleetManager(Fleet fleet, CustomerResourceManager crm)
         {
             _fleet = fleet;
@@ -132,6 +155,14 @@ namespace MateRatesRentACar
             DeleteVehicle.GetComponent<Form>("confirm").Submitted += DeleteVehicleOnSubmitted;
             RentVehicle.Submitted += RentVehicleOnSubmitted;
             ReturnVehicle.Submitted += ReturnVehicleOnSubmitted;
+            VehicleReport.PreRender += VehicleReportOnFocused;
+        }
+
+        private void VehicleReportOnFocused(object sender, EventArgs e)
+        {
+            VehicleReport.Items.Clear();
+            VehicleReport.Items.AddRange(_fleet.Vehicles.Select(vehicle =>
+                new VehicleDisplayInfo(vehicle, _fleet.RentedBy(vehicle.Registration))));
         }
 
         private void ReturnVehicleOnSubmitted(object sender, Form.SubmittedEventArgs e)
