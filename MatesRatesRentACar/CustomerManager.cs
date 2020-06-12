@@ -98,6 +98,9 @@ namespace MateRatesRentACar
             }
         }, "select", "Delete Customer");
 
+        [MenuItem] public Table<Customer> CustomerReport { get; } =
+            new Table<Customer>("Customer Report");
+
         public CustomerManager(CustomerResourceManager crm, Fleet fleet)
         {
             _crm = crm;
@@ -109,6 +112,13 @@ namespace MateRatesRentACar
             ModifyCustomer.GetComponent<Form>("modify").Submitted += ModifyCustomerOnSubmitted;
             DeleteCustomer.GetComponent<Form>("select").Submitted += DeleteCustomerOnSearch;
             DeleteCustomer.GetComponent<Form>("confirm").Submitted += DeleteCustomerOnSubmitted;
+            CustomerReport.PreRender += CustomerReportOnFocused;
+        }
+
+        private void CustomerReportOnFocused(object sender, EventArgs e)
+        {
+            CustomerReport.Items.Clear();
+            CustomerReport.Items.AddRange(_crm.Customers);
         }
 
         private void CustomerSearchOnSearch(object sender, Form.SubmittedEventArgs e)
