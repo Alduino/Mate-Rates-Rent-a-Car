@@ -124,7 +124,7 @@ namespace MateRatesRentACar
 
             if (e.Data.Get<string>("Search").IsEmpty())
             {
-                e.Result = "  Enter a search term";
+                e.Result = "Enter a search term";
                 return;
             }
             
@@ -143,7 +143,7 @@ namespace MateRatesRentACar
 
             if (matches.Length == 0)
             {
-                e.Result = "  No results where found";
+                e.Result = "No results where found";
                 return;
             }
 

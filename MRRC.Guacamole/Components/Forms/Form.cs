@@ -201,7 +201,7 @@ namespace MRRC.Guacamole.Components.Forms
             
             _submit.Render(state, x + 1, yOffset + 1);
             
-            DrawUtil.Text(x + maxTextWidth + 2, yOffset + _submit.Height / 2 + 1, _result);
+            DrawUtil.Text(x + _submit.Width + 2, yOffset + _submit.Height / 2 + 1, _result);
         }
 
         /// <summary>
