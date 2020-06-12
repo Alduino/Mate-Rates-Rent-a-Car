@@ -16,5 +16,7 @@ namespace MCCR.Data
         [Name("SunRoof")] public bool HasSunRoof { get; set; } = false;
         public double DailyRate { get; set; } = 50;
         public string Colour { get; set; } = "Black";
+
+        public override string ToString() => $"{Registration}: {Year} {Make} {Model}";
     }
 }
