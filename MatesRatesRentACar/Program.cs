@@ -19,7 +19,7 @@ namespace MateRatesRentACar
             var fleet = new Fleet("../../../Data/fleet.csv", "../../../Data/rentals.csv");
             
             var customerManager = new CustomerManager(crm, fleet);
-            var fleetManager = new FleetManager(fleet);
+            var fleetManager = new FleetManager(fleet, crm);
             
             var mainMenu = new Menu("Main Menu", new Component[]
             {

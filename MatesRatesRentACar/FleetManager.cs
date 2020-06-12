@@ -21,6 +21,7 @@ namespace MateRatesRentACar
         private static readonly Regex RegoRegex = new Regex("^\\d{3}[A-Za-z]{3}");
         
         private readonly Fleet _fleet;
+        private readonly CustomerResourceManager _crm;
 
         [MenuItem] public OneOf FleetSearch { get; } = new OneOf(new Dictionary<string, Component>
         {
@@ -107,9 +108,21 @@ namespace MateRatesRentACar
             }
         }, "select", "Delete Vehicle");
 
-        public FleetManager(Fleet fleet)
+        [MenuItem] public Form RentVehicle { get; } = new Form("Rent Vehicle", new []
+        {
+            new Form.Item("Customer ID", new TextBox()),
+            new Form.Item("Vehicle Rego", new TextBox { MaxLength = 6, Placeholder = "123ABC" }), 
+        }, new Button("Submit"));
+
+        [MenuItem] public Form ReturnVehicle { get; } = new Form("Return Vehicle", new []
+        {
+            new Form.Item("Registration", new TextBox { MaxLength = 6, Placeholder = "123ABC" }), 
+        }, new Button("Submit"));
+
+        public FleetManager(Fleet fleet, CustomerResourceManager crm)
         {
             _fleet = fleet;
+            _crm = crm;
             AddVehicle.Submitted += AddVehicleOnSubmitted;
             FleetSearch.GetComponent<Form>("initial search").Submitted += FleetSearchOnSearch;
             FleetSearch.GetComponent<Form>("customer list").Submitted += FleetSearchOnSearch;
@@ -117,6 +130,66 @@ namespace MateRatesRentACar
             ModifyVehicle.GetComponent<Form>("modify").Submitted += ModifyVehicleOnSubmit;
             DeleteVehicle.GetComponent<Form>("select").Submitted += DeleteVehicleOnSearch;
             DeleteVehicle.GetComponent<Form>("confirm").Submitted += DeleteVehicleOnSubmitted;
+            RentVehicle.Submitted += RentVehicleOnSubmitted;
+            ReturnVehicle.Submitted += ReturnVehicleOnSubmitted;
+        }
+
+        private void ReturnVehicleOnSubmitted(object sender, Form.SubmittedEventArgs e)
+        {
+            var rego = e.Data.Get<string>("Registration").ToUpper();
+            var person = _fleet.ReturnVehicle(rego);
+
+            if (person == -1)
+            {
+                e.Result = "Vehicle is not being rented";
+                return;
+            }
+
+            e.Result = "Successful";
+        }
+
+        private void RentVehicleOnSubmitted(object sender, Form.SubmittedEventArgs e)
+        {
+            var customerId = e.Data.Get<string>("Customer ID");
+            var vehicleRegistration = e.Data.Get<string>("Vehicle Rego").ToUpper();
+
+            if (!int.TryParse(customerId, out var customerIdNo))
+            {
+                e.Result = "Invalid customer ID";
+                return;
+            }
+
+            if (_fleet.Vehicles.All(it => it.Registration != vehicleRegistration))
+            {
+                e.Result = "Vehicle not found";
+                return;
+            }
+
+            if (_crm.Customers.All(it => it.Id != customerIdNo))
+            {
+                e.Result = "Customer not found";
+                return;
+            }
+
+            if (_fleet.IsRented(vehicleRegistration))
+            {
+                e.Result = "Vehicle is already rented";
+                return;
+            }
+
+            if (_fleet.IsRenting(customerIdNo))
+            {
+                e.Result = "Customer is already renting";
+                return;
+            }
+
+            if (!_fleet.RentVehicle(vehicleRegistration, customerIdNo))
+            {
+                e.Result = "Failed to rent vehicle";
+                return;
+            }
+
+            e.Result = "Success";
         }
 
         private void FleetSearchOnSearch(object sender, Form.SubmittedEventArgs e)
