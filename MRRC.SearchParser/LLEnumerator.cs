@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace MRRC.SearchParser
 {
@@ -83,6 +84,24 @@ namespace MRRC.SearchParser
             tempItems.PrependInto(_lookedAt);
             
             return Current;
+        }
+
+        /// <summary>
+        /// Looks ahead in the enumerator and returns the specified item
+        /// </summary>
+        /// <param name="count">The amount of items to look ahead by</param>
+        /// <param name="def">The default value to return if the enumerator has completed</param>
+        /// <exception cref="ArgumentOutOfRangeException">count is not over or equal to 1</exception>
+        public T LookAhead(T def, int count = 1)
+        {
+            try
+            {
+                return LookAhead(count);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return def;
+            }
         }
 
         public bool ReachedEnd()
