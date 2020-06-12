@@ -10,19 +10,24 @@ namespace MRRC.Guacamole.Components
         private readonly PropertyInfo[] _keys = typeof(T).GetProperties();
         
         public ObservableCollection<T> Items { get; }
+        
+        public string Title { get; }
 
-        public Table(IEnumerable<T> items)
+        public Table(string title, IEnumerable<T> items)
         {
+            Title = title;
             Items = new ObservableCollection<T>(items);
             Items.CollectionChanged += TriggerRender;
         }
         
-        public Table() : this(new T[0]) {}
+        public Table(string title) : this(title, new T[0]) {}
         
         protected override void Draw(int x, int y, bool active, ApplicationState state)
         {
             var maxWidths = _keys.Select(key => 
-                Items.Max(it => key.GetValue(it)?.ToString().Length ?? 4));
+                Items.Select(it => key.GetValue(it)?.ToString().Length ?? 4)
+                    .Append(key.Name.Length)
+                    .Max());
 
             var separatorBar = string.Join(" ", maxWidths.Select(w => '─'.Repeat(w + 2)));
             
@@ -30,16 +35,21 @@ namespace MRRC.Guacamole.Components
             DrawUtil.Text(x, y + 1, 
                 $"│{string.Join("│", _keys.Select(k => $" {k.Name} "))}│");
             DrawUtil.Text(x, y + 2, $"├{separatorBar.Replace(' ', '┼')}┤");
-            
+
             DrawUtil.Lines(
                 x, y + 3,
-                Items.Select(item => string.Join("│",
+                Items.Select(item => 
+                    "│" +
+                    string.Join("│",
                     _keys.Select(key => " " + (key.GetValue(item)?.ToString() ?? "null") + " ")
-                    )
+                    ) +
+                    "│"
                 )
             );
             
             DrawUtil.Text(x, y + _keys.Length + 3, $"└{separatorBar.Replace(' ', '┴')}┘");
         }
+
+        public override string ToString() => Title;
     }
 }
