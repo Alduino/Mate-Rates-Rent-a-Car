@@ -18,7 +18,8 @@ namespace MRRC.SearchParser
             CloseBracket,
             Whitespace,
             Invalid,
-            NonTerminatedString
+            NonTerminatedString,
+            Eof
         }
 
         public static IMatcher[] TokenTypes { get; } = {
@@ -34,6 +35,11 @@ namespace MRRC.SearchParser
 
         public readonly struct Match
         {
+            /// <summary>
+            /// Token used for displaying invalid ending tokens
+            /// </summary>
+            public static Match Eof => new Match(Type.Eof, "", "", 0);
+            
             public Match(Type type, string content, string source, int index)
             {
                 Type = type;

@@ -9,7 +9,8 @@ namespace MRRC.SearchParser.Parts
             var a = Parts.Value.Parse(tokens);
             if (a is FailedParseResult<Value> aFailure) return aFailure.Cast<Expression>();
 
-            if (tokens.ReachedEnd() || tokens.LookAhead().Type != Token.Type.And && tokens.LookAhead().Type != Token.Type.Or)
+            if (tokens.LookAhead(Token.Match.Eof).Type != Token.Type.And &&
+                tokens.LookAhead(Token.Match.Eof).Type != Token.Type.Or)
                 return a.Then(v => new Expression(v));
             
             var conjunction = Conjunction.Parse(tokens);
@@ -27,7 +28,7 @@ namespace MRRC.SearchParser.Parts
         /// <returns>Expression result</returns>
         public static IParseResult<Expression> Parse(LLEnumerator<Token.Match> tokens)
         {
-            switch (tokens.LookAhead().Type)
+            switch (tokens.LookAhead(Token.Match.Eof).Type)
             {
                 case Token.Type.Not:
                 case Token.Type.Value:
@@ -44,7 +45,7 @@ namespace MRRC.SearchParser.Parts
                 default:
                     return new FailedParseResult<Expression>(
                         new [] {Token.Type.Not, Token.Type.Value, Token.Type.OpenBracket},
-                        tokens.LookAhead(), "An expression should start with NOT, (, or a value.");
+                        tokens.LookAhead(Token.Match.Eof), "An expression should start with NOT, (, or a value.");
             }
         }
 
