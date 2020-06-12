@@ -12,7 +12,7 @@ namespace MRRC.SearchParser.Parts
 
         public static IParseResult<Conjunction> Parse(IEnumerator<Token.Match> tokens)
         {
-            var next = tokens.Next();
+            var next = tokens.Next(Token.Match.Eof);
             switch (next.Type)
             {
                 case Token.Type.And:

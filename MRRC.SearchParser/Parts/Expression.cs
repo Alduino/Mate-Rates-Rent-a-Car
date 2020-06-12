@@ -34,9 +34,9 @@ namespace MRRC.SearchParser.Parts
                 case Token.Type.Value:
                     return ParseValue(tokens);
                 case Token.Type.OpenBracket:
-                    tokens.Next();
+                    tokens.Next(Token.Match.Eof);
                     var res = Parse(tokens);
-                    var next = tokens.Next();
+                    var next = tokens.Next(Token.Match.Eof);
                     if (next.Type != Token.Type.CloseBracket)
                         return new FailedParseResult<Expression>(Token.Type.CloseBracket, next,
                             "A closing bracket should be used after an expression that started with " +

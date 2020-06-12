@@ -9,13 +9,13 @@ namespace MRRC.SearchParser.Parts
         /// </summary>
         public static IParseResult<Value> Parse(IEnumerator<Token.Match> tokens)
         {
-            var token = tokens.Next();
+            var token = tokens.Next(Token.Match.Eof);
 
             var inverted = false;
             if (token.Type == Token.Type.Not)
             {
                 inverted = true;
-                token = tokens.Next();
+                token = tokens.Next(Token.Match.Eof);
             }
             
             if (token.Type != Token.Type.Value) 
