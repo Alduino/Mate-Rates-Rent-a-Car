@@ -213,6 +213,12 @@ namespace MRRC.Guacamole.Components.Forms
             item.Component?.SetValue(value);
         }
 
+        /// <summary>
+        /// Returns the specified input component
+        /// </summary>
+        public T GetComponent<T>(string name) where T : IInput<object> =>
+            (T) _items.First(item => item.Title == name).Component;
+
         public override string ToString() => _title;
     }
 }
