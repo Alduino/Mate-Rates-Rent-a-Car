@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MRRC.SearchParser.Parts
@@ -28,15 +29,22 @@ namespace MRRC.SearchParser.Parts
         {
             // exactly the same as string[] Matches but with a different data type
             var leftMatches = Left.Matches(options);
+            var rightMatches = Right.Matches(options);
+            
             if (leftMatches.Item1.Length > 0 && Conjunction.Type == Conjunction.CType.And)
             {
-                var rightMatches = Right.Matches(options);
-                
                 return new Tuple<Tuple<string, T>[], T[]>(
-                    leftMatches.Item1.Concat(rightMatches.Item1).ToArray(),
+                    leftMatches.Item1.Where(a => 
+                        rightMatches.Item1.Any(b =>
+                            EqualityComparer<T>.Default.Equals(a.Item2, b.Item2))).ToArray(),
                     leftMatches.Item2.Concat(rightMatches.Item2).ToArray()
                 );
             }
+            
+            return new Tuple<Tuple<string, T>[], T[]>(
+                leftMatches.Item1.Concat(rightMatches.Item1).ToArray(),
+                leftMatches.Item2.Concat(rightMatches.Item2).ToArray()
+            );
 
             return Conjunction.Type == Conjunction.CType.Or ?
                 Right.Matches(options) : new Tuple<Tuple<string, T>[], T[]>(new Tuple<string, T>[0], new T[0]);
