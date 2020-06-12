@@ -50,6 +50,24 @@ This menu lets you choose between the groups of functions the program supports. 
 
 This menu is shown under the title _Customers_, and contains actions to add, modify and remove customers.
 
+#### Find Customer
+
+This item displays a form containing a search field, which allows you to find customers based on the following fields:
+
+- Id
+- Title
+- Given names
+- Surname
+- Gender
+
+To search for a field that contains special characters (anything that is not alphanumeric or an underscore), surround it in double quotes. Replace any double quotes in a quoted field with two of them `""` to prevent the field from closing.
+
+You can use the `AND` and `OR` keywords between two expressions to combine them, either requiring both to match or only one to match, respectively. Place the `NOT` keyword before an expression to match anything that does not match that expression.
+
+You can surround an expression in  parentheses (`()`) to group them together, forcing the order of query checking (similar to in arithmetics).
+
+Selecting _Search_ will show a results selection field. The value here is not used for anything, instead the field is used to display your search results. If one of them is the one you wanted, you can copy its ID into wherever you need it. Otherwise, type a new search in and press _Search again_.
+
 #### Add Customer
 
 This item displays a form (that can be entered using enter or the right arrow) with the different fields relating to customers. Press tab, enter, or the vertical arrow keys to cycle through these. In the Gender field, press enter to show a list of options, then tab or vertical arrow keys to select an option, then enter to confirm it.
@@ -70,11 +88,23 @@ You may press the left arrow key to go back to the search at any time, and press
 
 This form starts off the same as the Modify Customer menu, requesting a customer ID. After searching, it will show information about the customer to help identify them, and ask for confirmation to delete them from the database. It will not allow them to be deleted if they are currently renting a vehicle (although at this time renting is not supported).
 
+#### Customer Report
+
+This shows a table of every customer and all the stored information about them. Note that it does not show rentals, for this look in the fleet management menu.
+
 ### Fleet Management Menu
 
 This menu is basically the same as the customer management menu, however the Add Vehicle form contains a new component - the checkbox. Press enter while it is focused to toggle it.
 
 Note that the Add Vehicle form is quite tall, so you may need to resize your terminal window for it to fit. Some terminals may scroll to show the currently focused component, however this can be jarring.
+
+#### Rent Vehicle
+
+This form is to rent a vehicle out to a customer. Enter the customer's ID and the vehicle's registration number (which can be found from the _Find Customer_ and _Find Vehicle_ forms respectively), and select Submit to begin renting. A message will be displayed if something went wrong.
+
+#### Return Vehicle
+
+Enter the registration number of the vehicle to return it.
 
 ### Exiting
 
@@ -85,11 +115,3 @@ Note that you can press Control+C to kill the application on most terminals, how
 ## VCS
 
 During creating this application, Git was used to keep track of anything, and to provide a (private) backup on Github. You may open the directory in a Git viewer, or contact me (n10482661@qut.edu.au) to request access to the Github repo. Note: my username is Alduino (sometimes with an underscore at the end).
-
-
-
-## Planned to be implemented for Part B:
-
-- Ability to list customers and vehicles
-- Search for customer by other attributes to find the ID
-- Use multiple classes for vehicle types and have updating default values depending on the type
