@@ -1,3 +1,5 @@
+using System;
+
 namespace MRRC.SearchParser.Parts
 {
     public class Expression : IMatchable
@@ -72,5 +74,6 @@ namespace MRRC.SearchParser.Parts
         public IMatchable Value { get; }
 
         public string[] Matches(string[] options) => Value.Matches(options);
+        public Tuple<string, T>[] Matches<T>(Tuple<string, T>[] options) => Value.Matches(options);
     }
 }
