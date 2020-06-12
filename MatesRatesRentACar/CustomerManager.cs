@@ -126,14 +126,14 @@ namespace MateRatesRentACar
         {
             var options = _crm.Customers.Select(c => new[]
             {
-                c.Id.ToString(),
-                c.Title.ToString(),
-                c.GivenNames,
-                c.Surname,
-                c.Gender.ToString()
+                new Tuple<string, Customer>(c.Id.ToString(), c),
+                new Tuple<string, Customer>(c.Title.ToString(), c),
+                new Tuple<string, Customer>(c.GivenNames, c),
+                new Tuple<string, Customer>(c.Surname, c),
+                new Tuple<string, Customer>(c.Gender.ToString(), c)
             }).SelectMany(it => it).ToArray();
             
-            var parser = new MrrcParser(e.Data.Get<string>("Search"));
+            var parser = new MrrcParser(e.Data.Get<string>("Search").ToUpperInvariant());
             var result = parser.Parse(parser.Tokenise());
 
             if (result is FailedParseResult<Expression> failure)
@@ -144,7 +144,7 @@ namespace MateRatesRentACar
 
             var success = (SuccessfulParseResult<Expression>) result;
 
-            success.Result.Matches(options);
+            var matches = success.Result.Matches(options);
         }
 
         private void DeleteCustomerOnSubmitted(object sender, Form.SubmittedEventArgs e)
