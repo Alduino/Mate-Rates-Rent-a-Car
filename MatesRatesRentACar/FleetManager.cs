@@ -133,7 +133,8 @@ namespace MateRatesRentACar
                 new Tuple<string, Vehicle>(v.Fuel.ToString(), v),
                 new Tuple<string, Vehicle>(v.HasGps ? "GPS" : "No GPS", v),
                 new Tuple<string, Vehicle>(v.HasSunRoof ? "Sun roof" : "No sun roof", v),
-                new Tuple<string, Vehicle>(v.Colour, v)
+                new Tuple<string, Vehicle>(v.Colour, v),
+                new Tuple<string, Vehicle>($"{v.SeatCount} seats", v), 
             }).SelectMany(it => it).ToArray();
 
             if (e.Data.Get<string>("Search").IsEmpty())
@@ -155,9 +156,11 @@ namespace MateRatesRentACar
 
             var matches = success.Result.Matches(options);
 
-            var individualMatches = matches.Item1.GroupBy(v => v.Item2)
-                .SelectMany(v => v)
-                .Select(v => v.Item2).ToArray();
+            var individualMatches = matches.Item1
+                .Select(it => it.Item2)
+                .Distinct()
+                .Where(it => !matches.Item2.Contains(it))
+                .ToArray();
 
             if (individualMatches.Length == 0)
             {
