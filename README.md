@@ -1,7 +1,5 @@
 # Mates Rates Rent a Car
 
-Zach Barham (n10482661) -- 4th May 2020
-
 > A rental management system that currently supports adding, modifying and removing customers and vehicles
 
 ## Building
@@ -111,7 +109,3 @@ Enter the registration number of the vehicle to return it.
 To save and exit the application, press escape at any time, then choose 'Yes'.
 
 Note that you can press Control+C to kill the application on most terminals, however be careful because this will not save your changes.
-
-## VCS
-
-During creating this application, Git was used to keep track of anything, and to provide a (private) backup on Github. You may open the directory in a Git viewer, or contact me (n10482661@qut.edu.au) to request access to the Github repo. Note: my username is Alduino (sometimes with an underscore at the end).
