@@ -2,6 +2,27 @@
 
 > A rental management system that currently supports adding, modifying and removing customers and vehicles
 
+This was an assignment from university, where we had to make a management
+interface for a hypothetical rental management company. I went a bit overboard
+and made a whole CUI (Console UI) library for it, which began as an immediate
+mode library, but evolved over time to be mostly retained from the
+application's point of view (although it was rendered as an immediate GUI
+internally). Unfortunately, as it is based on an immediate mode renderer, it
+has to update the entire screen for each change, which is very slow. (Work was
+done to change this, but never completed). You can find the graphics library
+in the MRRC.Guacamole directory.
+
+We were not allowed to use any third party libraries, so I had to make a few
+more for the project:
+
+It includes a search term parser, which can be used to highlight search terms,
+and includes functionality to search for words or a regular expression in some
+source (MRRC.SearchParser).
+
+It also includes a tiny CSV parser which generates and reads CSVs from/into
+class instances, and can handle commas, quotes, and new lines in fields
+(MRRC.Cursive).
+
 ## Building
 
 This project is set up so it can be built in Visual Studio or any other IDEs that support Visual Studio solution files. To build in VS, open the solution (`MateRatesRentACar.sln`), right click the `MatesRatesRentACar` project in the Solution Explorer panel and select Build (the required files will be put in the `MatesRatesRentACar/bin/Debug`directory).
